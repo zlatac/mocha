@@ -1,0 +1,124 @@
+/* Empty. Add your own CSS if you like */
+.w3-animate-right{
+        position:relative;
+        animation:animateright 0.4s}
+      @keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
+      
+      .w3-animate-bottom{
+          position:relative;
+          -webkit-animation:animatebottom 0.4s;
+          animation:animatebottom 0.4s
+      }
+      @-webkit-keyframes animatebottom{from{bottom:-300px;opacity:0} to{bottom:0px;opacity:1}}
+      @keyframes animatebottom{from{bottom:-300px;opacity:0} to{bottom:0;opacity:1}}
+        
+      body {
+          text-transform: capitalize;
+          border-top: 5px;
+          border-top-color: rgba(166, 22, 173, 0.9);
+          border-top-style: solid;
+      }
+      h1 {
+/*
+          font-family: 'Shadows Into Light', cursive;
+          font-weight: 900;
+          letter-spacing: 9px;
+          font-size: 100px;
+*/
+          font-family: roboto;
+          font-weight: 200;
+          letter-spacing: 9px;
+          font-size: 70px;
+          color: rgba(135, 14, 140, 0.9);
+          text-shadow: 7px 2px rgb(245, 245, 245);
+      }
+      a.facebook, a.facebook:hover {
+          background-color: #3b5998;
+      }
+      .sp{
+          padding-bottom: 60%;
+      }
+      span.card-title {
+          color: black !important;
+      }
+      .main-color,main-color:hover {
+          background-color:  rgba(202, 26, 210, 0.9) !important;
+      }
+      .btn-green,btn-green:hover {
+          background-color:  rgba(83, 191, 83, 0.91) !important;
+      }
+      .btn-grey,btn-grey:hover {
+          background-color:  #969696 !important;
+      }
+      .btn-full {
+          width: 100%;
+      }
+      .profile {
+          width: 100px;
+          height: 100px;
+          position: absolute;
+          top: 0;
+          left: 36%;
+      }
+      .btn-menu {
+        position: fixed;
+        /*right: 5%;
+        bottom: 3%;*/
+        right: -6%;
+        top: 3%;
+        z-index: 10;
+        padding-top: 5px;
+        color: white;
+        margin: 10px 15px 20px 0px;
+        border-radius: 5px;
+        padding-right: 10px;
+      }
+      .price {
+          font-size: 40px;
+      }
+      .tiny-points {
+          font-size: 8px;
+      }
+      .motto {
+          font-family: 'Shadows Into Light', cursive;
+          font-size: 20px;
+          font-weight: 400;
+          letter-spacing: 3px;
+      }
+      .card-panel {
+          background-color: rgba(251, 251, 251, 0.46) !important;
+      }
+      .userView {
+          border-bottom-style: solid;
+          border-bottom-color: #ff6081;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        background-color: rgba(202, 26, 210, 0.9);
+        height: 30px;
+        width: 30px;
+        margin-top: -12px;
+      }
+      input[type=range]::-moz-range-thumb {
+        background-color: red;
+      }
+      input[type=range]::-ms-thumb {
+        background-color: red;
+      }
+      input[type=range]+.thumb.active {
+        display: none;
+      }
+      .points-box {
+        width: 96px !important;
+        border-radius: 8%;
+        height: 56px;
+      }
+      .card-image img{
+        max-height: 300px !important;
+        width: auto !important;
+        margin: auto !important;
+      }
+      .chip{
+          background-color: rgb(243, 243, 243);
+          position: absolute;
+          left: 35%;
+      }

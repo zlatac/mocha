@@ -1,0 +1,59 @@
+<ion-view title="/game">
+    <ion-content>
+        <div class="center-align">
+      <menu></menu>
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-image">
+                  <img ng-src="{{game.url}}" ng-style="newstyle = (show_points == true)?{filter:'blur(10px)'}:null">
+                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light main-color points-box"
+                     ng-show="show_points !== true">
+                      <span>750 </span><span class="tiny-points">pts</span>
+                  </a>
+                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-green w3-animate-bottom points-box"
+                     ng-show="show_points == true">
+                      <span>{{point_earned}}/750 </span><span class="tiny-points">pts</span>
+                  </a>
+                </div>
+                <div class="card-content" style="padding-top: 50px;">
+                  <p class="price" ng-click="inputShow()" ng-show="manualprice == false">
+                      ${{test.price}} <span class="right"><i class="material-icons">edit</i></span>
+                  </p>
+    
+                  <div ng-show="manualprice == true">
+                      <form name="myForm" ng-submit="submitPrediction()">
+                          <input type="number" ng-model="test.price" style="font-size:39px;">
+                          <input type="submit" value="Submit" hidden>
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col z-depth-2" style="padding-bottom:15px;margin-top:-8%;">
+                <form ng-show="show_points !== true">
+                    <p class="range-field" ng-if="manualprice == false">
+                      <input type="range" id="test5" min="0" max="500" ng-model="test.price"/>
+                    </p>
+                </form>
+                <br>
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-green"
+                   ng-click="submitPrediction()"
+                   ng-show="show_points !== true">
+                    <span>ENTER</span>
+                </a>
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 main-color"
+                   ng-click="nextProduct()"
+                   ng-show="show_points == true">
+                    <span>NEXT</span> <i class="material-icons right">chevron_right</i>
+                </a>
+
+
+            </div>
+
+        </div>
+     </div>
+    </ion-content>
+</ion-view>

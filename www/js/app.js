@@ -1,0 +1,217 @@
+// Ionic Starter App
+
+// angular.module is a global place for creating, registering and retrieving Angular modules
+// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+// the 2nd parameter is an array of 'requires'
+var myapp = angular.module('starter', ['ionic'])
+
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+
+      // Don't remove this line unless you know what you are doing. It stops the viewport
+      // from snapping when text inputs are focused. Ionic handles this internally for
+      // a much nicer keyboard experience.
+      cordova.plugins.Keyboard.disableScroll(true);
+    }
+    if(window.StatusBar) {
+      StatusBar.styleDefault();
+    }
+  });
+});
+
+ myapp.controller('mCtrl', function($scope,$location,$rootScope){
+        
+        //$scope.price = 300;
+        $scope.data = [
+            {url:"http://s7d9.scene7.com/is/image/Aritzia/large/s17_04_a08_61865_11902_on_a.jpg",
+            price:'125'
+            },
+            {
+                url:'http://katespade.insnw.net/KateSpade/NJMU7547_653?$large$',
+                price:'448'
+            },
+            {
+                url:'http://media.aldoshoes.com/v2/product/pisana/97/pisana_black_97_main_sq_gy_1600x1600.jpg',
+                price:'60'
+            },
+            {
+                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS24J32LBLE_Large_M_1.jpg',
+                price:'40'
+            },
+            {
+                url:'http://images.urbanoutfitters.com/is/image/UrbanOutfitters/42187435_070_b?$medium$&defaultImage=',
+                price:'65'
+            },
+            {
+                url:'http://images.urbanoutfitters.com/is/image/UrbanOutfitters/42470492_001_b?$medium$&defaultImage=',
+                price:'39'
+            },
+            {
+                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS32M24LNUD_Large_F_1.jpg',
+                price:'65'
+            },
+            {
+                url:'http://img1.fpassets.com/is/image/FreePeople/35286665_036_b?$pdp$',
+                price:'185'
+            },
+            {
+                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS62B06LMUL_Large_M_1.jpg',
+                price:'40'
+            },
+            {
+                url:'http://sits-pod26.demandware.net/dw/image/v2/AAUP_PRD/on/demandware.static/-/Sites-master/default/dwdd27cdf1/PF0263_SUQ_24.jpg?sw=656&sh=656&sm=fit',
+                price:'175'
+            }
+        ];
+        $scope.show_points = false;
+        $scope.manualprice = false;
+        $scope.point_earned = 0;
+        $scope.test = {price:0,second_price:0,start_time:null,end_time:null};
+        $scope.index = 0;
+        $scope.game = $scope.data[$scope.index];
+        $scope.submitPrediction = function(){
+            if($scope.index < $scope.data.length){
+                $scope.data[$scope.index].prediction = $scope.test.price;
+                //$scope.index++;
+                //$scope.game = $scope.data[$scope.index];
+                $scope.point_earned = $scope.data[$scope.index].point =  pointsMath($scope.index,$scope.test.price);
+                //$scope.data[$scope.index].point = pointsMath($scope.index,x);
+                $scope.show_points = true;
+                $scope.manualprice = false;
+            }
+            
+            if($scope.index == $scope.data.length){
+                console.log($scope.data);
+                $location.path('/final');
+                
+            }
+            
+        };
+        
+        $scope.nextProduct = function(){
+            //action for what happens after final answer is given
+            if($scope.index !== $scope.data.length - 1){
+                console.log($scope.data);
+                $scope.index++;
+                $scope.show_points = false;
+                //$scope.manualprice = false;
+                $scope.game = $scope.data[$scope.index];
+                
+                
+            }else{
+                $scope.point_earned = getPoints();
+                gameTimePlayed();
+                //$location.path('/final');
+                angular.element(document.querySelector('.modal')).modal('open');
+            }
+            
+        };
+        
+        $scope.inputShow = function(){
+            $scope.manualprice = true;
+            
+        };
+        
+        $scope.startTime = function(){
+            $scope.test.start_time = moment();
+        };
+        
+        $scope.resetGame = function(){
+            $scope.show_points = false;
+            $scope.manualprice = false;
+            $scope.point_earned = 0;
+            $scope.test = {price:0,second_price:0,start_time:null,end_time:null};
+            $scope.index = 0;
+            $scope.game = $scope.data[$scope.index];
+        };
+        
+        function pointsMath(index, val){
+            realPrice = $scope.data[index].price;
+            pChange = val/realPrice;
+            console.log(val, realPrice, pChange);
+            
+            //when prediction is more than 200% of the value
+            if(pChange >= 2 || pChange <= 0){
+                return 0;
+            }
+            
+            //when prediction is more than 100% of the real value
+            if(pChange > 1 && pChange < 2){
+                return Math.round(750 - pChange*750 + 750);
+            }else{
+               return Math.round(pChange*750);
+            }
+        }
+        
+        function getPoints(){
+            let y = 0;
+            for(x in $scope.data){
+                y += $scope.data[x].point;
+            }
+            
+            return y;
+        }
+        
+        function gameTimePlayed(){
+            //get current time
+            $scope.test.end_time = moment();
+            //get difference between start and end in miliseconds
+            var dif = $scope.test.end_time.diff($scope.test.start_time);
+            //format the miliseconds to minutes,seconds and milliseconds
+            $scope.test.timePlayed = moment(dif).format("mm:ss:SS");
+            return $scope.test.timePlayed;
+        }
+        
+//        angular.element(document.querySelector('.btn-menu')).sideNav({
+//          menuWidth: 300, // Default is 300
+//          edge: 'left', // Choose the horizontal origin
+//          closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+//          draggable: true // Choose whether you can drag to open on touch screens
+//        });
+        
+        angular.element(document.querySelector('.modal')).modal();
+        
+    });
+    
+    myapp.config(function($stateProvider, $urlRouterProvider) {
+      $stateProvider
+      .state("/", {
+        url: "/",
+        templateUrl : "../dash.html",
+        controller: "mCtrl"
+      })
+      .state("/game", {
+        url: "/game",
+        templateUrl : "../game.html",
+        controller: "mCtrl"
+      })
+      .state("/dash", {
+        url: "/dash",
+        templateUrl : "../dash.html",
+        controller: "mCtrl"
+      })
+      .state("/login", {
+        url: "/login",
+        templateUrl : "../login.html",
+        controller: "mCtrl"
+      });
+    $urlRouterProvider.otherwise('/');
+    });
+    
+    myapp.directive('menu', function() {
+      return {
+        template: '<a class="btn-menu main-color" data-activates="slide-out"><i class="material-icons" style="font-size:35px">menu</i></a>',
+        link: function(scope, elem, attrs) {
+            angular.element(document.querySelector('.btn-menu')).sideNav({
+              menuWidth: 300, // Default is 300
+              edge: 'right', // Choose the horizontal origin
+              closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+              draggable: true // Choose whether you can drag to open on touch screens
+            });
+        }
+      };
+    });
