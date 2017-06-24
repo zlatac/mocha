@@ -40,6 +40,16 @@
   </head>
   <body ng-app="starter" ng-cloack ng-controller="mCtrl">
    <ion-nav-view></ion-nav-view>
+   
+   <div class="bar bar-header" style="background-color:rgba(125, 125, 125, 0.86);" ng-class="{hide: menuhide === 0}">
+      <div class="row" style="color:white;">
+       <div class="col"><i class="material-icons">home</i></div>
+      <div class="col"><i class="material-icons">dashboard</i></div>
+      <div class="col"><i class="material-icons">attach_money</i></div>
+      <div class="col"><i class="material-icons">person</i></div>
+       </div>
+ 
+   </div>
 <!--
     <ion-header-bar align-title="left" class="bar-light">
       <div class="buttons">

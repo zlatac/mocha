@@ -23,7 +23,7 @@ var myapp = angular.module('starter', ['ionic'])
   });
 });
 
- myapp.controller('mCtrl', function($scope,$location,$rootScope){
+ myapp.controller('mCtrl', function($scope,$location,$rootScope,$ionicModal,$ionicSideMenuDelegate){
         
         //$scope.price = 300;
         $scope.data = [
@@ -71,17 +71,26 @@ var myapp = angular.module('starter', ['ionic'])
         $scope.manualprice = false;
         $scope.point_earned = 0;
         $scope.test = {price:0,second_price:0,start_time:null,end_time:null};
+        $scope.progress = 0;
         $scope.index = 0;
+        $scope.menuhide = 0;
         $scope.game = $scope.data[$scope.index];
         $scope.submitPrediction = function(){
             if($scope.index < $scope.data.length){
                 $scope.data[$scope.index].prediction = $scope.test.price;
                 //$scope.index++;
                 //$scope.game = $scope.data[$scope.index];
+                
+                //reconcile price prediction for consistent points
+                if($scope.manualprice === true)
+                    $scope.test.price = $scope.test.second_price;
+                
                 $scope.point_earned = $scope.data[$scope.index].point =  pointsMath($scope.index,$scope.test.price);
                 //$scope.data[$scope.index].point = pointsMath($scope.index,x);
                 $scope.show_points = true;
                 $scope.manualprice = false;
+                pullNextImage(); //this pulls the next image into the DOM for smoother UX experience                
+                
             }
             
             if($scope.index == $scope.data.length){
@@ -91,6 +100,11 @@ var myapp = angular.module('starter', ['ionic'])
             }
             
         };
+     
+        $scope.modal = $ionicModal.fromTemplate('<div class="modal"><header class="bar bar-header bar-positive"> <h1 class="title">I\'m A Modal</h1><div class="button button-clear" ng-click="modal2.hide()"><span class="icon ion-close"></span></div></header><content has-header="true" padding="true"><p>This is a modal</p></content></div>', {
+            scope: $scope,
+            animation: 'slide-in-up'
+          });
         
         $scope.nextProduct = function(){
             //action for what happens after final answer is given
@@ -100,6 +114,9 @@ var myapp = angular.module('starter', ['ionic'])
                 $scope.show_points = false;
                 //$scope.manualprice = false;
                 $scope.game = $scope.data[$scope.index];
+                $scope.progress = (($scope.index + 1)/$scope.data.length)*100
+                //$scope.modal.show();
+                //$ionicSideMenuDelegate.toggleLeft();
                 
                 
             }else{
@@ -113,6 +130,8 @@ var myapp = angular.module('starter', ['ionic'])
         
         $scope.inputShow = function(){
             $scope.manualprice = true;
+            //unfortunately HTML range slider returns price as string instead of number
+            $scope.test.second_price = Number($scope.test.price);
             
         };
         
@@ -127,6 +146,11 @@ var myapp = angular.module('starter', ['ionic'])
             $scope.test = {price:0,second_price:0,start_time:null,end_time:null};
             $scope.index = 0;
             $scope.game = $scope.data[$scope.index];
+        };
+        
+        $scope.menuHide = function(){
+            $scope.menuhide += 1;
+            console.log('sfiogwegweog');
         };
         
         function pointsMath(index, val){
@@ -165,6 +189,11 @@ var myapp = angular.module('starter', ['ionic'])
             $scope.test.timePlayed = moment(dif).format("mm:ss:SS");
             return $scope.test.timePlayed;
         }
+     
+        function pullNextImage(){
+            var x = new Image();
+            x.src = $scope.data[$scope.index + 1].url;
+        }
         
 //        angular.element(document.querySelector('.btn-menu')).sideNav({
 //          menuWidth: 300, // Default is 300
@@ -181,7 +210,7 @@ var myapp = angular.module('starter', ['ionic'])
       $stateProvider
       .state("/", {
         url: "/",
-        templateUrl : "../dash.html",
+        templateUrl : "../login.html",
         controller: "mCtrl"
       })
       .state("/game", {
@@ -204,14 +233,14 @@ var myapp = angular.module('starter', ['ionic'])
     
     myapp.directive('menu', function() {
       return {
-        template: '<a class="btn-menu main-color" data-activates="slide-out"><i class="material-icons" style="font-size:35px">menu</i></a>',
+        template: '<a class="btn-menu main-color" ng-click="menuHide()"><i class="material-icons" style="font-size:35px">menu</i></a>',
         link: function(scope, elem, attrs) {
-            angular.element(document.querySelector('.btn-menu')).sideNav({
+            /*angular.element(document.querySelector('.btn-menu')).sideNav({
               menuWidth: 300, // Default is 300
               edge: 'right', // Choose the horizontal origin
               closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
               draggable: true // Choose whether you can drag to open on touch screens
-            });
+            });*/
         }
       };
     });
