@@ -249,7 +249,7 @@ var myapp = angular.module('starter', ['ionic'])
       return {
         template: 
       '<div class="bar bar-header" style="background-color:rgba(125, 125, 125, 0.43);" ng-class="{\'hide\':test.menuhide%2 == 0}">' +
-          '<div class="row" style="color:white;">' +
+          '<div class="row center-align" style="color:white;">' +
               '<div class="col"><a href="#dash"><i class="material-icons">home</i></a></div>' +
               '<div class="col"><i class="material-icons">dashboard</i></div>' +
               '<div class="col"><i class="material-icons">attach_money</i></div>' +
