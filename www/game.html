@@ -1,7 +1,8 @@
 <ion-view title="/game">
-    <ion-content>
+    <menu-header></menu-header>
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
         <div class="center-align">
-        <menu></menu>
+          <menu-button></menu-button>
           <div class="row">
             <div class="col">
               <div class="card">

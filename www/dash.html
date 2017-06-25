@@ -1,6 +1,7 @@
 <ion-view title="/dash">
-<ion-content>
-    <menu></menu>
+<menu-header></menu-header>
+<ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
+    <menu-button></menu-button>
     <div class="container center-align">
       <row>
           <div class="col" style="margin-top:50px;">

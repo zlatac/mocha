@@ -70,10 +70,10 @@ var myapp = angular.module('starter', ['ionic'])
         $scope.show_points = false;
         $scope.manualprice = false;
         $scope.point_earned = 0;
-        $scope.test = {price:0,second_price:0,start_time:null,end_time:null};
+        $scope.test = {price:0,second_price:0,start_time:null,end_time:null,menuhide:0};
         $scope.progress = 0;
         $scope.index = 0;
-        $scope.menuhide = 0;
+        //$scope.menuhide = 0;
         $scope.game = $scope.data[$scope.index];
         $scope.submitPrediction = function(){
             if($scope.index < $scope.data.length){
@@ -149,7 +149,7 @@ var myapp = angular.module('starter', ['ionic'])
         };
         
         $scope.menuHide = function(){
-            $scope.menuhide += 1;
+            $scope.test.menuhide += 1;
             console.log('sfiogwegweog');
         };
         
@@ -231,7 +231,7 @@ var myapp = angular.module('starter', ['ionic'])
     $urlRouterProvider.otherwise('/');
     });
     
-    myapp.directive('menu', function() {
+    myapp.directive('menuButton', function() {
       return {
         template: '<a class="btn-menu main-color" ng-click="menuHide()"><i class="material-icons" style="font-size:35px">menu</i></a>',
         link: function(scope, elem, attrs) {
@@ -242,5 +242,21 @@ var myapp = angular.module('starter', ['ionic'])
               draggable: true // Choose whether you can drag to open on touch screens
             });*/
         }
+      };
+    });
+
+    myapp.directive('menuHeader', function() {
+      return {
+        template: 
+      '<div class="bar bar-header" style="background-color:rgba(125, 125, 125, 0.43);" ng-class="{\'hide\':test.menuhide%2 == 0}">' +
+          '<div class="row" style="color:white;">' +
+              '<div class="col"><a href="#dash"><i class="material-icons">home</i></a></div>' +
+              '<div class="col"><i class="material-icons">dashboard</i></div>' +
+              '<div class="col"><i class="material-icons">attach_money</i></div>' +
+              '<div class="col"><i class="material-icons">person</i></div>' +
+          '</div>' +
+ 
+      '</div>',
+        
       };
     });
