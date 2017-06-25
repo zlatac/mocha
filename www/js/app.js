@@ -114,7 +114,7 @@ var myapp = angular.module('starter', ['ionic'])
                 $scope.show_points = false;
                 //$scope.manualprice = false;
                 $scope.game = $scope.data[$scope.index];
-                $scope.progress = (($scope.index + 1)/$scope.data.length)*100
+                $scope.progress = (($scope.index)/$scope.data.length)*100;
                 //$scope.modal.show();
                 //$ionicSideMenuDelegate.toggleLeft();
                 
