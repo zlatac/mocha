@@ -23,7 +23,7 @@ var myapp = angular.module('starter', ['ionic'])
   });
 });
 
- myapp.controller('mCtrl', function($scope,$location,$rootScope,$ionicModal,$ionicSideMenuDelegate){
+ myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$ionicModal,$ionicSideMenuDelegate){
         
         //$scope.price = 300;
         $scope.data = [
@@ -70,7 +70,7 @@ var myapp = angular.module('starter', ['ionic'])
         $scope.show_points = false;
         $scope.manualprice = false;
         $scope.point_earned = 0;
-        $scope.test = {price:0,second_price:0,start_time:null,end_time:null,menuhide:0};
+        $scope.test = {price:0,second_price:0,start_time:null,end_time:null,menuhide:0,hideModal:true};
         $scope.progress = 0;
         $scope.index = 0;
         //$scope.menuhide = 0;
@@ -122,8 +122,9 @@ var myapp = angular.module('starter', ['ionic'])
             }else{
                 $scope.point_earned = getPoints();
                 gameTimePlayed();
+                $scope.test.hideModal = false;
                 //$location.path('/final');
-                angular.element(document.querySelector('.modal')).modal('open');
+                //angular.element(document.querySelector('.modal')).modal('open');
             }
             
         };
@@ -143,14 +144,15 @@ var myapp = angular.module('starter', ['ionic'])
             $scope.show_points = false;
             $scope.manualprice = false;
             $scope.point_earned = 0;
-            $scope.test = {price:0,second_price:0,start_time:null,end_time:null};
+            $scope.test.price=$scope.test.second_price=$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
+            $scope.test.hideModal = true;
+            $state.go('/dash');
             $scope.index = 0;
             $scope.game = $scope.data[$scope.index];
         };
         
         $scope.menuHide = function(){
             $scope.test.menuhide += 1;
-            console.log('sfiogwegweog');
         };
         
         function pointsMath(index, val){
@@ -202,7 +204,7 @@ var myapp = angular.module('starter', ['ionic'])
 //          draggable: true // Choose whether you can drag to open on touch screens
 //        });
         
-        angular.element(document.querySelector('.modal')).modal();
+        //angular.element(document.querySelector('.modal')).modal();
         
     });
     
@@ -210,23 +212,19 @@ var myapp = angular.module('starter', ['ionic'])
       $stateProvider
       .state("/", {
         url: "/",
-        templateUrl : "../login.html",
-        controller: "mCtrl"
+        templateUrl : "../login.html"
       })
       .state("/game", {
         url: "/game",
-        templateUrl : "../game.html",
-        controller: "mCtrl"
+        templateUrl : "../game.html"
       })
       .state("/dash", {
         url: "/dash",
-        templateUrl : "../dash.html",
-        controller: "mCtrl"
+        templateUrl : "../dash.html"
       })
       .state("/login", {
         url: "/login",
-        templateUrl : "../login.html",
-        controller: "mCtrl"
+        templateUrl : "../login.html"
       });
     $urlRouterProvider.otherwise('/');
     });
@@ -247,16 +245,7 @@ var myapp = angular.module('starter', ['ionic'])
 
     myapp.directive('menuHeader', function() {
       return {
-        template: 
-      '<div class="bar bar-header" style="background-color:rgba(125, 125, 125, 0.43);height:60px;" ng-class="{\'hide\':test.menuhide%2 == 0}">' +
-          '<div class="row center-align" style="color:white;">' +
-              '<div class="col"><a href="#dash"><i class="material-icons">home</i><div>Home</div></a></div>' +
-              '<div class="col"><i class="material-icons">dashboard</i><div>Leaderboard</div></div>' +
-              '<div class="col"><i class="material-icons">attach_money</i><div>Redeem</div></div>' +
-              '<div class="col"><i class="material-icons">person</i><div>Profile</div></div>' +
-          '</div>' +
- 
-      '</div>',
+        templateUrl: 'menu-header.html'
         
       };
     });
