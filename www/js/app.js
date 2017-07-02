@@ -146,7 +146,7 @@ var myapp = angular.module('starter', ['ionic'])
             $scope.point_earned = 0;
             $scope.test.price=$scope.test.second_price=$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
             $scope.test.hideModal = true;
-            $state.go('/dash');
+            $state.go('/login');
             $scope.index = 0;
             $scope.game = $scope.data[$scope.index];
         };
