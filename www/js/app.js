@@ -39,7 +39,7 @@ var myapp = angular.module('starter', ['ionic'])
                 price:'60'
             },
             {
-                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS24J32LBLE_Large_M_1.jpg',
+                url:'http://media.topshop.com/wcsstor',
                 price:'40'
             },
             {
@@ -115,6 +115,7 @@ var myapp = angular.module('starter', ['ionic'])
                 //$scope.manualprice = false;
                 $scope.game = $scope.data[$scope.index];
                 $scope.progress = (($scope.index)/$scope.data.length)*100;
+                pullNextImage();
                 //$scope.modal.show();
                 //$ionicSideMenuDelegate.toggleLeft();
                 
@@ -140,13 +141,16 @@ var myapp = angular.module('starter', ['ionic'])
             $scope.test.start_time = moment();
         };
         
-        $scope.resetGame = function(){
+        $scope.resetGame = function(a){
             $scope.show_points = false;
             $scope.manualprice = false;
             $scope.point_earned = 0;
             $scope.test.price=$scope.test.second_price=$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
             $scope.test.hideModal = true;
-            $state.go('/login');
+            $state.go('/' + a);
+            if(a == 'game'){
+               $scope.startTime(); 
+            }
             $scope.index = 0;
             $scope.game = $scope.data[$scope.index];
         };
