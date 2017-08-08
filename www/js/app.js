@@ -31,7 +31,7 @@ var myapp = angular.module('starter', ['ionic'])
             price:'125'
             },
             {
-                url:'http://katespade.insnw.net/KateSpade/NJMU7547_653?$large$',
+                url:'http://katespade.',
                 price:'448'
             },
             {
@@ -194,6 +194,11 @@ var myapp = angular.module('starter', ['ionic'])
      
         function pullNextImage(){
             var x = new Image();
+            x.onload = function(){};
+            x.onerror = function(){
+                $scope.data.splice($scope.index + 1,1);
+                pullNextImage();
+            };
             x.src = $scope.data[$scope.index + 1].url;
         }
         
