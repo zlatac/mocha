@@ -39,7 +39,7 @@ var myapp = angular.module('starter', ['ionic'])
                 price:'60'
             },
             {
-                url:'http://media.topshop.com/wcsstor',
+                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS24J32LBLE_Large_M_1.jpg',
                 price:'40'
             },
             {
@@ -182,6 +182,7 @@ var myapp = angular.module('starter', ['ionic'])
             for(x in $scope.data){
                 y += $scope.data[x].point;
             }
+            y = Math.round((y/($scope.data.length*750))*7500);
             
             return y;
         }
