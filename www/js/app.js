@@ -23,50 +23,73 @@ var myapp = angular.module('starter', ['ionic'])
   });
 });
 
- myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$ionicModal,$ionicSideMenuDelegate){
+ myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$http,$ionicModal,$ionicSideMenuDelegate){
         
         //$scope.price = 300;
-        $scope.data = [
-            {url:"http://s7d9.scene7.com/is/image/Aritzia/large/s17_04_a08_61865_11902_on_a.jpg",
-            price:'125'
-            },
-            {
-                url:'http://katespade.',
-                price:'448'
-            },
-            {
-                url:'http://media.aldoshoes.com/v2/product/pisana/97/pisana_black_97_main_sq_gy_1600x1600.jpg',
-                price:'60'
-            },
-            {
-                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS24J32LBLE_Large_M_1.jpg',
-                price:'40'
-            },
-            {
-                url:'http://images.urbanoutfitters.com/is/image/UrbanOutfitters/42187435_070_b?$medium$&defaultImage=',
-                price:'65'
-            },
-            {
-                url:'http://images.urbanoutfitters.com/is/image/UrbanOutfitters/42470492_001_b?$medium$&defaultImage=',
-                price:'39'
-            },
-            {
-                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS32M24LNUD_Large_F_1.jpg',
-                price:'65'
-            },
-            {
-                url:'http://img1.fpassets.com/is/image/FreePeople/35286665_036_b?$pdp$',
-                price:'185'
-            },
-            {
-                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS62B06LMUL_Large_M_1.jpg',
-                price:'40'
-            },
-            {
-                url:'http://sits-pod26.demandware.net/dw/image/v2/AAUP_PRD/on/demandware.static/-/Sites-master/default/dwdd27cdf1/PF0263_SUQ_24.jpg?sw=656&sh=656&sm=fit',
-                price:'175'
+//        $scope.data = [
+//            {url:"http://s7d9.scene7.com/is/image/Aritzia/large/s17_04_a08_61865_11902_on_a.jpg",
+//            price:'125'
+//            },
+//            {
+//                url:'http://katespade.',
+//                price:'448'
+//            },
+//            {
+//                url:'http://media.aldoshoes.com/v2/product/pisana/97/pisana_black_97_main_sq_gy_1600x1600.jpg',
+//                price:'60'
+//            },
+//            {
+//                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS24J32LBLE_Large_M_1.jpg',
+//                price:'40'
+//            },
+//            {
+//                url:'http://images.urbanoutfitters.com/is/image/UrbanOutfitters/42187435_070_b?$medium$&defaultImage=',
+//                price:'65'
+//            },
+//            {
+//                url:'http://images.urbanoutfitters.com/is/image/UrbanOutfitters/42470492_001_b?$medium$&defaultImage=',
+//                price:'39'
+//            },
+//            {
+//                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS32M24LNUD_Large_F_1.jpg',
+//                price:'65'
+//            },
+//            {
+//                url:'http://img1.fpassets.com/is/image/FreePeople/35286665_036_b?$pdp$',
+//                price:'185'
+//            },
+//            {
+//                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS62B06LMUL_Large_M_1.jpg',
+//                price:'40'
+//            },
+//            {
+//                url:'http://sits-pod26.demandware.net/dw/image/v2/AAUP_PRD/on/demandware.static/-/Sites-master/default/dwdd27cdf1/PF0263_SUQ_24.jpg?sw=656&sh=656&sm=fit',
+//                price:'175'
+//            }
+//        ];
+        $scope.data = [];
+        //$http.get('http://127.0.0.1:8000/mocha')
+        $http.get('http://twistedlovebox.com/mocha')
+        .then(function(res){
+            console.log(res);
+            $scope.data = res.data;
+            if($scope.data.length != 0){
+                let y = new Image();
+                for(let x=0; x < 1; x++){
+                    
+                    y.onload = function(){};
+                    y.onerror = function(){
+                        $scope.data.splice(x,1);
+                        //pullNextImage();
+                    };
+                    y.src = $scope.data[x].url;
+                    //console.log(y.src);
+                }
+                $scope.game = $scope.data[0];
             }
-        ];
+        });
+     
+     
         $scope.show_points = false;
         $scope.manualprice = false;
         $scope.point_earned = 0;
