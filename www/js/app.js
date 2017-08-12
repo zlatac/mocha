@@ -67,37 +67,28 @@ var myapp = angular.module('starter', ['ionic'])
 //                price:'175'
 //            }
 //        ];
-        $scope.data = [];
-        //$http.get('http://127.0.0.1:8000/mocha')
-        $http.get('http://twistedlovebox.com/mocha')
-        .then(function(res){
-            console.log(res);
-            $scope.data = res.data;
-            if($scope.data.length != 0){
-                let y = new Image();
-                for(let x=0; x < 1; x++){
-                    
-                    y.onload = function(){};
-                    y.onerror = function(){
-                        $scope.data.splice(x,1);
-                        //pullNextImage();
-                    };
-                    y.src = $scope.data[x].url;
-                    //console.log(y.src);
-                }
-                $scope.game = $scope.data[0];
-            }
-        });
-     
-     
+        //$scope.data = [];
+        $scope.apiData = [];
+        $scope.apiCounter = 1;
         $scope.show_points = false;
         $scope.manualprice = false;
         $scope.point_earned = 0;
         $scope.test = {price:0,second_price:0,start_time:null,end_time:null,menuhide:0,hideModal:true};
         $scope.progress = 0;
         $scope.index = 0;
+        //$http.get('http://127.0.0.1:8000/mocha')
+        $http.get('http://twistedlovebox.com/mocha')
+        .then(function(res){
+            console.log(res);
+            $scope.apiData = res.data;
+            takeChunk();
+        })
+        .then(function(){
         //$scope.menuhide = 0;
         $scope.game = $scope.data[$scope.index];
+            
+        });
+     
         $scope.submitPrediction = function(){
             if($scope.index < $scope.data.length){
                 $scope.data[$scope.index].prediction = $scope.test.price;
@@ -114,13 +105,15 @@ var myapp = angular.module('starter', ['ionic'])
                 $scope.manualprice = false;
                 pullNextImage(); //this pulls the next image into the DOM for smoother UX experience                
                 
+            }else{
+                $scope.nextProduct();
             }
             
-            if($scope.index == $scope.data.length){
-                console.log($scope.data);
-                $location.path('/final');
-                
-            }
+//            if($scope.index == $scope.data.length){
+//                console.log($scope.data);
+//                $location.path('/final');
+//                
+//            }
             
         };
      
@@ -147,6 +140,7 @@ var myapp = angular.module('starter', ['ionic'])
                 $scope.point_earned = getPoints();
                 gameTimePlayed();
                 $scope.test.hideModal = false;
+                takeChunk();
                 //$location.path('/final');
                 //angular.element(document.querySelector('.modal')).modal('open');
             }
@@ -228,6 +222,36 @@ var myapp = angular.module('starter', ['ionic'])
                 pullNextImage();
             };
             x.src = $scope.data[$scope.index + 1].url;
+        }
+        
+        function takeChunk(){
+            $scope.data = [];
+            var round = 25; //No of products for each round
+            if($scope.apiCounter*round >= $scope.apiData.length){
+                $scope.apiCounter = 1;
+            }
+            var a = ($scope.apiCounter - 1)*round;
+              
+            for(a; a<$scope.apiCounter*round; a++){
+                $scope.data.push($scope.apiData[a]);
+            }
+            
+            if($scope.data.length != 0){
+                let y = new Image();
+                for(let x=0; x < 1; x++){
+                    
+                    y.onload = function(){};
+                    y.onerror = function(){
+                        $scope.data.splice(x,1);
+                        //pullNextImage();
+                    };
+                    y.src = $scope.data[x].url;
+                    //console.log(y.src);
+                }
+                $scope.game = $scope.data[0];
+                $scope.apiCounter++
+            }
+            
         }
         
 //        angular.element(document.querySelector('.btn-menu')).sideNav({
