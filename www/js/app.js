@@ -158,7 +158,7 @@ var myapp = angular.module('starter', ['ionic'])
         
         $scope.startTime = function(c){
             //use true parameter to force a new time stamp
-            if(!$scope.data[0].hasOwnProperty('point') || c == true){
+            if(!$scope.data[0].hasOwnProperty('point') || c === true){
                 $scope.test.start_time = moment();
                 console.log('clock is ticking');
             }

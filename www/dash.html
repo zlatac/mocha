@@ -19,15 +19,18 @@
       </row>
       <row>
           <div class="card-panel">
-              <a ui-sref="/game" class="btn-green btn-floating btn-large waves-effect waves-light pulse"
+              <!--<a ui-sref="/game" class="btn-green btn-floating btn-large waves-effect waves-light pulse"
                    ng-click="startTime()" disabled>
                     <i class="material-icons ">play_arrow</i>
-                </a>
+              </a>-->
+              <a class="btn btn-full btn-large waves-effect waves-light btn-green" ui-sref="/game" ng-click="startTime()" disabled>
+                Prize Mode - $500 <i class="material-icons right">attach_money</i>
+            </a>
           </div>
       </row>
       <row>
           <div class="card-panel">
-            <a class="btn btn-full btn-large waves-effect waves-light btn-grey pulse" ui-sref="/game" ng-click="startTime()">
+            <a class="btn btn-full btn-large waves-effect waves-light btn-green" ui-sref="/game" ng-click="startTime()">
                 Practice Mode <i class="material-icons right">games</i>
             </a>
         </div>      
