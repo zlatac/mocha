@@ -100,10 +100,10 @@ width: 30px;
 margin-top: -12px;
 }
 input[type=range]::-moz-range-thumb {
-background-color: red;
+background-color: rgba(202, 26, 210, 0.9);
 }
 input[type=range]::-ms-thumb {
-background-color: red;
+background-color: rgba(202, 26, 210, 0.9);
 }
 input[type=range]+.thumb.active {
 display: none;

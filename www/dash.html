@@ -20,14 +20,14 @@
       <row>
           <div class="card-panel">
               <a ui-sref="/game" class="btn-green btn-floating btn-large waves-effect waves-light pulse"
-                   ng-click="startTime()">
+                   ng-click="startTime()" disabled>
                     <i class="material-icons ">play_arrow</i>
                 </a>
           </div>
       </row>
       <row>
           <div class="card-panel">
-            <a class="btn btn-full btn-large waves-effect waves-light btn-grey">
+            <a class="btn btn-full btn-large waves-effect waves-light btn-grey pulse" ui-sref="/game" ng-click="startTime()">
                 Practice Mode <i class="material-icons right">games</i>
             </a>
         </div>      

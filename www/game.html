@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
                   <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}">
-                      ${{test.price}} <span class="right"><i class="material-icons">edit</i></span>
+                      ${{test.price}} <span class="right"><i class="material-icons" ng-class="{hide:show_points == true}">edit</i></span>
                   </p>
     
                   <div ng-class="{hide: manualprice !== true}">

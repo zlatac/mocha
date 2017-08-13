@@ -139,6 +139,7 @@ var myapp = angular.module('starter', ['ionic'])
             }else{
                 $scope.point_earned = getPoints();
                 gameTimePlayed();
+                getTokens();
                 $scope.test.hideModal = false;
                 takeChunk();
                 //$location.path('/final');
@@ -148,28 +149,38 @@ var myapp = angular.module('starter', ['ionic'])
         };
         
         $scope.inputShow = function(){
-            $scope.manualprice = true;
-            //unfortunately HTML range slider returns price as string instead of number
-            $scope.test.second_price = Number($scope.test.price);
-            
+            if($scope.show_points !== true){
+                $scope.manualprice = true;
+                //unfortunately HTML range slider returns price as string instead of number
+                $scope.test.second_price = Number($scope.test.price);
+            }
         };
         
-        $scope.startTime = function(){
-            $scope.test.start_time = moment();
+        $scope.startTime = function(c){
+            //use true parameter to force a new time stamp
+            if(!$scope.data[0].hasOwnProperty('point') || c == true){
+                $scope.test.start_time = moment();
+                console.log('clock is ticking');
+            }
         };
         
-        $scope.resetGame = function(a){
+        $scope.resetGame = function(a,b){
             $scope.show_points = false;
             $scope.manualprice = false;
             $scope.point_earned = 0;
             $scope.test.price=$scope.test.second_price=$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
             $scope.test.hideModal = true;
-            $state.go('/' + a);
+            if(b == true && a == 'game'){
+                $scope.apiCounter = $scope.apiCounter - 2;
+                takeChunk();
+                $scope.startTime(true); 
+               }
             if(a == 'game'){
                $scope.startTime(); 
             }
             $scope.index = 0;
             $scope.game = $scope.data[$scope.index];
+            $state.go('/' + a);
         };
         
         $scope.menuHide = function(){
@@ -252,6 +263,25 @@ var myapp = angular.module('starter', ['ionic'])
                 $scope.apiCounter++
             }
             
+        }
+     
+        function getTokens(){
+            var b = Number($scope.point_earned);
+            if(b >= 3750 && b <= 5750){
+               $scope.test.token = 3;
+            }
+            if(b > 5750 && b <= 6750){
+               $scope.test.token = 4;
+            }
+            if(b > 6750 && b < 7500){
+               $scope.test.token = 5;
+            }
+            if(b == 7500){
+               $scope.test.token = 10;
+            }
+            if(b < 3750){
+               $scope.test.token = 0;
+            } 
         }
         
 //        angular.element(document.querySelector('.btn-menu')).sideNav({
