@@ -77,7 +77,7 @@ var myapp = angular.module('starter', ['ionic'])
         $scope.progress = 0;
         $scope.index = 0;
         //$http.get('http://127.0.0.1:8000/mocha')
-        $http.get('http://twistedlovebox.com/mocha')
+        $http.get('http://twistedlovebox.com/mocha?q=' + 250)
         .then(function(res){
             console.log(res);
             $scope.apiData = res.data;
