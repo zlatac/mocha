@@ -1,6 +1,6 @@
 {
   "name": "myNewProject",
-  "app_id": "",
+  "app_id": "c2f7c8b5",
   "type": "ionic1",
   "watchPatterns": [
     "scss/**/*"
