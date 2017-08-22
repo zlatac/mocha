@@ -5,12 +5,31 @@
 // the 2nd parameter is an array of 'requires'
 var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 
-.config(function($ionicCloudProvider) {
+.config(function($ionicCloudProvider,$stateProvider, $urlRouterProvider) {
   $ionicCloudProvider.init({
     "core": {
       "app_id": "c2f7c8b5"
     }
   });
+    
+  $stateProvider
+      .state("/", {
+        url: "/",
+        templateUrl : "login.html"
+      })
+      .state("/game", {
+        url: "/game",
+        templateUrl : "game.html"
+      })
+      .state("/dash", {
+        url: "/dash",
+        templateUrl : "dash.html"
+      })
+      .state("/login", {
+        url: "/login",
+        templateUrl : "login.html"
+      });
+    $urlRouterProvider.otherwise('/');
 })
 
 .run(function($ionicPlatform) {
@@ -301,27 +320,6 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         
         //angular.element(document.querySelector('.modal')).modal();
         
-    });
-    
-    myapp.config(function($stateProvider, $urlRouterProvider) {
-      $stateProvider
-      .state("/", {
-        url: "/",
-        templateUrl : "../login.html"
-      })
-      .state("/game", {
-        url: "/game",
-        templateUrl : "../game.html"
-      })
-      .state("/dash", {
-        url: "/dash",
-        templateUrl : "../dash.html"
-      })
-      .state("/login", {
-        url: "/login",
-        templateUrl : "../login.html"
-      });
-    $urlRouterProvider.otherwise('/');
     });
     
     myapp.directive('menuButton', function() {
