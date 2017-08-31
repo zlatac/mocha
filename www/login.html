@@ -6,12 +6,15 @@
             <!--<p>Shop with your mind</p>-->
 <!--            <p class="motto">Shop more. Spend less.</p>-->
             <p class="motto">Shop more with fun.</p>
+            <p class="btn-large red" ng-class="{hide: screen_big !== true}" style="margin-top:30px;">
+                <i class="fa fa-warning"></i> Mobile phones only (Access this site on your Smartphone)
+            </p>
             </div>
             <!--<div class="animated fadeIn">
                 <a ui-sref="/dash" class="waves-effect waves-light facebook btn-large z-depth-4">Login with Facebook <i class="fa fa-facebook-official right"></i></a>
             </div>-->
-            <div class="animated fadeIn">
-                <a ui-sref="/dash" class="waves-effect waves-light facebook btn-large z-depth-4">START DEMO</a>
+            <div class="animated fadeIn" ng-class="{hide: screen_big == true}">
+                <a ui-sref="/dash" class="waves-effect waves-light btn-large z-depth-4" style="background-color:rgba(166, 22, 173, 0.9)">START DEMO</a>
             </div>
         
         </div>

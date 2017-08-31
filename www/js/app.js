@@ -50,7 +50,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
   });
 });
 
- myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$http,$ionicModal,$ionicSideMenuDelegate){
+ myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$http,$window){
         
         //$scope.price = 300;
 //        $scope.data = [
@@ -103,6 +103,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.test = {price:0,second_price:0,start_time:null,end_time:null,menuhide:0,hideModal:true};
         $scope.progress = 0;
         $scope.index = 0;
+        checkWindow();
         //$http.get('http://127.0.0.1:8000/mocha')
         $http.get('http://twistedlovebox.com/mocha?q=' + 250)
         .then(function(res){
@@ -144,10 +145,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             
         };
      
-        $scope.modal = $ionicModal.fromTemplate('<div class="modal"><header class="bar bar-header bar-positive"> <h1 class="title">I\'m A Modal</h1><div class="button button-clear" ng-click="modal2.hide()"><span class="icon ion-close"></span></div></header><content has-header="true" padding="true"><p>This is a modal</p></content></div>', {
-            scope: $scope,
-            animation: 'slide-in-up'
-          });
+//        $scope.modal = $ionicModal.fromTemplate('<div class="modal"><header class="bar bar-header bar-positive"> <h1 class="title">I\'m A Modal</h1><div class="button button-clear" ng-click="modal2.hide()"><span class="icon ion-close"></span></div></header><content has-header="true" padding="true"><p>This is a modal</p></content></div>', {
+//            scope: $scope,
+//            animation: 'slide-in-up'
+//          });
         
         $scope.nextProduct = function(){
             //action for what happens after final answer is given
@@ -202,7 +203,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 takeChunk();
                 $scope.startTime(true); 
                }
-            if(a == 'game'){
+            if(a == 'game' && b !== true){
                $scope.startTime(); 
             }
             $scope.index = 0;
@@ -309,6 +310,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             if(b < 3750){
                $scope.test.token = 0;
             } 
+        }
+        
+        function checkWindow(){
+            if($window.innerWidth > 414){
+                //console.log('screen  to big');
+                $scope.screen_big = true;
+            }
         }
         
 //        angular.element(document.querySelector('.btn-menu')).sideNav({
