@@ -100,7 +100,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.show_points = false;
         $scope.manualprice = false;
         $scope.point_earned = 0;
-        $scope.test = {price:0,second_price:0,start_time:null,end_time:null,menuhide:0,hideModal:true};
+        $scope.test = {price:250,second_price:250,start_time:null,end_time:null,menuhide:0,hideModal:true};
         $scope.progress = 0;
         $scope.index = 0;
         checkWindow();
@@ -196,7 +196,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $scope.show_points = false;
             $scope.manualprice = false;
             $scope.point_earned = 0;
-            $scope.test.price=$scope.test.second_price=$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
+            $scope.test.price=$scope.test.second_price=250;$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
             $scope.test.hideModal = true;
             if(b == true && a == 'game'){
                 $scope.apiCounter = $scope.apiCounter - 2;
