@@ -10,7 +10,8 @@
                   <div class="progress" style="margin-top:0px;background-color:#dadcda;">
                       <div class="determinate btn-green" style="width: {{progress}}%"></div>
                   </div>
-                  <div class="chip animated bounce" style="left:0;bottom:0;z-index:5;" ng-class="{hide:game.subcategory == ''}">{{game.subcategory}}</div>
+                  <div class="chip animated bounce" style="left:0;bottom:0;z-index:5;" 
+                       ng-class="{hide:game.subcategory == ''|| show_points == true}">{{game.subcategory}}</div>
                   <img ng-src="{{game.url}}" ng-style="newstyle = (show_points == true)?{filter:'blur(10px)'}:null">
                   <a class="btn-floating btn-large halfway-fab waves-effect waves-light main-color points-box"
                      ng-class="{hide: show_points == true}">
