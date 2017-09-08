@@ -313,7 +313,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         }
         
         function checkWindow(){
-            if($window.innerWidth > 414){
+            if($window.innerWidth > 600){
                 //console.log('screen  to big');
                 $scope.screen_big = true;
             }
