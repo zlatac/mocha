@@ -25,6 +25,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         url: "/dash",
         templateUrl : "dash.html"
       })
+      .state("/contest", {
+        url: "/contest",
+        templateUrl : "contest.html"
+      })
       .state("/login", {
         url: "/login",
         templateUrl : "login.html"
@@ -96,6 +100,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 //        ];
         //$scope.data = [];
         $scope.apiData = [];
+        $scope.contest = {};
         $scope.apiCounter = 1;
         $scope.show_points = false;
         $scope.manualprice = false;
@@ -214,6 +219,21 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.menuHide = function(){
             $scope.test.menuhide += 1;
         };
+     
+        $scope.goContest = function(){
+            $scope.test.hideModal = true;
+            $state.go('/contest'); 
+        };
+     
+        $scope.contestSubmit = function(){
+            $scope.contest.timestamp = moment().toISOString();
+            $scope.contest.points = $scope.point_earned;
+            $scope.contest.playtime = $scope.test.timePlayed;
+            $http.get('http://twistedlovebox.com/contest?name='+$scope.contest.name+"&phone="+$scope.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points+"&playtime="+$scope.contest.playtime)
+            .then(function(res){
+                $scope.resetGame('login');
+            });
+        }
         
         function pointsMath(index, val){
             realPrice = $scope.data[index].price;
