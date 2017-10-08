@@ -8,23 +8,25 @@
               <div class="card">
                 <div class="card-image">
                   <div class="progress" style="margin-top:0px;background-color:#dadcda;">
-                      <div class="determinate btn-green" style="width: {{progress}}%"></div>
+                      <div class="determinate btn-green" style="width: {{progress}}%" 
+                           ng-class="{'btn-green':wully !== true, 'btn-black':wully==true}"></div>
                   </div>
                   <div class="chip animated bounce" style="left:0;bottom:0;z-index:5;margin-left:5px;" 
                        ng-class="{hide:game.subcategory == ''|| show_points == true}">{{game.subcategory}}</div>
                   <img ng-src="{{game.url}}" ng-style="newstyle = (show_points == true)?{filter:'blur(10px)'}:null">
                   <a class="btn-floating btn-large halfway-fab waves-effect waves-light main-color points-box"
-                     ng-class="{hide: show_points == true}">
+                     ng-class="{'hide': show_points == true, 'main-color':wully !== true, 'wully-color':wully==true}">
                       <span>750 </span><span class="tiny-points">pts</span>
                   </a>
                   <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-green w3-animate-bottom points-box"
-                     ng-class="{hide: show_points !== true}">
+                     ng-class="{'hide': show_points !== true}">
                       <span>{{point_earned}}/750 </span><span class="tiny-points">pts</span>
                   </a>
+                  <div class="wully" ng-class="{hide:wully !== true}" ng-bind-html="game.question"></div>
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
                   <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}">
-                      ${{test.price}} <span class="right"><i class="material-icons" ng-class="{hide:show_points == true}">edit</i></span>
+                      <span ng-class="{hide:wully == true}">$</span>{{test.price}} {{game.context}} <span class="right"><i class="material-icons" ng-class="{hide:show_points == true}">edit</i></span>
                   </p>
     
                   <div ng-class="{hide: manualprice !== true}">
@@ -41,22 +43,22 @@
             <div class="col z-depth-2" style="padding-bottom:15px;margin-top:-8%;">
                 <form ng-class="{hide: show_points == true}">
                     <p class="range-field" ng-if="manualprice == false">
-                      <input type="range" id="test5" min="0" max="500" ng-model="test.price"/>
+                      <input type="range" id="test5"  min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price"
+                             ng-class="{'hide':wully === true}"/>
+                      <input type="range" class="wully-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-class="{'hide':wully !== true}"/>
                     </p>
                 </form>
                 <br>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-green"
                    ng-click="submitPrediction()"
-                   ng-class="{hide: show_points == true}">
+                   ng-class="{'hide': show_points == true, 'btn-green':wully !== true, 'btn-black':wully==true}">
                     <span>ENTER</span>
                 </a>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 main-color"
                    ng-click="nextProduct()"
-                   ng-class="{hide: show_points !== true}">
+                   ng-class="{'hide': show_points !== true, 'main-color':wully !== true, 'wully-color':wully==true}">
                     <span>NEXT</span> <i class="material-icons right">chevron_right</i>
                 </a>
-
-
             </div>
 
         </div>

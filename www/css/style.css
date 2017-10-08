@@ -45,8 +45,14 @@ span.card-title {
 .main-color,main-color:hover {
   background-color:  rgba(202, 26, 210, 0.9) !important;
 }
+.wully-color,wully-color:hover {
+  background-color:  rgba(249, 53, 71, 0.91) !important;
+}
 .btn-green,btn-green:hover {
   background-color:  rgba(83, 191, 83, 0.91) !important;
+}
+.btn-black,btn-black:hover {
+  background-color:  rgba(16, 16, 16, 0.9) !important;
 }
 .btn-grey,btn-grey:hover {
   background-color:  #969696 !important;
@@ -100,11 +106,23 @@ height: 30px;
 width: 30px;
 margin-top: -12px;
 }
+input[type=range].wully-range::-webkit-slider-thumb {
+background-color: rgba(224, 24, 43, 0.91);
+height: 30px;
+width: 30px;
+margin-top: -12px;
+}
 input[type=range]::-moz-range-thumb {
 background-color: rgba(202, 26, 210, 0.9);
 }
+input[type=range].wully-range::-moz-range-thumb {
+background-color: rgba(224, 24, 43, 0.91);
+}
 input[type=range]::-ms-thumb {
 background-color: rgba(202, 26, 210, 0.9);
+}
+input[type=range].wully-range::-ms-thumb {
+background-color: rgba(224, 24, 43, 0.91);
 }
 input[type=range]+.thumb.active {
 display: none;
@@ -149,4 +167,15 @@ margin: auto !important;
 }
 .btn-tfw{
     background-color:#4a3b34;
+}
+.wully{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 60px 0px;
+    background-color: rgba(134, 134, 134, 0.67);
+    color: white;
+    height: 320px;
+    font-size: 24px;
+    line-height: 44px;
 }

@@ -21,6 +21,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         url: "/game",
         templateUrl : "game.html"
       })
+      .state("/wully", {
+        url: "/game",
+        templateUrl : "game.html",
+        params: {demo: 'wully'}
+      })
       .state("/dash", {
         url: "/dash",
         templateUrl : "dash.html"
@@ -54,7 +59,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
   });
 });
 
- myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$http,$window){
+ myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$stateParams,$http,$window){
         
         //$scope.price = 300;
 //        $scope.data = [
@@ -98,6 +103,99 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 //                price:'175'
 //            }
 //        ];
+        $scope.wully_data = [
+            {
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21909710_115559839139284_2536705386933649408_n.jpg',
+                price:'1245',
+                question:'How many animals has Wully saved in total since launch?',
+                min:'1000',
+                max:'1500',
+                context:'',
+                subcategory:''
+            },
+            {
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18950047_457101204639111_8252268334817476608_n.jpg',
+                price:'729',
+                question:'Predict the price of this Jacket.',
+                min:'500',
+                max:'1000',
+                context:'',
+                subcategory:'jacket'
+            },
+            {
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/17076453_395943147440848_8888064781869645824_n.jpg',
+                price:'13',
+                question:'1 Wully Jacket spares the lives of how many animals?',
+                min:'0',
+                max:'30',
+                context:'',
+                subcategory:''
+            },
+            {
+                url:'https://scontent.cdninstagram.com/t51.2885-15/sh0.08/e35/p640x640/16583180_163288994176752_6167586102346514432_n.jpg',
+                price:'649',
+                question:'Predict the price of this Jacket.',
+                min:'500',
+                max:'1000',
+                context:'',
+                subcategory:'jacket'
+            },
+            {
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18095282_224668581353323_7557851820467421184_n.jpg',
+                price:'1',
+                question:'Wully Jackets are made in California? <p>1 - No</p> <p>0 - Yes</p>',
+                min:'0',
+                max:'1',
+                context:'',
+                subcategory:''                
+            },
+            {
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18382007_1384574631589888_4089628285422534656_n.jpg',
+                price:'-20',
+                question:'Whats the coldest temperature to wear this jacket?',
+                min:'-100',
+                max:'-1',
+                context:'degrees',
+                subcategory:''
+            },
+            {
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18011469_1775695206076417_9048892774320963584_n.jpg',
+                price:'6',
+                question:'1 Wully jacket takes how many weeks to produce?',
+                min:'1',
+                max:'20',
+                context:'Weeks',
+                subcategory:''
+            },
+            {
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15101788_599006020224290_2198237972321533952_n.jpg',
+                price:'2012',
+                question:'Wully Outerwear launched in what year?',
+                min:'2010',
+                max:'2017',
+                context:'',
+                subcategory:''
+            },
+            {
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/12818980_519161731596821_1859894505_n.jpg',
+                price:'1253',
+                question:'1 Wully Jacket saves how many liters of water?',
+                min:'800',
+                max:'1300',
+                context:'Litres',
+                subcategory:''
+            },
+            {
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21372233_306885123111795_3977466434258206720_n.jpg',
+                price:'1',
+                question:'Wully jackets come in sizes extra-small to extra-large? <p>1 - Yes</p> <p>0 - No</p>',
+                min:'0',
+                max:'1',
+                context:'',
+                subcategory:''
+            },
+            
+        ];
         //$scope.data = [];
         $scope.apiData = [];
         $scope.contest = {};
@@ -117,9 +215,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             takeChunk();
         })
         .then(function(){
-        //$scope.menuhide = 0;
-        $scope.game = $scope.data[$scope.index];
-            
+            //$scope.menuhide = 0;
+            $scope.game = $scope.data[$scope.index];            
         });
      
         $scope.submitPrediction = function(){
@@ -164,6 +261,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 //$scope.manualprice = false;
                 $scope.game = $scope.data[$scope.index];
                 $scope.progress = (($scope.index)/$scope.data.length)*100;
+                if($scope.wully == true){
+                   //$scope.test.price = $scope.test.second_price = 5;
+                   $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+                }
                 pullNextImage();
                 //$scope.modal.show();
                 //$ionicSideMenuDelegate.toggleLeft();
@@ -211,6 +312,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             if(a == 'game' && b !== true){
                $scope.startTime(); 
             }
+            if($stateParams.demo === 'wully'){
+                $scope.data = $scope.wully_data;
+                a = 'wully';
+            }
             $scope.index = 0;
             $scope.game = $scope.data[$scope.index];
             $state.go('/' + a);
@@ -233,7 +338,21 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             .then(function(res){
                 $scope.resetGame('login');
             });
-        }
+        };
+        
+        $scope.startWully = function(){
+            $scope.data = $scope.wully_data;
+            $scope.game = $scope.data[$scope.index];
+            $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
+            $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+            $scope.startTime();
+            angular.element(document.querySelector('body'))[0].style.borderTopColor='rgba(224, 24, 43, 0.91)';
+//            angular.element(document.querySelector('a.btn-menu'))[0].style.backgroundColor='#b9150e';
+            $scope.wully = true;
+            $state.go('/wully');
+            
+            console.log($stateParams);
+        };
         
         function pointsMath(index, val){
             realPrice = $scope.data[index].price;
@@ -352,7 +471,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
     
     myapp.directive('menuButton', function() {
       return {
-        template: '<a class="btn-menu main-color" ng-click="menuHide()"><i class="material-icons" style="font-size:35px">menu</i></a>',
+        template: '<a class="btn-menu main-color" ng-click="menuHide()" ng-class="{\'main-color\':wully !== true, \'wully-color\':wully==true}"><i class="material-icons" style="font-size:35px">menu</i></a>',
         link: function(scope, elem, attrs) {
             /*angular.element(document.querySelector('.btn-menu')).sideNav({
               menuWidth: 300, // Default is 300
@@ -367,6 +486,15 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
     myapp.directive('menuHeader', function() {
       return {
         templateUrl: 'menu-header.html'
+        
+      };
+    });
+
+    myapp.directive('selectType', function() {
+      return {
+        link: function(scope, elem, attrs){
+            angular.element('select').material_select();
+        }
         
       };
     });
