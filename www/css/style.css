@@ -179,3 +179,6 @@ margin: auto !important;
     font-size: 24px;
     line-height: 44px;
 }
+.spinner-white-only{
+    border-color: white;
+}

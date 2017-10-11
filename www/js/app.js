@@ -59,7 +59,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
   });
 });
 
- myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$stateParams,$http,$window){
+ myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout){
         
         //$scope.price = 300;
 //        $scope.data = [
@@ -152,7 +152,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18382007_1384574631589888_4089628285422534656_n.jpg',
                 price:'-20',
-                question:'Whats the coldest temperature to wear this jacket?',
+                question:'What\'s the coldest temperature to wear this jacket?',
                 min:'-100',
                 max:'-1',
                 context:'degrees',
@@ -220,7 +220,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         });
      
         $scope.submitPrediction = function(){
-            if($scope.index < $scope.data.length){
+            if($scope.index <= $scope.data.length - 1){
                 $scope.data[$scope.index].prediction = $scope.test.price;
                 //$scope.index++;
                 //$scope.game = $scope.data[$scope.index];
@@ -233,7 +233,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 //$scope.data[$scope.index].point = pointsMath($scope.index,x);
                 $scope.show_points = true;
                 $scope.manualprice = false;
-                pullNextImage(); //this pulls the next image into the DOM for smoother UX experience                
+                pullNextImage('auto'); //this pulls the next image into the DOM for smoother UX experience
+                
+                if($scope.index == $scope.data.length - 1){
+                    //$scope.index++;
+                    $timeout($scope.nextProduct,1300);
+                   }
                 
             }else{
                 $scope.nextProduct();
@@ -254,7 +259,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         
         $scope.nextProduct = function(){
             //action for what happens after final answer is given
-            if($scope.index !== $scope.data.length - 1){
+            if($scope.index < $scope.data.length - 1){
                 console.log($scope.data);
                 $scope.index++;
                 $scope.show_points = false;
@@ -392,14 +397,32 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             return $scope.test.timePlayed;
         }
      
-        function pullNextImage(){
+        function pullNextImage(a){
             var x = new Image();
-            x.onload = function(){};
+            x.onload = function(){
+               if(a === 'auto'){
+                   //Do not let player manually move to next if this is in place.
+                   $timeout($scope.nextProduct,1300);
+               }
+            };
             x.onerror = function(){
                 $scope.data.splice($scope.index + 1,1);
-                pullNextImage();
+                if(a === 'auto'){
+                    //This is used cause we need the game to move forward automatically despite an image(s) download failure
+                   pullNextImage('auto');
+                }else{
+                   pullNextImage();
+                }
+                
             };
-            x.src = $scope.data[$scope.index + 1].url;
+            
+            if($scope.safe($scope.data[$scope.index + 1])){
+                //This initiates the downloading of the image into the DOM
+                x.src = $scope.data[$scope.index + 1].url;
+            }else{
+                console.log('fuck no');
+            }
+            //x.src = $scope.data[$scope.index + 1].url;
         }
         
         function takeChunk(){
@@ -456,6 +479,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 //console.log('screen  to big');
                 $scope.screen_big = true;
             }
+        }
+        
+        $scope.safe = function (a){
+            if(a === undefined || a === null || a === ''){
+                return false;
+            }
+            return true;
         }
         
 //        angular.element(document.querySelector('.btn-menu')).sideNav({

@@ -49,15 +49,26 @@
                     </p>
                 </form>
                 <br>
-                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-green"
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-green animated fadeIn"
                    ng-click="submitPrediction()"
                    ng-class="{'hide': show_points == true, 'btn-green':wully !== true, 'btn-black':wully==true}">
                     <span>ENTER</span>
                 </a>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 main-color"
-                   ng-click="nextProduct()"
-                   ng-class="{'hide': show_points !== true, 'main-color':wully !== true, 'wully-color':wully==true}">
-                    <span>NEXT</span> <i class="material-icons right">chevron_right</i>
+                   ng-class="{'hide': show_points !== true, 'main-color':wully !== true, 'wully-color':wully==true}"
+                   style="padding-top:8px;">
+<!--                    <span>NEXT</span> <i class="material-icons right">chevron_right</i>-->
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-white-only">
+                              <div class="circle-clipper left">
+                                <div class="circle"></div>
+                              </div><div class="gap-patch">
+                                <div class="circle"></div>
+                              </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                              </div>
+                            </div>
+                      </div>
                 </a>
             </div>
 
