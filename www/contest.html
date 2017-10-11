@@ -6,7 +6,8 @@
                     <form name="contestForm" ng-submit="contestSubmit()" style="width:100%">
                           <input type="text" name="name" placeholder="Full Name" ng-model="contest.name">
                           <input type="number" name="phone" placeholder="Phone Number" ng-model="contest.phone">
-                          <input type="submit" class="waves-effect waves-light main-color btn-large z-depth-4" value="Submit">
+                          <input type="submit" class="waves-effect waves-light main-color btn-large z-depth-4" value="Submit"
+                                 ng-class="{'main-color':wully !== true, 'wully-color':wully==true}">
                     </form>
                 </div>
             </div>
