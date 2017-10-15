@@ -58,11 +58,12 @@
                 <p class=""><i class="fa fa-clock-o"></i> Time: {{test.timePlayed}}</p>
                 <p class=""><i class="fa fa-money"></i> Tokens: {{test.token}}</p>
                 <a class="waves-effect waves-light main-color btn-large z-depth-4 center-align" ng-click="goContest()"
-                   ng-class="{'main-color':wully !== true, 'wully-color':wully==true}">Submit to win $100</a>
+                   ng-class="{'main-color':wully !== true, 'wully-color':wully==true, 'hide':!prize && !wully}">Submit to win $100</a>
                 <div style="position:absolute;bottom:0;width:100%;">
                     <!--<a class="waves-effect waves-green btn-flat" ng-click="resetGame('login')">Exit</a>-->
-                    <a class="waves-effect waves-green btn-flat" ng-click="resetGame('game',true)">Retry</a>
-                    <a class="waves-effect waves-green btn-flat" ng-click="resetGame('game')">Next Round</a>
+                    <a class="waves-effect waves-green btn-flat" ng-click="resetGame('practice',true)">Retry</a>
+                    <a class="waves-effect waves-green btn-flat" ng-click="resetGame('practice')"
+                       ng-class="{'hide':prize || wully}">Next Round</a>
                 </div>
             </div>
         </div>

@@ -182,3 +182,9 @@ margin: auto !important;
 .spinner-white-only{
     border-color: white;
 }
+.spinner-purple-only{
+    border-color: rgba(202, 26, 210, 0.9);
+}
+.btn-gold{
+    background-color: #d2b935;
+}

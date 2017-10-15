@@ -9,7 +9,7 @@
                 <div class="card-image">
                   <div class="progress" style="margin-top:0px;background-color:#dadcda;">
                       <div class="determinate btn-green" style="width: {{progress}}%" 
-                           ng-class="{'btn-green':wully !== true, 'btn-black':wully==true}"></div>
+                           ng-class="{'btn-green':prize === true, 'btn-black':wully==true, 'btn-grey': practice === true}"></div>
                   </div>
                   <div class="chip animated bounce" style="left:0;bottom:0;z-index:5;margin-left:5px;" 
                        ng-class="{hide:game.subcategory == ''|| show_points == true}">{{game.subcategory}}</div>
@@ -43,7 +43,7 @@
             <div class="col z-depth-2" style="padding-bottom:15px;margin-top:-8%;">
                 <form ng-class="{hide: show_points == true}">
                     <p class="range-field" ng-if="manualprice == false">
-                      <input type="range" id="test5"  min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price"
+                      <input type="range" id="test5"  min="0" max="500" ng-model="test.price"
                              ng-class="{'hide':wully === true}"/>
                       <input type="range" class="wully-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-class="{'hide':wully !== true}"/>
                     </p>
@@ -51,7 +51,7 @@
                 <br>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-green animated fadeIn"
                    ng-click="submitPrediction()"
-                   ng-class="{'hide': show_points == true, 'btn-green':wully !== true, 'btn-black':wully==true}">
+                   ng-class="{'hide': show_points == true, 'btn-green':prize ===true, 'btn-black':wully===true, 'btn-grey': practice === true}">
                     <span>ENTER</span>
                 </a>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 main-color"

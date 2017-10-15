@@ -8,7 +8,7 @@
               <div class="card-panel z-depth-1" style="margin-top:60px;">
                 <div class="row">
 <!--                    <img class="circle profile z-depth-3" src="https://scontent-yyz1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10888392_10153073531899736_2293866441272698715_n.jpg?oh=f6166190cf97f3fbaef5514d73598aea&oe=59A6B966">-->
-                    <img class="circle profile z-depth-3" src="https://styleminions.co/images/SM%20Logo%20White.svg">
+                    <img class="circle profile z-depth-3" src="https://styleminions.co/images/SM%20Logo%20White.svg" ng-click="wully_dashboard = wully_dashboard + 1">
                 </div>
                 <div class="row">
                     <div class="col">Tokens</div>
@@ -24,14 +24,15 @@
                    ng-click="startTime()" disabled>
                     <i class="material-icons ">play_arrow</i>
               </a>-->
-              <a class="btn btn-full btn-large waves-effect waves-light btn-green" ui-sref="/game" ng-click="startTime()" disabled>
-                Prize Mode - $500 <i class="material-icons right">attach_money</i>
+              <a class="btn btn-full btn-large waves-effect waves-light btn-green" ng-click="startPrize()" 
+                 ng-disabled="wully === true">
+                Prize Mode - $100 <i class="material-icons right">attach_money</i>
             </a>
           </div>
       </row>
       <row>
           <div class="card-panel">
-            <a class="btn btn-full btn-large waves-effect waves-light btn-green" ui-sref="/game" ng-click="startTime(); wully='cl'"
+            <a class="btn btn-full btn-large waves-effect waves-light btn-grey" ng-click="startPractice(); wully='cl'"
                ng-disabled="wully === true">
                 Practice Mode <i class="material-icons right">games</i>
             </a>
@@ -48,24 +49,14 @@
       </row>
 -->
       <row>
-          <div class="card-panel">
+          <div class="card-panel" ng-class="{'hide':wully_dashboard !== 2}">
             <a class="btn btn-full btn-large waves-effect waves-light btn-wully" ng-click="startWully()" style="background-color:black" ng-disabled="wully==='cl'">
                 Wully Outerwear <span class="right">
                 <img src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/s150x150/16908361_720960684745218_2933981757210361856_a.jpg" style="width:40px;margin-top:5px;border-radius:50%;"></span>
             </a>
         </div>      
       </row>
-<!--
-      <row>
-        <ul class="collection with-header">
-        <li class="collection-header"><h4>First Names</h4></li>
-        <li class="collection-item">Alvin</li>
-        <li class="collection-item">Alvin</li>
-        <li class="collection-item">Alvin</li>
-        <li class="collection-item">Alvin</li>
-        </ul>
-      </row>
--->
+        
     </div>    
 </ion-content>
 </ion-view>

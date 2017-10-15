@@ -14,7 +14,18 @@
                 <a ui-sref="/dash" class="waves-effect waves-light facebook btn-large z-depth-4">Login with Facebook <i class="fa fa-facebook-official right"></i></a>
             </div>-->
             <div class="animated fadeIn" ng-class="{hide: screen_big == true}">
-                <a ui-sref="/dash" class="waves-effect waves-light btn-large z-depth-4" style="background-color:rgba(166, 22, 173, 0.9)">START DEMO</a>
+                <!--<a ui-sref="/dash" class="waves-effect waves-light btn-large z-depth-4" style="background-color:rgba(166, 22, 173, 0.9)">START DEMO</a>-->
+                <div class="preloader-wrapper small active">
+                    <div class="spinner-layer spinner-purple-only">
+                      <div class="circle-clipper left">
+                        <div class="circle"></div>
+                      </div><div class="gap-patch">
+                        <div class="circle"></div>
+                      </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                      </div>
+                    </div>
+              </div>
             </div>
 <!--
             <div class="animated fadeIn" ng-class="{hide: screen_big == true}" style="margin-top:5px;">

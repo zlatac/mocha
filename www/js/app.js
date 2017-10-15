@@ -17,14 +17,20 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         url: "/",
         templateUrl : "login.html"
       })
-      .state("/game", {
+      .state("/practice", {
         url: "/game",
-        templateUrl : "game.html"
+        templateUrl : "game.html",
+        params: {demo: 'practice'}
       })
       .state("/wully", {
         url: "/game",
         templateUrl : "game.html",
         params: {demo: 'wully'}
+      })
+      .state("/prize", {
+        url: "/game",
+        templateUrl : "game.html",
+        params: {demo: 'prize'}
       })
       .state("/dash", {
         url: "/dash",
@@ -206,17 +212,26 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.test = {price:250,second_price:250,start_time:null,end_time:null,menuhide:0,hideModal:true};
         $scope.progress = 0;
         $scope.index = 0;
+        $scope.wully_dashboard = 0;
         checkWindow();
         //$http.get('http://127.0.0.1:8000/mocha')
         $http.get('http://twistedlovebox.com/mocha?q=' + 250)
         .then(function(res){
             console.log(res);
             $scope.apiData = res.data;
+            $scope.prizeData = $scope.apiData.slice(120,145);
             takeChunk();
         })
         .then(function(){
             //$scope.menuhide = 0;
-            $scope.game = $scope.data[$scope.index];            
+            $scope.game = $scope.data[$scope.index];
+            if($scope.screen_big !== true){
+                //This mimics a real life game loading thing. this can definitely be optimized later.
+                $timeout(function(){
+                    $state.go('/dash');
+                },3000);
+            }
+            
         });
      
         $scope.submitPrediction = function(){
@@ -309,17 +324,21 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $scope.point_earned = 0;
             $scope.test.price=$scope.test.second_price=250;$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
             $scope.test.hideModal = true;
-            if(b == true && a == 'game'){
+            if(b == true && a == 'practice'){
                 $scope.apiCounter = $scope.apiCounter - 2;
                 takeChunk();
                 $scope.startTime(true); 
                }
-            if(a == 'game' && b !== true){
+            if(a == 'practice' && b !== true){
                $scope.startTime(); 
             }
             if($stateParams.demo === 'wully'){
                 $scope.data = $scope.wully_data;
                 a = 'wully';
+            }
+            if($stateParams.demo === 'prize'){
+                $scope.data = $scope.prizeData;
+                a = 'prize';
             }
             $scope.index = 0;
             $scope.game = $scope.data[$scope.index];
@@ -332,7 +351,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
      
         $scope.goContest = function(){
             $scope.test.hideModal = true;
-            $state.go('/contest'); 
+            if($scope.safe(localStorage.name)){
+                //Pull saved user data if it exists
+                $scope.contest.name = localStorage.name;
+                $scope.contest.phone = Number(localStorage.phone);
+            }
+            $state.go('/contest');
         };
      
         $scope.contestSubmit = function(){
@@ -341,12 +365,15 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $scope.contest.playtime = $scope.test.timePlayed;
             $http.get('http://twistedlovebox.com/contest?name='+$scope.contest.name+"&phone="+$scope.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points+"&playtime="+$scope.contest.playtime)
             .then(function(res){
-                $scope.resetGame('login');
+                localStorage.name = $scope.contest.name;
+                localStorage.phone = $scope.contest.phone;
+                $scope.resetGame('dash');
             });
         };
         
         $scope.startWully = function(){
             $scope.data = $scope.wully_data;
+            $scope.prize = $scope.practice = false;
             $scope.game = $scope.data[$scope.index];
             $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
             $scope.test.price = $scope.test.second_price = Number($scope.game.max);
@@ -358,6 +385,31 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             
             console.log($stateParams);
         };
+     
+        $scope.startPrize = function(){
+            if($scope.prize !== true){
+                $scope.data = $scope.prizeData;
+                // create function called default that acts like the reset function
+                $scope.index = $scope.progress = 0;
+                $scope.wully = $scope.practice = false;
+                $scope.game = $scope.data[$scope.index];
+            }
+            $scope.startTime();
+            $scope.prize = true;
+            $state.go('/prize');
+        }
+        
+        $scope.startPractice = function(){
+            if($scope.wully === true || $scope.prize === true){
+                $scope.data = $scope.apiData;
+                takeChunk();
+                $scope.wully = $scope.prize = false;
+                $scope.resetGame('practice');
+            }
+            $scope.startTime();
+            $scope.practice = true;
+            $state.go('/practice');
+        }
         
         function pointsMath(index, val){
             realPrice = $scope.data[index].price;
