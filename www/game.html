@@ -13,7 +13,7 @@
                   </div>
                   <div class="chip animated bounce" style="left:0;bottom:0;z-index:5;margin-left:5px;" 
                        ng-class="{hide:game.subcategory == ''|| show_points == true}">{{game.subcategory}}</div>
-                  <img ng-src="{{game.url}}" ng-style="newstyle = (show_points == true)?{filter:'blur(10px)'}:null">
+                  <img ng-src="{{game.url}}" ng-style="newstyle = (show_points == true && wully !== true)?{filter:'blur(10px)'}:null">
                   <a class="btn-floating btn-large halfway-fab waves-effect waves-light main-color points-box"
                      ng-class="{'hide': show_points == true, 'main-color':wully !== true, 'wully-color':wully==true}">
                       <span>750 </span><span class="tiny-points">pts</span>
@@ -22,7 +22,7 @@
                      ng-class="{'hide': show_points !== true}">
                       <span>{{point_earned}}/750 </span><span class="tiny-points">pts</span>
                   </a>
-                  <div class="wully" ng-class="{hide:wully !== true}" ng-bind-html="game.question"></div>
+                  <div class="wully" ng-class="{'hide':wully !== true || show_points == true}" ng-bind-html="game.question"></div>
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
                   <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}">
