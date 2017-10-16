@@ -213,6 +213,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.progress = 0;
         $scope.index = 0;
         $scope.wully_dashboard = 0;
+        $scope.dashimage = 'https://styleminions.co/images/SM%20Logo%20White.svg';
         checkWindow();
         //$http.get('http://127.0.0.1:8000/mocha')
         $http.get('http://twistedlovebox.com/mocha?q=' + 250)
@@ -367,6 +368,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             .then(function(res){
                 localStorage.name = $scope.contest.name;
                 localStorage.phone = $scope.contest.phone;
+                $scope.thankyou = true;
                 $scope.resetGame('dash');
             });
         };
@@ -409,6 +411,16 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $scope.startTime();
             $scope.practice = true;
             $state.go('/practice');
+        }
+        
+        $scope.wullyAppear = function(){
+            $scope.wully_dashboard += 1;
+            if($scope.wully_dashboard >= 2){
+                angular.element(document.querySelector('body'))[0].style.borderTopColor='rgba(224, 24, 43, 0.91)';
+                $scope.wully = true;
+                $scope.dashimage = 'https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/s150x150/16908361_720960684745218_2933981757210361856_a.jpg';
+            }
+            
         }
         
         function pointsMath(index, val){
