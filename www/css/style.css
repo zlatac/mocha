@@ -100,6 +100,10 @@ padding-right: 10px;
   border-bottom-style: solid;
   border-bottom-color: #ff6081;
 }
+input[type=range]{
+    height: 30px;
+    margin: 7px 0 0 0;
+}
 input[type=range]::-webkit-slider-thumb {
 background-color: rgba(202, 26, 210, 0.9);
 height: 30px;

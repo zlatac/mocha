@@ -285,6 +285,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 if($scope.wully == true){
                    //$scope.test.price = $scope.test.second_price = 5;
                    $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+                    //angular.element(document.querySelectorAll('input[type="range"]'))[3].value =700;
                 }
                 pullNextImage();
                 //$scope.modal.show();
