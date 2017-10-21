@@ -10,9 +10,11 @@
 <!--                    <img class="circle profile z-depth-3" src="https://scontent-yyz1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10888392_10153073531899736_2293866441272698715_n.jpg?oh=f6166190cf97f3fbaef5514d73598aea&oe=59A6B966">-->
                     <img class="circle profile z-depth-3" ng-src="{{dashimage}}" ng-click="wullyAppear()">
                 </div>
+				<div class="clearfix"></div>
                 <div class="row">
-                    <div class="col">Tokens</div>
-                    <div class="col">Points</div>                            
+                    <!--<div class="col">Tokens</div>
+                    <div class="col">Points</div> -->
+					<div class="col">Predict the price, gain the most points and win $$ to shop anywhere.</div>
                 </div>                 
 
               </div>
@@ -21,7 +23,8 @@
         
       <row>
           <div class="card-panel" ng-class="{'hide':thankyou !== true}">
-            <a class="btn btn-full btn-large waves-effect waves-light btn-wully wully-color">
+            <a class="btn btn-full btn-large waves-effect waves-light" 
+			   ng-class="{'wully-color': wully, 'main-color': !wully}">
                 Thank you for playing!!
             </a>
         </div>      

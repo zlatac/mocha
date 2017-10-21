@@ -3,9 +3,11 @@
         <div class="container center-align">
             <div class="sp animated flipInX">
                 <div class="row">
-                    <form name="contestForm" ng-submit="contestSubmit()" style="width:100%">
-                          <input type="text" name="name" placeholder="Full Name" ng-model="contest.name">
-                          <input type="number" name="phone" placeholder="Phone Number" ng-model="contest.phone">
+                    <form name="contestForm" ng-submit="contestSubmit(contestForm)" style="width:100%" novalidate>
+                          <input type="text" name="name" placeholder="Full Name" ng-model="contest.name" class="animated" 
+								 ng-class="{'hasError': nameError = contestForm.name.$invalid && contestForm.$submitted,'shake': nameError}" required>
+                          <input type="number" name="phone" placeholder="Phone Number" ng-model="contest.phone" class="animated"
+						  ng-class="{'hasError': phoneError = contestForm.phone.$invalid && contestForm.$submitted, 'shake': phoneError}"required>
                           <input type="submit" class="waves-effect waves-light main-color btn-large z-depth-4" value="Submit"
                                  ng-class="{'main-color':wully !== true, 'wully-color':wully==true}">
                     </form>

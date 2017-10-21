@@ -361,17 +361,22 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $state.go('/contest');
         };
      
-        $scope.contestSubmit = function(){
-            $scope.contest.timestamp = moment().toISOString();
-            $scope.contest.points = $scope.point_earned;
-            $scope.contest.playtime = $scope.test.timePlayed;
-            $http.get('http://twistedlovebox.com/contest?name='+$scope.contest.name+"&phone="+$scope.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points+"&playtime="+$scope.contest.playtime)
-            .then(function(res){
-                localStorage.name = $scope.contest.name;
-                localStorage.phone = $scope.contest.phone;
-                $scope.thankyou = true;
-                $scope.resetGame('dash');
-            });
+        $scope.contestSubmit = function(form){
+			if(form.$valid){
+				$scope.contest.timestamp = moment().toISOString();
+				$scope.contest.points = $scope.point_earned;
+				$scope.contest.playtime = $scope.test.timePlayed;
+				$http.get('http://twistedlovebox.com/contest?name='+$scope.contest.name+"&phone="+$scope.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points+"&playtime="+$scope.contest.playtime)
+				.then(function(res){
+					localStorage.name = $scope.contest.name;
+					localStorage.phone = $scope.contest.phone;
+					$scope.thankyou = true;
+					$scope.resetGame('dash');
+				});
+			}else{
+				console.log('fuck no form not valid');
+				console.log(form);
+			}
         };
         
         $scope.startWully = function(){
@@ -396,8 +401,9 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 $scope.index = $scope.progress = 0;
                 $scope.wully = $scope.practice = false;
                 $scope.game = $scope.data[$scope.index];
+				$scope.startTime();
             }
-            $scope.startTime();
+            
             $scope.prize = true;
             $state.go('/prize');
         }
@@ -408,8 +414,9 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 takeChunk();
                 $scope.wully = $scope.prize = false;
                 $scope.resetGame('practice');
+				//$scope.startTime(); its already starting time in the resetGame method
             }
-            $scope.startTime();
+            
             $scope.practice = true;
             $state.go('/practice');
         }

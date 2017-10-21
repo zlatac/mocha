@@ -192,3 +192,6 @@ margin: auto !important;
 .btn-gold{
     background-color: #d2b935;
 }
+.hasError{
+	background-color: #ffe7e7 !important;
+}
