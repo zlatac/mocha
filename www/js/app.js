@@ -40,6 +40,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         url: "/contest",
         templateUrl : "contest.html"
       })
+	  .state("/leaderboard", {
+        url: "/leaderboard",
+        templateUrl : "leaderboard.html"
+      })	
       .state("/login", {
         url: "/login",
         templateUrl : "login.html"
@@ -236,7 +240,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         });
      
         $scope.submitPrediction = function(){
-            if($scope.index <= $scope.data.length - 1){
+            if($scope.index < $scope.data.length){
                 $scope.data[$scope.index].prediction = $scope.test.price;
                 //$scope.index++;
                 //$scope.game = $scope.data[$scope.index];
@@ -249,12 +253,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 //$scope.data[$scope.index].point = pointsMath($scope.index,x);
                 $scope.show_points = true;
                 $scope.manualprice = false;
-                pullNextImage('auto'); //this pulls the next image into the DOM for smoother UX experience
+                pullNextImage(); //this pulls the next image into the DOM for smoother UX experience
+                //pullNextImage('auto'); //this pulls the next image into the DOM for smoother UX experience
                 
-                if($scope.index == $scope.data.length - 1){
-                    //$scope.index++;
-                    $timeout($scope.nextProduct,1300);
-                   }
+//                if($scope.index == $scope.data.length - 1){
+//                    //$scope.index++;
+//                    //$timeout($scope.nextProduct,1300);
+//					$scope.nextProduct();
+//                   }
                 
             }else{
                 $scope.nextProduct();
@@ -275,7 +281,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         
         $scope.nextProduct = function(){
             //action for what happens after final answer is given
-            if($scope.index < $scope.data.length - 1){
+            if($scope.index !== $scope.data.length - 1){
                 console.log($scope.data);
                 $scope.index++;
                 $scope.show_points = false;

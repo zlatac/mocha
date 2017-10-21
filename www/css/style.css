@@ -195,3 +195,6 @@ margin: auto !important;
 .hasError{
 	background-color: #ffe7e7 !important;
 }
+li.item{
+	margin: 2px 0;
+}
