@@ -196,5 +196,23 @@ margin: auto !important;
 	background-color: #ffe7e7 !important;
 }
 li.item{
-	margin: 2px 0;
+	margin: 10px 0;
+}
+.list-me {
+	background-color: #cf30d6;
+    color: white;
+}
+.loader{
+	height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 9;
+    background-color: white;
+	padding-top: 30%;
+}
+.spinner svg{
+    width: 100px !important;
+    height: 100px !important;
+	fill: #b43fba !important;
+	stroke: #b43fba !important;
 }

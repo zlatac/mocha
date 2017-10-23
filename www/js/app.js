@@ -42,7 +42,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       })
 	  .state("/leaderboard", {
         url: "/leaderboard",
-        templateUrl : "leaderboard.html"
+        templateUrl : "leaderboard.html",
+	  	controller: "leaderboard.controller"
       })	
       .state("/login", {
         url: "/login",
@@ -606,3 +607,40 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         
       };
     });
+
+	myapp.directive('loader', function() {
+      return {
+        template: '<div class="loader center-align"><ion-spinner icon="ripple"></ion-spinner><div>'
+        
+      };
+    });
+
+	myapp.controller('leaderboard.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout){
+		$scope.loader = true;
+		//$timeout(function(){$scope.loader = false;},3000)
+		var gametime = moment('2017/10/16','YYYY/MM/DD').toISOString();
+		$http.get('http://twistedlovebox.com/leaderboard?q=' + gametime)
+		.then(function(res){
+			//console.log(res);
+			$scope.leaderList = [];
+			$scope.thisPlayer = false;
+			var number = localStorage.phone;
+			var list = res.data;
+			list.forEach(function(item){
+				if(item.phone === number){
+					item.thisplayer = true;
+					$scope.thisPlayer = true;
+					if(!localStorage.hasOwnProperty('points')){
+						localStorage.points = item.points;
+					}
+					
+				}else{
+					item.thisplayer = false;
+				}
+				$scope.leaderList.push(item);
+			});
+			$scope.player = localStorage;
+			$scope.loader = false;
+			
+		});
+	});

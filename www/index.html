@@ -54,7 +54,7 @@
     <div class="mocha-modal" ng-class="{hide: test.hideModal == true}">
         <div class="mocha-modal-content w3-animate-bottom">
             <div style="width:100%;font-size: 25px">
-                <p class=""><i class="fa fa-trophy"></i> Points: {{point_earned}}/7500</p>
+                <p class=""><i class="fa fa-trophy"></i> Points: {{point_earned | number:0}}/7,500</p>
                 <p class=""><i class="fa fa-clock-o"></i> Time: {{test.timePlayed}}</p>
                 <p class=""><i class="fa fa-money"></i> Tokens: {{test.token}}</p>
                 <a class="waves-effect waves-light main-color btn-large z-depth-4 center-align" ng-click="goContest()"

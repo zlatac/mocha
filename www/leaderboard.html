@@ -1,20 +1,52 @@
  <ion-view title="/contest">
 	<menu-header></menu-header>
+	<loader ng-class="{'hide': !loader}"></loader>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
 		<menu-button></menu-button>
         <div class="container center-align" style="margin-top:50px;">
             <row>
-				<ul class="list">
-					<li class="item item">
-						<span class="badge badge-assertive">0</span>
-					 Big boy
-					</li><li class="item">
-					 Big boy
-					</li><li class="item">
-					 Big boy
-					</li><li class="item">
-					 Big boy
+				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
+					<li class="item item z-depth-1">
+						<span class="badge badge-stable z-depth-1 hide">Top 20</span>
+					 Leaderboard
 					</li>
+					<li class="item" ng-repeat="x in leaderList" ng-class="{'list-me': x.thisplayer, 'z-depth-4': x.thisplayer}">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10"> {{$index + 1}}</div>
+							 <div class="col col-60">{{x.name}}</div>
+							 <div class="col">{{x.points| number:0}} Pts</div>
+						 </div>
+					</li>
+					<li class="item list-me z-depth-4" ng-class="{'hide': thisPlayer}">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10">- -</div>
+							 <div class="col col-60">{{player.name}}</div>
+							 <div class="col">{{player.points| number:0}} Pts</div>
+						 </div>
+					</li>
+<!--
+					<li class="item">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10"> 15</div>
+							 <div class="col col-60">Diana</div>
+							 <div class="col">3,445 Pts</div>
+						 </div>
+					</li>
+					<li class="item list-me z-depth-4">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10"> 19</div>
+							 <div class="col col-60">Olivia</div>
+							 <div class="col">4,356 Pts</div>
+						 </div>
+					</li>
+					<li class="item">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10"> 20</div>
+							 <div class="col col-60">Emily</div>
+							 <div class="col">2,378 Pts</div>
+						 </div>
+					</li>
+-->
 					
 				</ul>
                
