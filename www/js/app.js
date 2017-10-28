@@ -225,7 +225,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         .then(function(res){
             console.log(res);
             $scope.apiData = res.data;
-            $scope.prizeData = $scope.apiData.slice(120,145);
+            $scope.prizeData = $scope.apiData.slice(120,135);
             takeChunk();
         })
         .then(function(){
@@ -257,11 +257,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 pullNextImage(); //this pulls the next image into the DOM for smoother UX experience
                 //pullNextImage('auto'); //this pulls the next image into the DOM for smoother UX experience
                 
-//                if($scope.index == $scope.data.length - 1){
-//                    //$scope.index++;
-//                    //$timeout($scope.nextProduct,1300);
-//					$scope.nextProduct();
-//                   }
+                if($scope.index == $scope.data.length - 1){
+                    //$scope.index++;
+                    //$timeout($scope.nextProduct,1300);
+					$scope.nextProduct();
+                   }
                 
             }else{
                 $scope.nextProduct();
@@ -506,7 +506,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         
         function takeChunk(){
             $scope.data = [];
-            var round = 25; //No of products for each round
+            var round = 15; //No of products for each round
             if($scope.apiCounter*round >= $scope.apiData.length){
                 $scope.apiCounter = 1;
             }

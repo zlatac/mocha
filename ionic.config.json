@@ -1,8 +1,14 @@
 {
   "name": "myNewProject",
-  "app_id": "c2f7c8b5",
+  "app_id": "020ee44b",
   "type": "ionic1",
   "watchPatterns": [
-    "scss/**/*"
-  ]
+    "scss/**/*",
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ],
+  "integrations": {
+    "cordova": {}
+  }
 }

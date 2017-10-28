@@ -23,6 +23,7 @@
                       <span>{{point_earned}}/750 </span><span class="tiny-points">pts</span>
                   </a>
                   <div class="wully" ng-class="{'hide':wully !== true || show_points == true}" ng-bind-html="game.question"></div>
+				  <div class="wully" ng-class="{'hide':practice !== true || show_points !== true}" ng-bind-html="'$'+game.price"></div>
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
                   <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}">
