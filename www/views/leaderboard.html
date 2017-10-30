@@ -1,12 +1,18 @@
  <ion-view title="/contest">
 	<menu-header></menu-header>
+	<menu-button></menu-button>
 	<loader ng-class="{'hide': !loader}"></loader>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
-		<menu-button></menu-button>
         <div class="container center-align" style="margin-top:50px;">
             <row>
 				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
 					<li class="item item z-depth-1">
+						<!--<label class="toggle">
+						   <input type="checkbox">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>-->
 						<span class="badge badge-stable z-depth-1 hide">Top 20</span>
 					 Leaderboard
 					</li>

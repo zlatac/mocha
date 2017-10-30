@@ -15,39 +15,44 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
   $stateProvider
       .state("/", {
         url: "/",
-        templateUrl : "login.html"
+        templateUrl : "views/login.html"
       })
       .state("/practice", {
         url: "/game",
-        templateUrl : "game.html",
+        templateUrl : "views/game.html",
         params: {demo: 'practice'}
       })
       .state("/wully", {
         url: "/game",
-        templateUrl : "game.html",
+        templateUrl : "views/game.html",
         params: {demo: 'wully'}
       })
       .state("/prize", {
         url: "/game",
-        templateUrl : "game.html",
+        templateUrl : "views/game.html",
         params: {demo: 'prize'}
       })
       .state("/dash", {
         url: "/dash",
-        templateUrl : "dash.html"
+        templateUrl : "views/dash.html"
       })
       .state("/contest", {
         url: "/contest",
-        templateUrl : "contest.html"
+        templateUrl : "views/contest.html"
       })
 	  .state("/leaderboard", {
         url: "/leaderboard",
-        templateUrl : "leaderboard.html",
+        templateUrl : "views/leaderboard.html",
 	  	controller: "leaderboard.controller"
+      })
+	  .state("/winner", {
+        url: "/winner",
+        templateUrl : "views/winner.html",
+	  	controller: "winner.controller"
       })	
       .state("/login", {
         url: "/login",
-        templateUrl : "login.html"
+        templateUrl : "views/login.html"
       });
     $urlRouterProvider.otherwise('/');
 })
@@ -234,7 +239,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             if($scope.screen_big !== true){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
-                    $state.go('/dash');
+                    //$state.go('/dash');
                 },3000);
             }
             
@@ -594,7 +599,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 
     myapp.directive('menuHeader', function() {
       return {
-        templateUrl: 'menu-header.html'
+        templateUrl: 'views/menu-header.html'
         
       };
     });
@@ -644,3 +649,34 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 			
 		});
 	});
+	
+	myapp.controller('winner.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,$sce){
+		$scope.loader = true;
+		//In this version of Angular 1.x you have to add &callback=JSON_CALLBACK to the url when you use JSONP or else it will fail horibbly. http.get() wont work because of cross browser scripting.
+		var url = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=6066396632.c4c182e.998085c27363408aab71d3dd30f542b0';
+		//var trustedUrl = $sce.trustAsResourceUrl(url);
+		//mocha instagram id is "6066396632"
+		
+		$http.jsonp(url + '&callback=JSON_CALLBACK')
+		.then(function(res){
+			//console.log(res);
+			$scope.winnerList = [];
+			var list = res.data.data;
+			list.forEach(function(item){
+				if(item.tags.indexOf('winner') !== -1){
+					var obj = {};
+					obj.url = item.images.standard_resolution.url;
+					obj.user = item.users_in_photo[0].user.username;
+					obj.link = item.link;
+			    	$scope.winnerList.push(obj);
+					
+				}
+				
+			});
+			//console.log($scope.winnerList);
+			
+			$scope.loader = false;
+			
+		});
+	});
+
