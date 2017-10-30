@@ -239,7 +239,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             if($scope.screen_big !== true){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
-                    //$state.go('/dash');
+                    $state.go('/dash');
                 },3000);
             }
             
