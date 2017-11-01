@@ -49,7 +49,17 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         url: "/winner",
         templateUrl : "views/winner.html",
 	  	controller: "winner.controller"
-      })	
+      })
+	  .state("/fzdash", {
+        url: "/fzdash",
+        templateUrl : "views/fz.dash.html",
+	  	controller: "fz.dash.controller"
+      })
+	  .state("/fzgame", {
+        url: "/fzgame",
+        templateUrl : "views/fz.game.html",
+	  	controller: "fz.dash.controller"
+      })
       .state("/login", {
         url: "/login",
         templateUrl : "views/login.html"
@@ -75,50 +85,249 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
   });
 });
 
+ myapp.factory('mocha', function($rootScope,$state,$stateParams){
+	 this.submitPrediction = function($scope){
+            if($scope.index < $scope.data.length){
+				if(!$scope.data[$scope.index].hasOwnProperty('prediction'))
+                	$scope.data[$scope.index].prediction = $scope.test.price;
+				
+				var prediction = $scope.data[$scope.index].prediction;
+                //$scope.index++;
+                //$scope.game = $scope.data[$scope.index];
+                
+                //reconcile price prediction for consistent points
+                if($scope.manualprice === true)
+                    $scope.test.price = $scope.test.second_price;
+                
+                $scope.point_earned = $scope.data[$scope.index].point =  this.pointsMath($scope.index,prediction,$scope);
+                //$scope.data[$scope.index].point = pointsMath($scope.index,x);
+                $scope.show_points = true;
+                $scope.manualprice = false;
+                this.pullNextImage(null,$scope); //this pulls the next image into the DOM for smoother UX experience
+                //pullNextImage('auto'); //this pulls the next image into the DOM for smoother UX experience
+                
+                if($scope.index == $scope.data.length - 1){
+                    //$scope.index++;
+                    //$timeout($scope.nextProduct,1300);
+					this.nextProduct($scope);
+                   }
+                
+            }else{
+                this.nextProduct($scope);
+            }
+            
+        };
+	 
+	 this.nextProduct = function($scope){
+            //action for what happens after final answer is given
+            if($scope.index !== $scope.data.length - 1){
+                console.log($scope.data);
+                $scope.index++;
+                $scope.show_points = false;
+                //$scope.manualprice = false;
+                $scope.game = $scope.data[$scope.index];
+                $scope.progress = (($scope.index)/$scope.data.length)*100;
+                if(location.hash.includes('fz') || $scope.wully == true){
+                   //$scope.test.price = $scope.test.second_price = 5;
+                   $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+                    //angular.element(document.querySelectorAll('input[type="range"]'))[3].value =700;
+                }
+                this.pullNextImage(null,$scope);
+                //$scope.modal.show();
+                //$ionicSideMenuDelegate.toggleLeft();
+                
+                
+            }else{
+                $scope.point_earned = this.getPoints($scope);
+                this.gameTimePlayed($scope);
+                this.getTokens($scope);
+                $scope.test.hideModal = false;
+                this.takeChunk($scope);
+                //$location.path('/final');
+                //angular.element(document.querySelector('.modal')).modal('open');
+            }
+            
+        };
+	 
+	 this.pointsMath = function (index, val, $scope){
+            realPrice = $scope.data[index].price;
+            pChange = val/realPrice;
+            console.log(val, realPrice, pChange);
+            
+            //when prediction is more than 200% of the value
+            if(pChange >= 2 || pChange <= 0){
+                return 0;
+            }
+            
+            //when prediction is more than 100% of the real value
+            if(pChange > 1 && pChange < 2){
+                return Math.round(750 - pChange*750 + 750);
+            }else{
+               return Math.round(pChange*750);
+            }
+        }
+	 
+	 this.pullNextImage = function(a,$scope){
+            var x = new Image();
+            x.onload = function(){
+               if(a === 'auto'){
+                   //Do not let player manually move to next if this is in place.
+                   $timeout($scope.nextProduct,1300);
+               }
+            };
+            x.onerror = function(){
+                $scope.data.splice($scope.index + 1,1);
+                if(a === 'auto'){
+                    //This is used cause we need the game to move forward automatically despite an image(s) download failure
+                   this.pullNextImage('auto');
+                }else{
+                   this.pullNextImage(null,$scope);
+                }
+                
+            };
+            
+            if(this.safe($scope.data[$scope.index + 1])){
+                //This initiates the downloading of the image into the DOM
+                x.src = $scope.data[$scope.index + 1].url;
+            }else{
+                console.log('fuck no');
+            }
+            //x.src = $scope.data[$scope.index + 1].url;
+        }
+	 
+	 this.safe = function (a){
+            if(a === undefined || a === null || a === ''){
+                return false;
+            }
+            return true;
+	 }
+	 
+	 this.getPoints = function ($scope){
+            let y = 0;
+            for(x in $scope.data){
+                y += $scope.data[x].point;
+            }
+            y = Math.round((y/($scope.data.length*750))*7500);
+            
+            return y;
+        }
+        
+     this.gameTimePlayed = function ($scope){
+            //get current time
+            $scope.test.end_time = moment();
+            //get difference between start and end in miliseconds
+            var dif = $scope.test.end_time.diff($scope.test.start_time);
+            //format the miliseconds to minutes,seconds and milliseconds
+            $scope.test.timePlayed = moment(dif).format("mm:ss:SS");
+            return $scope.test.timePlayed;
+        }
+	 
+	 this.takeChunk = function ($scope){
+            $scope.data = [];
+            var round = 15; //No of products for each round
+            if($scope.apiCounter*round >= $scope.apiData.length){
+                $scope.apiCounter = 1;
+            }
+            var a = ($scope.apiCounter - 1)*round;
+              
+            for(a; a<$scope.apiCounter*round; a++){
+                $scope.data.push($scope.apiData[a]);
+            }
+            
+            if($scope.data.length != 0){
+                let y = new Image();
+                for(let x=0; x < 1; x++){
+                    
+                    y.onload = function(){};
+                    y.onerror = function(){
+                        $scope.data.splice(x,1);
+                        //pullNextImage();
+                    };
+                    y.src = $scope.data[x].url;
+                    //console.log(y.src);
+                }
+                $scope.game = $scope.data[0];
+                $scope.apiCounter++
+            }
+            
+        }
+     
+     this.getTokens = function ($scope){
+            var b = Number($scope.point_earned);
+            if(b >= 3750 && b <= 5750){
+               $scope.test.token = 3;
+            }
+            if(b > 5750 && b <= 6750){
+               $scope.test.token = 4;
+            }
+            if(b > 6750 && b < 7500){
+               $scope.test.token = 5;
+            }
+            if(b == 7500){
+               $scope.test.token = 10;
+            }
+            if(b < 3750){
+               $scope.test.token = 0;
+            } 
+        }
+	 
+	 this.inputShow = function($scope){
+            if($scope.show_points !== true){
+                $scope.manualprice = true;
+                //unfortunately HTML range slider returns price as string instead of number
+                $scope.test.second_price = Number($scope.test.price);
+            }
+        };
+        
+     this.startTime = function($scope,c){
+            //use true parameter to force a new time stamp
+            if(!$scope.data[0].hasOwnProperty('point') || c === true){
+                $scope.test.start_time = moment();
+                console.log('clock is ticking');
+            }
+        };
+	 
+	 this.menuHide = function($scope){
+            $scope.test.menuhide += 1;
+        };
+	 
+	 this.resetGame = function($scope,a,b){
+            $scope.show_points = false;
+            $scope.manualprice = false;
+            $scope.point_earned = 0;
+            $scope.test.price=$scope.test.second_price=250;$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
+            $scope.test.hideModal = true;
+            if(b == true && a == 'practice'){
+                $scope.apiCounter = $scope.apiCounter - 2;
+                this.takeChunk($scope);
+                this.startTime($scope,true); 
+               }
+            if(a == 'practice' && b !== true){
+               $scope.startTime(); 
+            }
+            if($stateParams.demo === 'wully'){
+                $scope.data = $scope.wully_data;
+                a = 'wully';
+            }
+            if($stateParams.demo === 'prize'){
+                $scope.data = $scope.prizeData;
+                a = 'prize';
+            }
+		 	if(location.hash.includes('fz')){
+                $scope.data = $scope.fz_data;
+				this.startTime($scope,true);
+                a = 'fzgame';
+            }
+            $scope.index = 0;
+            $scope.game = $scope.data[$scope.index];
+            $state.go('/' + a);
+        };
+	 
+	 return this;
+ });
+
  myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout){
         
-        //$scope.price = 300;
-//        $scope.data = [
-//            {url:"http://s7d9.scene7.com/is/image/Aritzia/large/s17_04_a08_61865_11902_on_a.jpg",
-//            price:'125'
-//            },
-//            {
-//                url:'http://katespade.',
-//                price:'448'
-//            },
-//            {
-//                url:'http://media.aldoshoes.com/v2/product/pisana/97/pisana_black_97_main_sq_gy_1600x1600.jpg',
-//                price:'60'
-//            },
-//            {
-//                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS24J32LBLE_Large_M_1.jpg',
-//                price:'40'
-//            },
-//            {
-//                url:'http://images.urbanoutfitters.com/is/image/UrbanOutfitters/42187435_070_b?$medium$&defaultImage=',
-//                price:'65'
-//            },
-//            {
-//                url:'http://images.urbanoutfitters.com/is/image/UrbanOutfitters/42470492_001_b?$medium$&defaultImage=',
-//                price:'39'
-//            },
-//            {
-//                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS32M24LNUD_Large_F_1.jpg',
-//                price:'65'
-//            },
-//            {
-//                url:'http://img1.fpassets.com/is/image/FreePeople/35286665_036_b?$pdp$',
-//                price:'185'
-//            },
-//            {
-//                url:'http://media.topshop.com/wcsstore/TopShop/images/catalog/TS62B06LMUL_Large_M_1.jpg',
-//                price:'40'
-//            },
-//            {
-//                url:'http://sits-pod26.demandware.net/dw/image/v2/AAUP_PRD/on/demandware.static/-/Sites-master/default/dwdd27cdf1/PF0263_SUQ_24.jpg?sw=656&sh=656&sm=fit',
-//                price:'175'
-//            }
-//        ];
         $scope.wully_data = [
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21909710_115559839139284_2536705386933649408_n.jpg',
@@ -236,7 +445,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         .then(function(){
             //$scope.menuhide = 0;
             $scope.game = $scope.data[$scope.index];
-            if($scope.screen_big !== true){
+            if($scope.screen_big !== true && !location.hash.includes('fz')){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
                     $state.go('/dash');
@@ -247,7 +456,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
      
         $scope.submitPrediction = function(){
             if($scope.index < $scope.data.length){
-                $scope.data[$scope.index].prediction = $scope.test.price;
+				if(!$scope.data[$scope.index].hasOwnProperty('prediction'))
+                	$scope.data[$scope.index].prediction = $scope.test.price;
+				
+				var prediction = $scope.data[$scope.index].prediction;
                 //$scope.index++;
                 //$scope.game = $scope.data[$scope.index];
                 
@@ -255,7 +467,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 if($scope.manualprice === true)
                     $scope.test.price = $scope.test.second_price;
                 
-                $scope.point_earned = $scope.data[$scope.index].point =  pointsMath($scope.index,$scope.test.price);
+                $scope.point_earned = $scope.data[$scope.index].point =  pointsMath($scope.index,prediction);
                 //$scope.data[$scope.index].point = pointsMath($scope.index,x);
                 $scope.show_points = true;
                 $scope.manualprice = false;
@@ -279,11 +491,6 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 //            }
             
         };
-     
-//        $scope.modal = $ionicModal.fromTemplate('<div class="modal"><header class="bar bar-header bar-positive"> <h1 class="title">I\'m A Modal</h1><div class="button button-clear" ng-click="modal2.hide()"><span class="icon ion-close"></span></div></header><content has-header="true" padding="true"><p>This is a modal</p></content></div>', {
-//            scope: $scope,
-//            animation: 'slide-in-up'
-//          });
         
         $scope.nextProduct = function(){
             //action for what happens after final answer is given
@@ -572,34 +779,24 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             return true;
         }
         
-//        angular.element(document.querySelector('.btn-menu')).sideNav({
-//          menuWidth: 300, // Default is 300
-//          edge: 'left', // Choose the horizontal origin
-//          closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-//          draggable: true // Choose whether you can drag to open on touch screens
-//        });
-        
-        //angular.element(document.querySelector('.modal')).modal();
-        
     });
     
     myapp.directive('menuButton', function() {
       return {
-        template: '<a class="btn-menu main-color" ng-click="menuHide()" ng-class="{\'main-color\':wully !== true, \'wully-color\':wully==true}"><i class="material-icons" style="font-size:35px">menu</i></a>',
-        link: function(scope, elem, attrs) {
-            /*angular.element(document.querySelector('.btn-menu')).sideNav({
-              menuWidth: 300, // Default is 300
-              edge: 'right', // Choose the horizontal origin
-              closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-              draggable: true // Choose whether you can drag to open on touch screens
-            });*/
-        }
+        template: '<a class="btn-menu main-color" ng-click="menuHide()" ng-class="{\'main-color\':wully !== true, \'wully-color\':wully==true}"><i class="material-icons" style="font-size:35px">menu</i></a>'
       };
     });
 
     myapp.directive('menuHeader', function() {
       return {
         templateUrl: 'views/menu-header.html'
+        
+      };
+    });
+
+	myapp.directive('resultModal', function() {
+      return {
+        templateUrl: 'views/result.html'
         
       };
     });
@@ -653,6 +850,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 	myapp.controller('winner.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,$sce){
 		$scope.loader = true;
 		//In this version of Angular 1.x you have to add &callback=JSON_CALLBACK to the url when you use JSONP or else it will fail horibbly. http.get() wont work because of cross browser scripting.
+		//stackoverflow refrence link - https://stackoverflow.com/questions/12066002/parsing-jsonp-http-jsonp-response-in-angular-js
 		var url = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=6066396632.c4c182e.998085c27363408aab71d3dd30f542b0';
 		//var trustedUrl = $sce.trustAsResourceUrl(url);
 		//mocha instagram id is "6066396632"
@@ -678,5 +876,160 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 			$scope.loader = false;
 			
 		});
+	});
+
+	myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
+		angular.element(document.querySelector('body'))[0].style.borderTopColor='#f64348';
+		angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
+		
+		$scope.fz_data = [
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18950047_457101204639111_8252268334817476608_n.jpg',
+                price:'729',
+                question:'Predict the price of this Jacket.',
+                min:'500',
+                max:'1000',
+                context:'',
+                subcategory:'jacket'
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21689320_127859157860810_5234811534567276544_n.jpg',
+                price:'2013',
+                question:'When was fashion zone founded.',
+                min:'1998',
+                max:'2018',
+                context:'',
+                subcategory:''
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18512847_296309494153999_6008173804130402304_n.jpg',
+                price:'595',
+                question:'Predict the price of this ledaveed duffle bag.',
+                min:'400',
+                max:'1000',
+                context:'',
+                subcategory:'duffle bag'
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19052186_1688222418151349_804088633102434304_n.jpg',
+                price:'0',
+                question:'Did 20/20 Armor recently acquire a client in Quebec? <p>1 - No</p> <p>0 - Yes</p>',
+                min:'0',
+                max:'1',
+                context:'',
+                subcategory:''
+            },
+			{
+                url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small',
+                price:'2',
+                question:'Who is the director of community at Fashion Zone?',
+                min:'0',
+                max:'3',
+                context:'',
+                subcategory:'',
+				options: [
+					{answer: 'Olga', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
+					{answer: 'Olena', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
+					{answer: 'Andrea', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14134779_987256658060687_458447697_n.jpg'},
+					{answer: 'Robert', url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small'}
+				]
+            },
+			{
+                url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small',
+                price:'2',
+                question:'Which Joe Fresh Centre member recently spoke at the startup fashion week?',
+                min:'0',
+                max:'3',
+                context:'',
+                subcategory:'',
+				options: [
+					{answer: 'James', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15048227_218441365259697_2371854405990350848_n.jpg'},
+					{answer: 'Michelle', url:'https://pbs.twimg.com/media/DDRp6L6W0AApnUF.jpg:small'},
+					{answer: 'Ahmer', url:'https://pbs.twimg.com/media/DDU3598XYAEojTV.jpg:small'},
+					{answer: 'Lindsay', url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small'}
+				]
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/22427059_141471486472588_9135289309950115840_n.jpg',
+                price:'300',
+                question:'What is the monthly fee for Fashion Zone\'s full desk membership if you have a Ryerson student in your team?',
+                min:'100',
+                max:'600',
+                context:'',
+                subcategory:'',
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14583368_219840081783732_5908804998388514816_n.jpg',
+                price:'1',
+                question:'Do Fashion Zone members have access to the DMZ space in New York? <p>1 - No</p> <p>0 - Yes</p>',
+                min:'0',
+                max:'1',
+                context:'',
+                subcategory:'',
+            },
+			{
+                url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg',
+                price:'1',
+                question:'Who is the social media advisor for Fashion Zone?',
+                min:'0',
+                max:'3',
+                context:'',
+                subcategory:'',
+				options: [
+					{answer: 'Lyndon', url:'http://fashionzone.ca/uploads/advisors/e5b202abb53bb394f9f365b8fa94fc95.jpg'},
+					{answer: 'Cammi', url:'http://fashionzone.ca/uploads/advisors/1c10e7de5ce1414b04761b5296b7be4c.jpg'},
+					{answer: 'Rebecca', url:'http://fashionzone.ca/uploads/advisors/9ab1d98495e97433107f9119f91db587.jpg'},
+					{answer: 'Steve', url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg'}
+				]
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14550126_308480726183912_5838350698462314496_n.jpg',
+                price:'52',
+                question:'Predict the price of this nudypatooty crop top.',
+                min:'30',
+                max:'100',
+                context:'',
+                subcategory:'crop top'
+            },
+		];
+		
+		$scope.data = $scope.fz_data;
+		//$scope.game = $scope.data[0];
+		$scope.index = 0;
+		$scope.game = $scope.data[$scope.index];
+		$scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
+		$scope.test.price = $scope.test.second_price = Number($scope.game.max);
+		mocha.startTime($scope);
+		$scope.mocha = mocha; // expose service to the view
+		console.log($scope.data);
+		
+		$scope.switchUp = function(game){
+			//console.log(game);
+			if($scope.safe(game.options)){
+			   	$scope.game.url = game.options[$scope.test.price].url;
+				$scope.game.context = game.options[$scope.test.price].answer;
+				if($scope.test.price !== game.price){
+					//this will make sure that the player gets zero if they choose the wrong option
+					game.prediction = '100';
+				   }else{
+					 game.prediction = $scope.test.price;
+				   }
+			   }
+		};
+		
+		$scope.fzSubmit = function(){mocha.submitPrediction($scope)};
+		$scope.fzNextProduct = function(){
+			mocha.nextProduct($scope);
+			$scope.switchUp($scope.game);
+		};
+		$scope.resetGame = function(){mocha.resetGame($scope)};
+		$scope.inputShow = function(){mocha.inputShow($scope)};
+		$scope.menuHide = function(){mocha.menuHide($scope)};
+		$scope.isPredict = function(){
+			if(mocha.safe($scope.game.question) && $scope.game.question.includes('price')){
+				return true;
+			}
+		}
+		
 	});
 
