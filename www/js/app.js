@@ -1001,6 +1001,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 		$scope.test.price = $scope.test.second_price = Number($scope.game.max);
 		mocha.startTime($scope);
 		$scope.mocha = mocha; // expose service to the view
+		$scope.hide_question = false;
 		console.log($scope.data);
 		
 		$scope.switchUp = function(game){
