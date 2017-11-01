@@ -314,7 +314,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 a = 'prize';
             }
 		 	if(location.hash.includes('fz')){
-                $scope.data = $scope.fz_data;
+                angular.copy($scope.fz_data,$scope.data);
 				this.startTime($scope,true);
                 a = 'fzgame';
             }
@@ -783,7 +783,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
     
     myapp.directive('menuButton', function() {
       return {
-        template: '<a class="btn-menu main-color" ng-click="menuHide()" ng-class="{\'main-color\':wully !== true, \'wully-color\':wully==true}"><i class="material-icons" style="font-size:35px">menu</i></a>'
+        template: '<a class="btn-menu main-color" ng-click="menuHide()" ng-class="{\'main-color\':wully !== true, \'wully-color\':wully==true || fz==true}"><i class="material-icons" style="font-size:35px">menu</i></a>'
       };
     });
 
@@ -993,7 +993,9 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             },
 		];
 		
-		$scope.data = $scope.fz_data;
+		$scope.data = [];
+		angular.copy($scope.fz_data,$scope.data);
+		$scope.fz = true;
 		//$scope.game = $scope.data[0];
 		$scope.index = 0;
 		$scope.game = $scope.data[$scope.index];
