@@ -57,8 +57,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       })
 	  .state("/fzgame", {
         url: "/fzgame",
-        templateUrl : "views/fz.game.html",
-	  	controller: "fz.dash.controller"
+        templateUrl : "views/fz.game.html"
+	  	//controller to this view is placed in the view with ng-controller to make data persist between fzdash and fzgame
       })
       .state("/login", {
         url: "/login",
@@ -896,7 +896,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 			{
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18950047_457101204639111_8252268334817476608_n.jpg',
                 price:'729',
-                question:'Predict the price of this Jacket.',
+                question:'Predict the price of this wully Jacket.',
                 min:'500',
                 max:'1000',
                 context:'',
