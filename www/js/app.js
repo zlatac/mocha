@@ -85,7 +85,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
   });
 });
 
- myapp.factory('mocha', function($rootScope,$state,$stateParams){
+ myapp.factory('mocha', function($rootScope,$state,$stateParams,$window){
 	 this.submitPrediction = function($scope){
             if($scope.index < $scope.data.length){
 				if(!$scope.data[$scope.index].hasOwnProperty('prediction'))
@@ -322,6 +322,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $scope.game = $scope.data[$scope.index];
             $state.go('/' + a);
         };
+	 
+	 this.checkWindow = function(){
+            if($window.innerWidth > 600){
+                //console.log('screen  to big');
+                return true;
+            }
+	 }
 	 
 	 return this;
  });
@@ -881,6 +888,9 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 	myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
 		angular.element(document.querySelector('body'))[0].style.borderTopColor='#f64348';
 		angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
+		if(mocha.checkWindow() === true){
+			$state.go('/')
+		}
 		
 		$scope.fz_data = [
 			{
@@ -912,8 +922,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             },
 			{
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19052186_1688222418151349_804088633102434304_n.jpg',
-                price:'0',
-                question:'Did 20/20 Armor recently acquire a client in Quebec? <p>1 - No</p> <p>0 - Yes</p>',
+                price:'1',
+                question:'Did 20/20 Armor recently acquire a client in Quebec? <p>1 - Yes</p> <p>0 - No</p>',
                 min:'0',
                 max:'1',
                 context:'',
@@ -951,7 +961,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             },
 			{
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/22427059_141471486472588_9135289309950115840_n.jpg',
-                price:'300',
+                price:'175',
                 question:'What is the monthly fee for Fashion Zone\'s full desk membership if you have a Ryerson student in your team?',
                 min:'100',
                 max:'600',
