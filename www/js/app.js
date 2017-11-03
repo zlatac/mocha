@@ -88,8 +88,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
  myapp.factory('mocha', function($rootScope,$state,$stateParams,$window){
 	 this.submitPrediction = function($scope){
             if($scope.index < $scope.data.length){
-				if(!$scope.data[$scope.index].hasOwnProperty('prediction'))
-                	$scope.data[$scope.index].prediction = $scope.test.price;
+				$scope.data[$scope.index].prediction = $scope.test.price;
 				
 				var prediction = $scope.data[$scope.index].prediction;
                 //$scope.index++;
@@ -165,7 +164,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             }else{
                return Math.round(pChange*750);
             }
-        }
+        };
 	 
 	 this.pullNextImage = function(a,$scope){
             var x = new Image();
@@ -193,14 +192,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 console.log('fuck no');
             }
             //x.src = $scope.data[$scope.index + 1].url;
-        }
+        };
 	 
 	 this.safe = function (a){
             if(a === undefined || a === null || a === ''){
                 return false;
             }
             return true;
-	 }
+	 };
 	 
 	 this.getPoints = function ($scope){
             let y = 0;
@@ -210,7 +209,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             y = Math.round((y/($scope.data.length*750))*7500);
             
             return y;
-        }
+        };
         
      this.gameTimePlayed = function ($scope){
             //get current time
@@ -220,7 +219,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             //format the miliseconds to minutes,seconds and milliseconds
             $scope.test.timePlayed = moment(dif).format("mm:ss:SS");
             return $scope.test.timePlayed;
-        }
+        };
 	 
 	 this.takeChunk = function ($scope){
             $scope.data = [];
@@ -250,7 +249,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 $scope.apiCounter++
             }
             
-        }
+        };
      
      this.getTokens = function ($scope){
             var b = Number($scope.point_earned);
@@ -269,7 +268,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             if(b < 3750){
                $scope.test.token = 0;
             } 
-        }
+        };
 	 
 	 this.inputShow = function($scope){
             if($scope.show_points !== true){
@@ -328,12 +327,39 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 //console.log('screen  to big');
                 return true;
             }
-	 }
+	 };
+	 
+	 this.playedAlready = function(start, end){
+		 if(localStorage.hasOwnProperty('prizeplaydate') && this.safe(localStorage.prizeplaydate)){
+			 let dateStored = moment(localStorage.prizeplaydate);
+			 let afterStart = dateStored.isAfter(start);
+			 let beforeEnd = dateStored.isBefore(end);
+			 if(afterStart == true && beforeEnd == true){
+				 return true;
+			 }
+		 }
+		 return false;
+	 };
+	 
+	 this.randomize = function(array) {
+			//Algorithm to shuffle an array
+			var input = array;
+
+			for (var i = input.length-1; i >=0; i--) {
+
+				var randomIndex = Math.floor(Math.random()*(i+1)); 
+				var itemAtIndex = input[randomIndex]; 
+
+				input[randomIndex] = input[i]; 
+				input[i] = itemAtIndex;
+			}
+			return input;
+		};
 	 
 	 return this;
  });
 
- myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout){
+ myapp.controller('mCtrl', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
         
         $scope.wully_data = [
             {
@@ -428,7 +454,9 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             },
             
         ];
+	 
         //$scope.data = [];
+	 	$scope.mocha = mocha;
         $scope.apiData = [];
         $scope.contest = {};
         $scope.apiCounter = 1;
@@ -438,8 +466,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.test = {price:250,second_price:250,start_time:null,end_time:null,menuhide:0,hideModal:true};
         $scope.progress = 0;
         $scope.index = 0;
+	 	$scope.retryNum = 3;
         $scope.wully_dashboard = 0;
         $scope.dashimage = 'https://styleminions.co/images/SM%20Logo%20White.svg';
+	 	//setting the prize dates manually is crucial for now but must be from the server when converted to native app
+	 	$scope.prizeStartDate = moment('2017/10/25','YYYY/MM/DD');
+	 	$scope.prizeEndDate = moment('2017/11/02','YYYY/MM/DD');
         checkWindow();
         //$http.get('http://127.0.0.1:8000/mocha')
         $http.get('http://twistedlovebox.com/mocha?q=' + 250)
@@ -447,6 +479,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             console.log(res);
             $scope.apiData = res.data;
             $scope.prizeData = $scope.apiData.slice(120,135);
+			$scope.apiData = mocha.randomize($scope.apiData); //Shuffle the data for practice mode.
             takeChunk();
         })
         .then(function(){
@@ -463,9 +496,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
      
         $scope.submitPrediction = function(){
             if($scope.index < $scope.data.length){
-				if(!$scope.data[$scope.index].hasOwnProperty('prediction'))
-                	$scope.data[$scope.index].prediction = $scope.test.price;
-				
+				$scope.data[$scope.index].prediction = $scope.test.price;	
+								
 				var prediction = $scope.data[$scope.index].prediction;
                 //$scope.index++;
                 //$scope.game = $scope.data[$scope.index];
@@ -536,7 +568,19 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 //unfortunately HTML range slider returns price as string instead of number
                 $scope.test.second_price = Number($scope.test.price);
             }
+			if($scope.prize && $scope.show_points == true){
+				//retry feature trigger
+				$scope.retry();			   
+		    }
         };
+	 
+	 	$scope.retry = function(){
+			if($scope.retryNum > 0){
+				$scope.retryNum -= 1;
+				$scope.show_points = false;
+			}
+			
+		}
         
         $scope.startTime = function(c){
             //use true parameter to force a new time stamp
@@ -596,8 +640,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 				.then(function(res){
 					localStorage.name = $scope.contest.name;
 					localStorage.phone = $scope.contest.phone;
+					localStorage.prizeplaydate = moment().toISOString();
 					$scope.thankyou = true;
-					$scope.resetGame('dash');
+					//$scope.resetGame('dash');
+					$state.go('/leaderboard');
 				});
 			}else{
 				console.log('fuck no form not valid');
@@ -643,6 +689,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 				//$scope.startTime(); its already starting time in the resetGame method
             }
             
+			$scope.startTime();
             $scope.practice = true;
             $state.go('/practice');
         }

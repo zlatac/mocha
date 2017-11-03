@@ -1,4 +1,5 @@
 <ion-view title="/game">
+	<result-modal></result-modal>
     <menu-header></menu-header>
 	<menu-button></menu-button>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
@@ -30,7 +31,13 @@
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
                   <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}">
-                      <span ng-class="{hide:wully == true}">$</span>{{test.price}} {{game.context}} <span class="right"><i class="material-icons" ng-class="{hide:show_points == true}">edit</i></span>
+                      <span ng-class="{hide:wully == true}">$</span>{{test.price}} {{game.context}} 
+					  <span class="right">
+						  <i class="material-icons" ng-class="{hide:show_points == true}">edit</i>
+						  <span ng-class="{hide:show_points !== true || !prize}">
+						  	<i class="material-icons">replay</i><span style="font-size:13px;">{{retryNum}}</span>
+						  </span>
+					  </span>
                   </p>
     
                   <div ng-class="{hide: manualprice !== true}">
