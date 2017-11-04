@@ -7,7 +7,8 @@
                 <a class="waves-effect waves-light main-color btn-large z-depth-4 center-align" ng-click="goContest()"
                    ng-class="{'main-color':wully !== true, 'wully-color':wully==true || fz, 'hide':!prize && !wully && !fz}">Submit to win $100</a>
                 <div style="position:absolute;bottom:0;width:100%;">
-                    <!--<a class="waves-effect waves-green btn-flat" ng-click="resetGame('login')">Exit</a>-->
+                    <a class="waves-effect waves-green btn-flat" ng-click="resetGame('dash')"
+                       ng-class="{'hide':prize || wully}">Home</a>
                     <!--<a class="waves-effect waves-green btn-flat" ng-click="resetGame('practice',true)">Retry</a>-->
                     <a class="waves-effect waves-green btn-flat" ng-click="resetGame('practice')"
                        ng-class="{'hide':prize || wully}">Next Round</a>
