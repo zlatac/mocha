@@ -57,8 +57,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       })
 	  .state("/fzgame", {
         url: "/fzgame",
-        templateUrl : "views/fz.game.html"
-	  	//controller to this view is placed in the view with ng-controller to make data persist between fzdash and fzgame
+        templateUrl : "views/fz.game.html",
+        controller: "fz.dash.controller"
+      })
+      .state("/tutorial", {
+        url: "/tutorial",
+        templateUrl : "views/tutorial.html"
       })
       .state("/login", {
         url: "/login",
@@ -85,11 +89,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
   });
 });
 
- myapp.factory('mocha', function($rootScope,$state,$stateParams,$window){
+ myapp.factory('mocha', function($rootScope,$state,$stateParams,$window,$ionicSlideBoxDelegate){
 	 this.submitPrediction = function($scope){
             if($scope.index < $scope.data.length){
-				$scope.data[$scope.index].prediction = $scope.test.price;
-				
+                if(!$scope.data[$scope.index].hasOwnProperty('prediction')){
+                    //for situations where prediction is automatically inserted by other functions
+                    $scope.data[$scope.index].prediction = $scope.test.price;
+                }
 				var prediction = $scope.data[$scope.index].prediction;
                 //$scope.index++;
                 //$scope.game = $scope.data[$scope.index];
@@ -354,7 +360,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 				input[i] = itemAtIndex;
 			}
 			return input;
-		};
+        };
+        
+        this.goDash = function(slider){
+            //$ionicSlideBoxDelegate.$getByHandle('slider').previous();
+            //slider._slidePrev(1000);
+            //slider._slideTo(0,500);
+            slider._slideNext(500);
+        }
 	 
 	 return this;
  });
@@ -493,6 +506,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             }
             
         });
+
+        // $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+        //     // grab an instance of the slider
+        //     $scope.slider = data.slider;
+        //   });
      
         $scope.submitPrediction = function(){
             if($scope.index < $scope.data.length){
@@ -1050,29 +1068,32 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             },
 		];
 		
-		$scope.data = [];
-		angular.copy($scope.fz_data,$scope.data);
-		$scope.fz = true;
-		//$scope.game = $scope.data[0];
-		$scope.index = 0;
-		$scope.game = $scope.data[$scope.index];
-		$scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
-		$scope.test.price = $scope.test.second_price = Number($scope.game.max);
-		mocha.startTime($scope);
-		$scope.mocha = mocha; // expose service to the view
-		$scope.hide_question = false;
-		console.log($scope.data);
+        
+        $scope.data = [];
+        angular.copy($scope.fz_data,$scope.data);
+        $scope.fz = true;
+        //$scope.game = $scope.data[0];
+        $scope.index = 0;
+        $scope.game = $scope.data[$scope.index];
+        $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
+        $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+        mocha.startTime($scope);
+        $scope.mocha = mocha; // expose service to the view
+        $scope.hide_question = false;
+        mocha.fz = true;
+        console.log($scope.data);
+        
 		
-		$scope.switchUp = function(game){
+		$scope.switchUp = function(){
 			//console.log(game);
-			if($scope.safe(game.options)){
-			   	$scope.game.url = game.options[$scope.test.price].url;
-				$scope.game.context = game.options[$scope.test.price].answer;
-				if($scope.test.price !== game.price){
+			if($scope.safe($scope.game.options)){
+			   	$scope.game.url = $scope.game.options[$scope.test.price].url;
+				$scope.game.context =  $scope.game.options[$scope.test.price].answer;
+				if($scope.test.price !==  $scope.game.price){
 					//this will make sure that the player gets zero if they choose the wrong option
-					game.prediction = '100';
+                    $scope.data[$scope.index].prediction = '100';
 				   }else{
-					 game.prediction = $scope.test.price;
+                    $scope.data[$scope.index].prediction = $scope.test.price;
 				   }
 			   }
 		};
@@ -1080,16 +1101,19 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 		$scope.fzSubmit = function(){mocha.submitPrediction($scope)};
 		$scope.fzNextProduct = function(){
 			mocha.nextProduct($scope);
-			$scope.switchUp($scope.game);
+			$scope.switchUp();
 		};
 		$scope.resetGame = function(){mocha.resetGame($scope)};
 		$scope.inputShow = function(){mocha.inputShow($scope)};
 		$scope.menuHide = function(){mocha.menuHide($scope)};
 		$scope.isPredict = function(){
-			if(mocha.safe($scope.game.question) && $scope.game.question.includes('price')){
+			if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') || $scope.game.question.includes('fee'))){
 				return true;
 			}
-		}
+        };
+        $scope.startFz = function(){
+            $state.go('/fzgame');
+        };
 		
 	});
 

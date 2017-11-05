@@ -52,6 +52,10 @@
         </div>
         <div class="row">
             <div class="col z-depth-2" style="padding-bottom:15px;margin-top:-8%;">
+                <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                    <div class="determinate btn-green" style="width: {{progress}}%" 
+                            ng-class="{'btn-green':prize === true, 'btn-black':wully==true, 'btn-grey': practice === true}"></div>
+                </div>
                 <form ng-class="{hide: show_points == true}">
                     <p class="range-field" ng-if="manualprice == false">
                       <input type="range" id="test5"  min="0" max="500" ng-model="test.price"

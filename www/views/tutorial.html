@@ -1,0 +1,24 @@
+<ion-view title="/tutorial">
+    <ion-content scroll="false">
+        <ion-slides  options="{loop: false,effect: 'slide',speed: 500}" slider="slider">
+          <ion-slide-page>
+            <div class="box blue">
+              <h1>BLUE</h1>
+              <a class="btn main-color" ng-click="mocha.goDash(slider)">Start</a> 
+            </div>           
+          </ion-slide-page>
+          <ion-slide-page>
+            <div class="box yellow">
+              <h1>YELLOW</h1>
+              <a class="btn main-color" ng-click="mocha.goDash(slider)">Start</a>   
+            </div>         
+          </ion-slide-page>
+          <ion-slide-page>
+            <div class="box pink">
+                <h1>PINK</h1>
+                <a class="btn main-color" ng-click="mocha.goDash(slider)">Start</a>
+            </div>
+          </ion-slide-page>
+        </ion-slides>
+      </ion-content>
+</ion-view>
