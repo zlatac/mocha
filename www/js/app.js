@@ -43,13 +43,15 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 	  .state("/leaderboard", {
         url: "/leaderboard",
         templateUrl : "views/leaderboard.html",
-	  	controller: "leaderboard.controller"
+        controller: "leaderboard.controller",
+        cache: false
       })
       .state("/fzleaderboard", {
         url: "/fzleaderboard",
         templateUrl : "views/leaderboard.html",
         controller: "leaderboard.controller",
-        params: {mode: 'fz'}
+        params: {mode: 'fz'},
+        cache: false
       })
 	  .state("/winner", {
         url: "/winner",
@@ -957,30 +959,35 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             url = 'https://styleminions.co/api/fzleaderboard?q=';
             $scope.fz = true;
         }
-		$http.get(url + gametime)
-		.then(function(res){
-			console.log(res);
-			$scope.leaderList = [];
-			$scope.thisPlayer = false;
-			var number = localStorage.phone;
-			var list = res.data;
-			list.forEach(function(item){
-				if(item.phone === number){
-					item.thisplayer = true;
-					$scope.thisPlayer = true;
-					if(!localStorage.hasOwnProperty('points')){
-						localStorage.points = item.points;
-					}
-					
-				}else{
-					item.thisplayer = false;
-				}
-				$scope.leaderList.push(item);
-			});
-			$scope.player = localStorage;
-			$scope.loader = false;
-			
-		});
+        $scope.getList = function(){
+            $scope.loader = true;
+            $http.get(url + gametime)
+            .then(function(res){
+                console.log(res);
+                $scope.leaderList = [];
+                $scope.thisPlayer = false;
+                var number = localStorage.phone;
+                var list = res.data;
+                list.forEach(function(item){
+                    if(item.phone === number){
+                        item.thisplayer = true;
+                        $scope.thisPlayer = true;
+                        if(!localStorage.hasOwnProperty('points')){
+                            localStorage.points = item.points;
+                        }
+                        
+                    }else{
+                        item.thisplayer = false;
+                    }
+                    $scope.leaderList.push(item);
+                });
+                $scope.player = localStorage;
+                $scope.loader = false;
+                
+            });
+        };
+        $scope.getList();
+		
 	});
 	
 	myapp.controller('winner.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,$sce){

@@ -7,7 +7,7 @@
         <div class="container center-align" style="margin-top:50px;">
             <row>
 				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
-					<li class="item item z-depth-1">
+					<li class="item item z-depth-1" ng-click="getList()">
 						<!--<label class="toggle">
 						   <input type="checkbox">
 						   <div class="track">
@@ -15,6 +15,7 @@
 						   </div>
 						</label>-->
 						<span class="badge badge-stable z-depth-1 hide">Top 20</span>
+						<span class="left"><i class="material-icons">refresh</i></span>
 					 Leaderboard
 					</li>
 					<li class="item" ng-repeat="x in leaderList" ng-class="{'list-me': x.thisplayer, 'z-depth-4': x.thisplayer}">
