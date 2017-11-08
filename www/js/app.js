@@ -527,7 +527,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 	 	$scope.prizeEndDate = moment('2017/11/02','YYYY/MM/DD');
         checkWindow();
         //$http.get('http://127.0.0.1:8000/mocha')
-        $http.get('http://twistedlovebox.com/mocha?q=' + 250)
+        $http.get('https://styleminions.co/api/mocha?q=' + 250)
         .then(function(res){
             //console.log(res);
             $scope.apiData = res.data;
@@ -696,7 +696,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 				$scope.contest.points = $scope.test.point_earned;
                 $scope.contest.playtime = $scope.test.timePlayed;
                 $scope.contest.played_data = JSON.stringify(mocha.played_data);
-                $http.get('http://twistedlovebox.com/contest?name='+$scope.contest.name+"&phone="+$scope.contest.phone+
+                $http.get('https://styleminions.co/api/contest?name='+$scope.contest.name+"&phone="+$scope.contest.phone+
                 "&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points+"&playtime="+$scope.contest.playtime+
                 "&played_data="+$scope.contest.played_data)
 				.then(function(res){
@@ -924,6 +924,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       };
     });
 
+    myapp.directive('fzResultModal', function() {
+        return {
+          templateUrl: 'views/fz.result.html'
+          
+        };
+      });
+
     myapp.directive('selectType', function() {
       return {
         link: function(scope, elem, attrs){
@@ -944,9 +951,9 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 		$scope.loader = true;
 		//$timeout(function(){$scope.loader = false;},3000)
         var gametime = moment('2017/10/16','YYYY/MM/DD').toISOString();
-        var url = 'http://twistedlovebox.com/leaderboard?q=';
+        var url = 'https://styleminions.co/api/leaderboard?q=';
         if($stateParams.mode === 'fz'){
-            url = 'http://twistedlovebox.com/fzleaderboard?q=';
+            url = 'https://styleminions.co/api/fzleaderboard?q=';
             $scope.fz = true;
         }
 		$http.get(url + gametime)
@@ -1215,7 +1222,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 $scope.contest.playtime = $scope.mocha.test.timePlayed;
                 $scope.contest.played_data = JSON.stringify(mocha.played_data);
                 $scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
-                $http.get('http://twistedlovebox.com/fzcontest?name='+$scope.mocha.contest.name+"&phone="+
+                $http.get('https://styleminions.co/api/fzcontest?name='+$scope.mocha.contest.name+"&phone="+
                 $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
                 +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
 				.then(function(res){
