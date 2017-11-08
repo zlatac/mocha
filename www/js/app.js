@@ -45,6 +45,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         templateUrl : "views/leaderboard.html",
 	  	controller: "leaderboard.controller"
       })
+      .state("/fzleaderboard", {
+        url: "/fzleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'fz'}
+      })
 	  .state("/winner", {
         url: "/winner",
         templateUrl : "views/winner.html",
@@ -59,6 +65,16 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         url: "/fzgame",
         templateUrl : "views/fz.game.html",
         controller: "fz.dash.controller"
+      })
+      .state("/fzlogin", {
+        url: "/fzlogin",
+        templateUrl : "views/fz.login.html",
+        controller: "fz.login.controller"
+      })
+      .state("/fzcontest", {
+        url: "/fzcontest",
+        templateUrl : "views/fz.contest.html",
+        controller: "fz.contest.controller"
       })
       .state("/tutorial", {
         url: "/tutorial",
@@ -90,7 +106,9 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 });
 
  myapp.factory('mocha', function($rootScope,$state,$stateParams,$window,$ionicSlideBoxDelegate){
-	 this.submitPrediction = function($scope){
+    this.contest = {};
+    this.played_data = []; 
+    this.submitPrediction = function($scope){
             if($scope.index < $scope.data.length){
                 if(!$scope.data[$scope.index].hasOwnProperty('prediction')){
                     //for situations where prediction is automatically inserted by other functions
@@ -104,7 +122,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 if($scope.manualprice === true)
                     $scope.test.price = $scope.test.second_price;
                 
-                $scope.point_earned = $scope.data[$scope.index].point =  this.pointsMath($scope.index,prediction,$scope);
+                $scope.test.point_earned = $scope.data[$scope.index].point =  this.pointsMath($scope.index,prediction,$scope);
                 //$scope.data[$scope.index].point = pointsMath($scope.index,x);
                 $scope.show_points = true;
                 $scope.manualprice = false;
@@ -143,16 +161,28 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 
                 
             }else{
-                $scope.point_earned = this.getPoints($scope);
+                $scope.test.point_earned = this.getPoints($scope);
                 this.gameTimePlayed($scope);
                 this.getTokens($scope);
                 $scope.test.hideModal = false;
+                this.played_data = this.getPlayedData($scope.data);
                 this.takeChunk($scope);
                 //$location.path('/final');
                 //angular.element(document.querySelector('.modal')).modal('open');
             }
             
         };
+
+     this.getPlayedData = function(arr){
+        let newArr = [];
+        arr.forEach(function(item){
+            let capture = {};
+            capture.p_id = item.p_id;
+            capture.prediction = item.prediction;
+            newArr.push(capture);
+        });
+        return newArr
+     }
 	 
 	 this.pointsMath = function (index, val, $scope){
             realPrice = $scope.data[index].price;
@@ -258,7 +288,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         };
      
      this.getTokens = function ($scope){
-            var b = Number($scope.point_earned);
+            var b = Number($scope.test.point_earned);
             if(b >= 3750 && b <= 5750){
                $scope.test.token = 3;
             }
@@ -299,7 +329,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 	 this.resetGame = function($scope,a,b){
             $scope.show_points = false;
             $scope.manualprice = false;
-            $scope.point_earned = 0;
+            $scope.test.point_earned = 0;
             $scope.test.price=$scope.test.second_price=250;$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
             $scope.test.hideModal = true;
             if(b == true && a == 'practice'){
@@ -360,14 +390,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 				input[i] = itemAtIndex;
 			}
 			return input;
-        };
+     };
         
-        this.goDash = function(slider){
-            //$ionicSlideBoxDelegate.$getByHandle('slider').previous();
-            //slider._slidePrev(1000);
-            //slider._slideTo(0,500);
-            slider._slideNext(500);
-        }
+     this.goDash = function(slider){
+        //$ionicSlideBoxDelegate.$getByHandle('slider').previous();
+        //slider._slidePrev(1000);
+        //slider._slideTo(0,500);
+        slider._slideNext(500);
+     };
 	 
 	 return this;
  });
@@ -475,8 +505,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.apiCounter = 1;
         $scope.show_points = false;
         $scope.manualprice = false;
-        $scope.point_earned = 0;
         $scope.test = {price:250,second_price:250,start_time:null,end_time:null,menuhide:0,hideModal:true};
+        $scope.test.point_earned = 0;
         $scope.progress = 0;
         $scope.index = 0;
 	 	$scope.retryNum = 3;
@@ -524,7 +554,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 if($scope.manualprice === true)
                     $scope.test.price = $scope.test.second_price;
                 
-                $scope.point_earned = $scope.data[$scope.index].point =  pointsMath($scope.index,prediction);
+                $scope.test.point_earned = $scope.data[$scope.index].point =  pointsMath($scope.index,prediction);
                 //$scope.data[$scope.index].point = pointsMath($scope.index,x);
                 $scope.show_points = true;
                 $scope.manualprice = false;
@@ -569,10 +599,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 
                 
             }else{
-                $scope.point_earned = getPoints();
+                $scope.test.point_earned = getPoints();
                 gameTimePlayed();
                 getTokens();
                 $scope.test.hideModal = false;
+                mocha.played_data = mocha.getPlayedData($scope.data);
                 takeChunk();
                 //$location.path('/final');
                 //angular.element(document.querySelector('.modal')).modal('open');
@@ -611,7 +642,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.resetGame = function(a,b){
             $scope.show_points = false;
             $scope.manualprice = false;
-            $scope.point_earned = 0;
+            $scope.test.point_earned = 0;
             $scope.test.price=$scope.test.second_price=250;$scope.progress=0; $scope.test.start_time=$scope.test.end_time=null;
             $scope.test.hideModal = true;
             if(b == true && a == 'practice'){
@@ -652,14 +683,17 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.contestSubmit = function(form){
 			if(form.$valid){
 				$scope.contest.timestamp = moment().toISOString();
-				$scope.contest.points = $scope.point_earned;
-				$scope.contest.playtime = $scope.test.timePlayed;
-				$http.get('http://twistedlovebox.com/contest?name='+$scope.contest.name+"&phone="+$scope.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points+"&playtime="+$scope.contest.playtime)
+				$scope.contest.points = $scope.test.point_earned;
+                $scope.contest.playtime = $scope.test.timePlayed;
+                $scope.contest.played_data = JSON.stringify(mocha.played_data);
+                $http.get('http://twistedlovebox.com/contest?name='+$scope.contest.name+"&phone="+$scope.contest.phone+
+                "&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points+"&playtime="+$scope.contest.playtime+
+                "&played_data="+$scope.contest.played_data)
 				.then(function(res){
 					localStorage.name = $scope.contest.name;
 					localStorage.phone = $scope.contest.phone;
 					localStorage.prizeplaydate = moment().toISOString();
-					$scope.thankyou = true;
+					//$scope.thankyou = true;
 					//$scope.resetGame('dash');
 					$state.go('/leaderboard');
 				});
@@ -819,7 +853,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         }
      
         function getTokens(){
-            var b = Number($scope.point_earned);
+            var b = Number($scope.test.point_earned);
             if(b >= 3750 && b <= 5750){
                $scope.test.token = 3;
             }
@@ -892,10 +926,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 	myapp.controller('leaderboard.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout){
 		$scope.loader = true;
 		//$timeout(function(){$scope.loader = false;},3000)
-		var gametime = moment('2017/10/16','YYYY/MM/DD').toISOString();
-		$http.get('http://twistedlovebox.com/leaderboard?q=' + gametime)
+        var gametime = moment('2017/10/16','YYYY/MM/DD').toISOString();
+        var url = 'http://twistedlovebox.com/leaderboard?q=';
+        if($stateParams.mode === 'fz'){
+            url = 'http://twistedlovebox.com/fzleaderboard?q=';
+        }
+		$http.get(url + gametime)
 		.then(function(res){
-			//console.log(res);
+			console.log(res);
 			$scope.leaderList = [];
 			$scope.thisPlayer = false;
 			var number = localStorage.phone;
@@ -965,7 +1003,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'500',
                 max:'1000',
                 context:'',
-                subcategory:'jacket'
+                subcategory:'jacket',
+                p_id:'1'
             },
 			{
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21689320_127859157860810_5234811534567276544_n.jpg',
@@ -974,7 +1013,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'1998',
                 max:'2018',
                 context:'',
-                subcategory:''
+                subcategory:'',
+                p_id:'2'
             },
 			{
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18512847_296309494153999_6008173804130402304_n.jpg',
@@ -983,7 +1023,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'400',
                 max:'1000',
                 context:'',
-                subcategory:'duffle bag'
+                subcategory:'duffle bag',
+                p_id:'3'
             },
 			{
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19052186_1688222418151349_804088633102434304_n.jpg',
@@ -992,7 +1033,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'0',
                 max:'1',
                 context:'',
-                subcategory:''
+                subcategory:'',
+                p_id:'4'
             },
 			{
                 url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small',
@@ -1002,6 +1044,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 max:'3',
                 context:'',
                 subcategory:'',
+                p_id:'5',
 				options: [
 					{answer: 'Olga', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
 					{answer: 'Olena', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
@@ -1017,6 +1060,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 max:'3',
                 context:'',
                 subcategory:'',
+                p_id:'6',
 				options: [
 					{answer: 'James', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15048227_218441365259697_2371854405990350848_n.jpg'},
 					{answer: 'Michelle', url:'https://pbs.twimg.com/media/DDRp6L6W0AApnUF.jpg:small'},
@@ -1032,6 +1076,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 max:'600',
                 context:'',
                 subcategory:'',
+                p_id:'7'
             },
 			{
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14583368_219840081783732_5908804998388514816_n.jpg',
@@ -1041,6 +1086,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 max:'1',
                 context:'',
                 subcategory:'',
+                p_id:'8'
             },
 			{
                 url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg',
@@ -1050,6 +1096,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 max:'3',
                 context:'',
                 subcategory:'',
+                p_id:'9',
 				options: [
 					{answer: 'Lyndon', url:'http://fashionzone.ca/uploads/advisors/e5b202abb53bb394f9f365b8fa94fc95.jpg'},
 					{answer: 'Cammi', url:'http://fashionzone.ca/uploads/advisors/1c10e7de5ce1414b04761b5296b7be4c.jpg'},
@@ -1064,7 +1111,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'30',
                 max:'100',
                 context:'',
-                subcategory:'crop top'
+                subcategory:'crop top',
+                p_id:'10'
             },
 		];
 		
@@ -1114,6 +1162,58 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.startFz = function(){
             $state.go('/fzgame');
         };
+        $scope.goContest = function(){
+            $scope.test.hideModal = true;
+            if(mocha.safe(localStorage.name)){
+                //Pull saved user data if it exists
+                mocha.test = $scope.test;
+                mocha.contest.name = localStorage.name;
+                mocha.contest.phone = Number(localStorage.phone);
+            }
+            $state.go('/fzcontest');
+        };
 		
+    });
+    
+    myapp.controller('fz.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+        $scope.screen_big = mocha.checkWindow();
+        if($scope.screen_big !== true){
+            //This mimics a real life game loading thing. this can definitely be optimized later.
+            $timeout(function(){
+                $state.go('/fzdash');
+            },3000);
+        }
+        
+    });
+    
+    myapp.controller('fz.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+        $scope.mocha = mocha;
+        $scope.mocha.contest.signup =true;
+        $scope.contestSubmit = function(form){
+			if(form.$valid){
+                $scope.contest = {};
+				$scope.contest.timestamp = moment().toISOString();
+				$scope.contest.points = $scope.mocha.test.point_earned;
+                $scope.contest.playtime = $scope.mocha.test.timePlayed;
+                $scope.contest.played_data = JSON.stringify(mocha.played_data);
+                $scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
+                $http.get('http://twistedlovebox.com/fzcontest?name='+$scope.mocha.contest.name+"&phone="+
+                $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
+                +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
+				.then(function(res){
+					localStorage.name = $scope.mocha.contest.name;
+					localStorage.phone = $scope.mocha.contest.phone;
+					localStorage.prizeplaydate = moment().toISOString();
+					//$scope.thankyou = true;
+					//$scope.resetGame('dash');
+					$state.go('/fzleaderboard');
+				});
+			}else{
+				console.log('fuck no form not valid');
+				console.log(form);
+			}
+        };
+
+        
 	});
 
