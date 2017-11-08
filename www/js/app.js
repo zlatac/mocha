@@ -412,7 +412,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'1000',
                 max:'1500',
                 context:'',
-                subcategory:''
+                subcategory:'',
+                p_id:'1'
             },
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18950047_457101204639111_8252268334817476608_n.jpg',
@@ -421,7 +422,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'500',
                 max:'1000',
                 context:'',
-                subcategory:'jacket'
+                subcategory:'jacket',
+                p_id:'2'
             },
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/17076453_395943147440848_8888064781869645824_n.jpg',
@@ -430,7 +432,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'0',
                 max:'30',
                 context:'',
-                subcategory:''
+                subcategory:'',
+                p_id:'3'
             },
             {
                 url:'https://scontent.cdninstagram.com/t51.2885-15/sh0.08/e35/p640x640/16583180_163288994176752_6167586102346514432_n.jpg',
@@ -439,7 +442,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'500',
                 max:'1000',
                 context:'',
-                subcategory:'jacket'
+                subcategory:'jacket',
+                p_id:'4'
             },
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18095282_224668581353323_7557851820467421184_n.jpg',
@@ -448,7 +452,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'0',
                 max:'1',
                 context:'',
-                subcategory:''                
+                subcategory:'',
+                p_id:'5'                
             },
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18382007_1384574631589888_4089628285422534656_n.jpg',
@@ -457,7 +462,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'-100',
                 max:'-1',
                 context:'degrees',
-                subcategory:''
+                subcategory:'',
+                p_id:'6'
             },
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18011469_1775695206076417_9048892774320963584_n.jpg',
@@ -466,7 +472,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'1',
                 max:'20',
                 context:'Weeks',
-                subcategory:''
+                subcategory:'',
+                p_id:'7',
             },
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15101788_599006020224290_2198237972321533952_n.jpg',
@@ -475,7 +482,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'2010',
                 max:'2017',
                 context:'',
-                subcategory:''
+                subcategory:'',
+                p_id:'8'
             },
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/12818980_519161731596821_1859894505_n.jpg',
@@ -484,7 +492,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'800',
                 max:'1300',
                 context:'Litres',
-                subcategory:''
+                subcategory:'',
+                p_id:'9',
             },
             {
                 url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21372233_306885123111795_3977466434258206720_n.jpg',
@@ -493,7 +502,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 min:'0',
                 max:'1',
                 context:'',
-                subcategory:''
+                subcategory:'',
+                p_id:'10',
             },
             
         ];
@@ -519,7 +529,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         //$http.get('http://127.0.0.1:8000/mocha')
         $http.get('http://twistedlovebox.com/mocha?q=' + 250)
         .then(function(res){
-            console.log(res);
+            //console.log(res);
             $scope.apiData = res.data;
             $scope.prizeData = $scope.apiData.slice(120,135);
 			$scope.apiData = mocha.randomize($scope.apiData); //Shuffle the data for practice mode.
@@ -900,6 +910,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       };
     });
 
+    myapp.directive('fzMenuHeader', function() {
+        return {
+          templateUrl: 'views/fz.menu-header.html'
+          
+        };
+      });
+
 	myapp.directive('resultModal', function() {
       return {
         templateUrl: 'views/result.html'
@@ -930,6 +947,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         var url = 'http://twistedlovebox.com/leaderboard?q=';
         if($stateParams.mode === 'fz'){
             url = 'http://twistedlovebox.com/fzleaderboard?q=';
+            $scope.fz = true;
         }
 		$http.get(url + gametime)
 		.then(function(res){
