@@ -107,6 +107,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 
  myapp.factory('mocha', function($rootScope,$state,$stateParams,$window,$ionicSlideBoxDelegate){
     this.contest = {};
+    this.test = {};
     this.played_data = []; 
     this.submitPrediction = function($scope){
             if($scope.index < $scope.data.length){
@@ -1189,9 +1190,9 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         };
         $scope.goContest = function(){
             $scope.test.hideModal = true;
+            mocha.test = $scope.test;
             if(mocha.safe(localStorage.name)){
                 //Pull saved user data if it exists
-                mocha.test = $scope.test;
                 mocha.contest.name = localStorage.name;
                 mocha.contest.phone = Number(localStorage.phone);
             }
