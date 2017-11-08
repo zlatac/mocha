@@ -1023,7 +1023,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 
 	myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
 		angular.element(document.querySelector('body'))[0].style.borderTopColor='#f64348';
-		angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
+        angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
 		if(mocha.checkWindow() === true){
 			$state.go('/')
 		}
@@ -1153,6 +1153,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.data = [];
         angular.copy($scope.fz_data,$scope.data);
         $scope.fz = true;
+        $scope.prizeStartDate = moment('2017/11/07','YYYY/MM/DD');
+        $scope.prizeEndDate = moment('2017/11/10','YYYY/MM/DD');
         //$scope.game = $scope.data[0];
         $scope.index = 0;
         $scope.game = $scope.data[$scope.index];
