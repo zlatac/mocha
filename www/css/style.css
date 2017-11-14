@@ -48,6 +48,9 @@ span.card-title {
 .wully-color,wully-color:hover {
   background-color:  rgba(249, 53, 71, 0.91) !important;
 }
+.dmz-color,dmz-color:hover {
+  background-color:  #00b3f0 !important;
+}
 .btn-green,btn-green:hover {
   background-color:  rgba(83, 191, 83, 0.91) !important;
 }
@@ -56,6 +59,9 @@ span.card-title {
 }
 .btn-grey,btn-grey:hover {
   background-color:  #969696 !important;
+}
+.btn-dmz,btn-dmz:hover {
+  background-color:  #00b3f0 !important;
 }
 .btn-full {
   width: 100%;
@@ -116,18 +122,30 @@ height: 30px;
 width: 30px;
 margin-top: -12px;
 }
+input[type=range].dmz-range::-webkit-slider-thumb {
+  background-color: #00b3f0;
+  height: 30px;
+  width: 30px;
+  margin-top: -12px;
+  }
 input[type=range]::-moz-range-thumb {
 background-color: rgba(202, 26, 210, 0.9);
 }
 input[type=range].wully-range::-moz-range-thumb {
 background-color: rgba(224, 24, 43, 0.91);
 }
+input[type=range].dmz-range::-moz-range-thumb {
+  background-color: #00b3f0;
+  }
 input[type=range]::-ms-thumb {
 background-color: rgba(202, 26, 210, 0.9);
 }
 input[type=range].wully-range::-ms-thumb {
 background-color: rgba(224, 24, 43, 0.91);
 }
+input[type=range].wully-range::-ms-thumb {
+  background-color: #00b3f0;
+  }
 input[type=range]+.thumb.active {
 display: none;
 }

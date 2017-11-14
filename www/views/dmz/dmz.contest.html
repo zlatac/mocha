@@ -1,0 +1,27 @@
+<ion-view title="/dmzcontest">
+    <ion-content class="has-header">
+        <div class="container center-align">
+            <div class="sp animated flipInX">
+                <div class="row">
+                    <form name="contestForm" ng-submit="contestSubmit(contestForm)" style="width:100%" novalidate>
+                          <input type="text" name="name" placeholder="Full Name" ng-model="mocha.contest.name" class="animated" 
+								 ng-class="{'hasError': nameError = contestForm.name.$invalid && contestForm.$submitted,'shake': nameError}" required>
+                          <input type="number" name="phone" placeholder="Phone Number" ng-model="mocha.contest.phone" class="animated"
+						  ng-class="{'hasError': phoneError = contestForm.phone.$invalid && contestForm.$submitted, 'shake': phoneError}"required>
+                          <div class="switch" style="margin-bottom:20px;">
+                            <label>
+                              <input type="checkbox" ng-model="mocha.contest.signup">
+                              <span class="lever"></span>
+                            </label>
+                            <span>I am interested in a gaming pilot project for my brand.</span>
+                          </div>
+                          <input type="submit" class="waves-effect waves-light btn-dmz btn-large z-depth-4" value="Submit">
+                    </form>
+                </div>
+            </div>
+           
+        
+        </div>
+        
+    </ion-content>
+</ion-view>

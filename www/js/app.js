@@ -60,22 +60,22 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       })
 	  .state("/fzdash", {
         url: "/fzdash",
-        templateUrl : "views/fz.dash.html",
+        templateUrl : "views/fz/fz.dash.html",
 	  	controller: "fz.dash.controller"
       })
 	  .state("/fzgame", {
         url: "/fzgame",
-        templateUrl : "views/fz.game.html",
+        templateUrl : "views/fz/fz.game.html",
         controller: "fz.dash.controller"
       })
       .state("/fzlogin", {
         url: "/fzlogin",
-        templateUrl : "views/fz.login.html",
+        templateUrl : "views/fz/fz.login.html",
         controller: "fz.login.controller"
       })
       .state("/fzcontest", {
         url: "/fzcontest",
-        templateUrl : "views/fz.contest.html",
+        templateUrl : "views/fz/fz.contest.html",
         controller: "fz.contest.controller"
       })
       .state("/tutorial", {
@@ -85,6 +85,33 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       .state("/login", {
         url: "/login",
         templateUrl : "views/login.html"
+      })
+      .state("/dmzdash", {
+        url: "/dmzdash",
+        templateUrl : "views/dmz/dmz.dash.html",
+	  	controller: "dmz.dash.controller"
+      })
+      .state("/dmzgame", {
+        url: "/dmzgame",
+        templateUrl : "views/dmz/dmz.game.html",
+        controller: "dmz.dash.controller"
+      })
+      .state("/dmzlogin", {
+        url: "/dmzlogin",
+        templateUrl : "views/dmz/dmz.login.html",
+        controller: "dmz.login.controller"
+      })
+      .state("/dmzcontest", {
+        url: "/dmzcontest",
+        templateUrl : "views/dmz/dmz.contest.html",
+        controller: "dmz.contest.controller"
+      })
+      .state("/dmzleaderboard", {
+        url: "/dmzleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'dmz'},
+        cache: false
       });
     $urlRouterProvider.otherwise('/');
 })
@@ -541,7 +568,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         .then(function(){
             //$scope.menuhide = 0;
             $scope.game = $scope.data[$scope.index];
-            if($scope.screen_big !== true && !location.hash.includes('fz')){
+            if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
                     $state.go('/dash');
@@ -908,38 +935,45 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 
     myapp.directive('menuHeader', function() {
       return {
-        templateUrl: 'views/menu-header.html'
-        
+        templateUrl: 'views/menu-header.html' 
       };
     });
 
     myapp.directive('fzMenuHeader', function() {
         return {
-          templateUrl: 'views/fz.menu-header.html'
-          
+          templateUrl: 'views/fz/fz.menu-header.html'
         };
-      });
+    });
+
+    myapp.directive('dmzMenuHeader', function() {
+        return {
+          templateUrl: 'views/dmz/dmz.menu-header.html'
+        };
+    });
 
 	myapp.directive('resultModal', function() {
       return {
         templateUrl: 'views/result.html'
-        
       };
     });
 
     myapp.directive('fzResultModal', function() {
         return {
-          templateUrl: 'views/fz.result.html'
-          
+          templateUrl: 'views/fz/fz.result.html'          
         };
-      });
+    });
+
+    myapp.directive('dmzResultModal', function() {
+        return {
+          templateUrl: 'views/dmz/dmz.result.html'          
+        };
+    });
 
     myapp.directive('selectType', function() {
       return {
         link: function(scope, elem, attrs){
             angular.element('select').material_select();
-        }
-        
+        }        
       };
     });
 
@@ -950,7 +984,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       };
     });
 
-	myapp.controller('leaderboard.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout){
+	myapp.controller('leaderboard.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
 		$scope.loader = true;
 		//$timeout(function(){$scope.loader = false;},3000)
         var gametime = moment('2017/10/16','YYYY/MM/DD').toISOString();
@@ -982,11 +1016,30 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                     $scope.leaderList.push(item);
                 });
                 $scope.player = localStorage;
+                //report($scope.leaderList);
                 $scope.loader = false;
                 
             });
         };
         $scope.getList();
+        
+        function report(list){
+            //analytics avg report for each question that was predicted to get value perception of consumer/service product.
+            var basket = [];
+            function average(num){return num/list.length;};
+            list.forEach(function(item){
+                var obj = JSON.parse(item.played_data);
+                for(var x = 0; x < obj.length; x++){
+                    var index = obj[x].p_id;
+                    if(!mocha.safe(basket[index])){
+                        basket[index] = 0;
+                    }
+                    basket[index] += Number(obj[x].prediction);
+                }	
+            });
+            var output = basket.map(average);
+            console.log(basket,'report',output,'output');
+        }
 		
 	});
 	
@@ -1021,11 +1074,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 		});
 	});
 
-	myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
+    //FASHION ZONE CONTROLLERS BELOW
+    myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
 		angular.element(document.querySelector('body'))[0].style.borderTopColor='#f64348';
         angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
 		if(mocha.checkWindow() === true){
-			$state.go('/')
+			$state.go('/');
 		}
 		
 		$scope.fz_data = [
@@ -1250,5 +1304,244 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         };
 
         
-	});
+    });
+
+    //DMZ CONTROLLERS BELOW
+    myapp.controller('dmz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
+		angular.element(document.querySelector('body'))[0].style.borderTopColor='#00b3f0';
+        angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu dmz-color';
+		if(mocha.checkWindow() === true){
+			$state.go('/');
+		}
+		
+		$scope.dmz_data = [
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18950047_457101204639111_8252268334817476608_n.jpg',
+                price:'2010',
+                question:'When was DMZ founded?',
+                min:'1991',
+                max:'2017',
+                context:'',
+                subcategory:'',
+                p_id:'1'
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21689320_127859157860810_5234811534567276544_n.jpg',
+                price:'1',
+                question:'Who was the first executive director of DMZ?',
+                min:'0',
+                max:'3',
+                context:'',
+                subcategory:'',
+                p_id:'2',
+                options: [
+					{answer: 'Abdullah Snobar', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
+					{answer: 'Valerie Fox', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
+					{answer: 'Hussaam Ayyad', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14134779_987256658060687_458447697_n.jpg'},
+					{answer: 'Hussan Rahnama', url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small'}
+				]
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18512847_296309494153999_6008173804130402304_n.jpg',
+                price:'3',
+                question:'Which DMZ startup is building affordable educational tablets for children in poor countries?',
+                min:'0',
+                max:'3',
+                context:'',
+                subcategory:'',
+                p_id:'3',
+                options: [
+					{answer: 'Algocian', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
+					{answer: 'Erplain', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
+					{answer: 'Flybits', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14134779_987256658060687_458447697_n.jpg'},
+                    {answer: 'Rumie', url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small'}
+				]
+
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19052186_1688222418151349_804088633102434304_n.jpg',
+                price:'1',
+                question:'Sheldon Levy is not the Ryerson president that helped launch DMZ? <p>0 - Yes</p> <p>1 - No</p>',
+                min:'0',
+                max:'1',
+                context:'',
+                subcategory:'',
+                p_id:'4'
+            },
+			{
+                url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small',
+                price:'2',
+                question:'Who is the Startup Services Lead at DMZ?',
+                min:'0',
+                max:'3',
+                context:'',
+                subcategory:'',
+                p_id:'5',
+				options: [
+					{answer: 'Ahmed Saleh', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
+					{answer: 'Laith Shukri', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
+					{answer: 'Shane Flynn', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14134779_987256658060687_458447697_n.jpg'},
+					{answer: 'Hussaam Ayyad', url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small'}
+				]
+            },
+			{
+                url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small',
+                price:'312',
+                question:'How many startups have incubated and accelerated in DMZ since inception?',
+                min:'100',
+                max:'600',
+                context:'',
+                subcategory:'',
+                p_id:'6'
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/22427059_141471486472588_9135289309950115840_n.jpg',
+                price:'61',
+                question:'How many startup members does DMZ currently have?',
+                min:'20',
+                max:'200',
+                context:'',
+                subcategory:'',
+                p_id:'7'
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14583368_219840081783732_5908804998388514816_n.jpg',
+                price:'391',
+                question:'How much investment has been raised by DMZ startups?',
+                min:'60',
+                max:'500',
+                context:'million',
+                subcategory:'',
+                p_id:'8'
+            },
+			{
+                url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg',
+                price:'3',
+                question:'Which DMZ startup is building an in-space telecommunication network for space-borne assets?',
+                min:'0',
+                max:'3',
+                context:'',
+                subcategory:'',
+                p_id:'9',
+				options: [
+					{answer: 'Fortuna AI', url:'http://fashionzone.ca/uploads/advisors/e5b202abb53bb394f9f365b8fa94fc95.jpg'},
+					{answer: 'Hubbli', url:'http://fashionzone.ca/uploads/advisors/1c10e7de5ce1414b04761b5296b7be4c.jpg'},
+					{answer: 'Komodo OpenLab', url:'http://fashionzone.ca/uploads/advisors/9ab1d98495e97433107f9119f91db587.jpg'},
+					{answer: 'Kepler Communications', url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg'}
+                ]
+            },
+			{
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14550126_308480726183912_5838350698462314496_n.jpg',
+                price:'2962',
+                question:'How many jobs have been created through DMZ?',
+                min:'500',
+                max:'5000',
+                context:'jobs',
+                subcategory:'',
+                p_id:'10'
+            },
+		];
+		
+        
+        $scope.data = [];
+        angular.copy($scope.dmz_data,$scope.data);
+        $scope.dmz = true;
+        $scope.prizeStartDate = moment('2017/11/07','YYYY/MM/DD');
+        $scope.prizeEndDate = moment('2017/11/10','YYYY/MM/DD');
+        //$scope.game = $scope.data[0];
+        $scope.index = 0;
+        $scope.game = $scope.data[$scope.index];
+        $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
+        $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+        mocha.startTime($scope);
+        $scope.mocha = mocha; // expose service to the view
+        $scope.hide_question = false;
+        mocha.dmz = true;
+        console.log($scope.data);
+        
+		
+		$scope.switchUp = function(){
+			//console.log(game);
+			if($scope.safe($scope.game.options)){
+			   	$scope.game.url = $scope.game.options[$scope.test.price].url;
+				$scope.game.context =  $scope.game.options[$scope.test.price].answer;
+				if($scope.test.price !==  $scope.game.price){
+					//this will make sure that the player gets zero if they choose the wrong option
+                    $scope.data[$scope.index].prediction = '100';
+				   }else{
+                    $scope.data[$scope.index].prediction = $scope.test.price;
+				   }
+			   }
+		};
+		
+		$scope.dmzSubmit = function(){mocha.submitPrediction($scope)};
+		$scope.dmzNextProduct = function(){
+			mocha.nextProduct($scope);
+			$scope.switchUp();
+		};
+		$scope.resetGame = function(){mocha.resetGame($scope)};
+		$scope.inputShow = function(){mocha.inputShow($scope)};
+		$scope.menuHide = function(){mocha.menuHide($scope)};
+		$scope.isPredict = function(){
+			if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') || $scope.game.question.includes('investment'))){
+				return true;
+			}
+        };
+        $scope.startDmz = function(){
+            $state.go('/dmzgame');
+        };
+        $scope.goContest = function(){
+            $scope.test.hideModal = true;
+            mocha.test = $scope.test;
+            if(mocha.safe(localStorage.name)){
+                //Pull saved user data if it exists
+                mocha.contest.name = localStorage.name;
+                mocha.contest.phone = Number(localStorage.phone);
+            }
+            $state.go('/dmzcontest');
+        };
+		
+    });
+    
+    myapp.controller('dmz.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+        $scope.screen_big = mocha.checkWindow();
+        if($scope.screen_big !== true){
+            //This mimics a real life game loading thing. this can definitely be optimized later.
+            $timeout(function(){
+                $state.go('/dmzdash');
+            },3000);
+        }
+        
+    });
+    
+    myapp.controller('dmz.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+        $scope.mocha = mocha;
+        $scope.mocha.contest.signup =true;
+        $scope.contestSubmit = function(form){
+			if(form.$valid){
+                $scope.contest = {};
+				$scope.contest.timestamp = moment().toISOString();
+				$scope.contest.points = $scope.mocha.test.point_earned;
+                $scope.contest.playtime = $scope.mocha.test.timePlayed;
+                $scope.contest.played_data = JSON.stringify(mocha.played_data);
+                $scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
+                $http.get('https://styleminions.co/api/fzcontest?name='+$scope.mocha.contest.name+"&phone="+
+                $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
+                +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
+				.then(function(res){
+					localStorage.name = $scope.mocha.contest.name;
+					localStorage.phone = $scope.mocha.contest.phone;
+					localStorage.prizeplaydate = moment().toISOString();
+					//$scope.thankyou = true;
+					//$scope.resetGame('dash');
+					$state.go('/dmzleaderboard');
+				});
+			}else{
+				console.log('fuck no form not valid');
+				console.log(form);
+			}
+        };
+
+        
+    });
 

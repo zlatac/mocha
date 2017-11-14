@@ -1,0 +1,25 @@
+<div class="bar bar-header" style="background-color:rgba(125, 125, 125, 0.43);height:60px;" ng-class="{'hide':test.menuhide%2 == 0}">
+    <div class="row center-align" style="color:white;">
+        <div class="col">
+            <a ui-sref="/dmzdash" ng-click="menuHide()">
+                <i class="material-icons">home</i>
+                <div>Home</div>
+            </a>
+        </div>
+        <div class="col">
+            <a ui-sref="/dmzleaderboard" ng-click="menuHide()">
+                <i class="material-icons">dashboard</i>
+              <div>Leaderboard</div>
+            </a>
+        </div>
+<!--          <div class="col"><i class="material-icons">attach_money</i><div>Redeem</div></div>-->
+        <div class="col">
+            <a ui-sref="/dmzleaderboard" ng-click="menuHide()">
+                <i class="material-icons">attach_money</i>
+                <div>Winners</div>
+            </a>
+        </div>
+        <div class="col"><i class="material-icons">person</i><div>Profile</div></div>
+    </div>
+
+</div>
