@@ -1450,8 +1450,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.data = [];
         angular.copy($scope.dmz_data,$scope.data);
         $scope.dmz = true;
-        $scope.prizeStartDate = moment('2017/11/07','YYYY/MM/DD');
-        $scope.prizeEndDate = moment('2017/11/10','YYYY/MM/DD');
+        $scope.prizeStartDate = moment('2017/11/15','YYYY/MM/DD');
+        $scope.prizeEndDate = moment('2017/11/20','YYYY/MM/DD');
         //$scope.game = $scope.data[0];
         $scope.index = 0;
         $scope.game = $scope.data[$scope.index];
@@ -1461,7 +1461,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         $scope.mocha = mocha; // expose service to the view
         $scope.hide_question = false;
         mocha.dmz = true;
-        console.log($scope.data);
+        //console.log($scope.data);
         
 		
 		$scope.switchUp = function(){
@@ -1531,7 +1531,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 				$scope.contest.points = $scope.mocha.test.point_earned;
                 $scope.contest.playtime = $scope.mocha.test.timePlayed;
                 $scope.contest.played_data = JSON.stringify(mocha.played_data);
-                $scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
+                //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
+                $scope.contest.signup = 0;
                 $http.get('https://styleminions.co/api/dmzcontest?name='+$scope.mocha.contest.name+"&phone="+
                 $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
                 +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
@@ -1545,7 +1546,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 				});
 			}else{
 				console.log('fuck no form not valid');
-				console.log(form);
+				//console.log(form);
 			}
         };
 
