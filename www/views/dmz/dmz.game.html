@@ -27,8 +27,8 @@
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
                   <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}">
-                      <span ng-class="{hide:isPredict() !== true}">$</span><span ng-class="{hide:mocha.safe(game.options)}">{{test.price}}</span> {{game.context}} 
-                      <span class="right"><i class="material-icons" ng-class="{hide:show_points == true || mocha.safe(game.options)}">edit</i></span>
+                      <span ng-class="{hide:isPredict() !== true}">$</span><span ng-class="{hide:mocha.safe(game.options)||show_radio}">{{test.price}}</span> {{game.context}} 
+                      <span class="right"><i class="material-icons" ng-class="{hide:show_points == true||mocha.safe(game.options)||show_radio}">edit</i></span>
                   </p>
     
                   <div ng-class="{hide: manualprice !== true}">
@@ -46,14 +46,26 @@
                 <div class="progress" style="margin-top:0px;background-color:#dadcda;">
                     <div class="determinate btn-black" style="width: {{progress}}%"></div>
                 </div>
-                <form ng-class="{hide: show_points == true}">
-                    <p class="range-field" ng-if="manualprice == false">
+                <form ng-class="{hide: show_points == true}" name="form">
+                    <p class="range-field" ng-if="manualprice == false && !show_radio">
                       <input type="range" class="dmz-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-change="switchUp(game)"/>
                     </p>
+                    <div class="row" ng-if="show_radio">
+                        <div class="col">
+                            <input class="with-gap" name="group1" type="radio" id="test3" ng-model="test.price_radio" value="1"
+                                   ng-click="radioFunc()"/>
+                            <label for="test3" style="color:black;">Yes</label>
+                        </div>
+                        <div class="col">
+                                <input class="with-gap" name="group1" type="radio" id="test4" ng-model="test.price_radio" value="0"
+                                       ng-click="radioFunc()"/>
+                                <label for="test4" style="color:black;">No</label>
+                            </div>
+                    </div>
                 </form>
                 <br>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-black animated fadeIn"
-                   ng-click="dmzSubmit()"
+                   ng-click="dmzSubmit()" ng-disabled="show_radio && !mocha.safe(form.group1.$modelValue)"
                    ng-class="{'hide': show_points == true}">
                     <span>ENTER</span>
                 </a>

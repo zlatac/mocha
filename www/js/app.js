@@ -337,10 +337,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         };
 	 
 	 this.inputShow = function($scope){
-            if($scope.show_points !== true && !this.safe($scope.game.options)){
-                $scope.manualprice = true;
+            if($scope.show_points !== true && !this.safe($scope.game.options) && !$scope.show_radio){
                 //unfortunately HTML range slider returns price as string instead of number
                 $scope.test.second_price = Number($scope.test.price);
+                $scope.manualprice = true;
             }
         };
         
@@ -1365,7 +1365,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 			{
                 url:'http://www.digitaljournal.com/img/6/8/1/5/3/0/i/1/1/6/o/SheldonLevyPage26big.jpg',
                 price:'1',
-                question:'Sheldon Levy is not the Ryerson president that helped launch DMZ? <p>0 - Yes</p> <p>1 - No</p>',
+                question:'Sheldon Levy is the Ryerson president that helped launch DMZ? <p>- Yes</p> <p>- No</p>',
                 min:'0',
                 max:'1',
                 context:'',
@@ -1460,6 +1460,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         mocha.startTime($scope);
         $scope.mocha = mocha; // expose service to the view
         $scope.hide_question = false;
+        $scope.show_radio = false;
         mocha.dmz = true;
         //console.log($scope.data);
         
@@ -1477,6 +1478,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 }else{
                     $scope.data[$scope.index].prediction = $scope.test.price;
                 }
+            }
+
+            if($scope.game.min === '0' & $scope.game.max === '1'){
+                $scope.show_radio = true;
+            }else{
+                $scope.show_radio = false;
             }
 		};
 		
@@ -1506,6 +1513,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 mocha.contest.phone = Number(localStorage.phone);
             }
             $state.go('/dmzcontest');
+        };
+        $scope.radioFunc = function(){
+            $scope.test.price = $scope.test.price_radio;
+            $scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no'
         };
 		
     });
