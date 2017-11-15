@@ -1383,7 +1383,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 p_id:'5',
 				options: [
 					{answer: 'Ahmed', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1605-e1486574518694.jpg'},
-					{answer: 'Laith', url:'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAegAAAAJGJlYzM3N2FkLWRmNzItNDY1Ni04MmE1LTEzMGVmMDM1ZjdlMA.jpg'},
+					{answer: 'Calypso', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1785-e1486573711279.jpg'},
 					{answer: 'Shane', url:'https://talent2tconference.com/wp-content/uploads/2017/09/Shane.png'},
 					{answer: 'Hussaam', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1-5-e1485046459651.png'}
 				]
@@ -1440,7 +1440,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 question:'How many jobs have been created through DMZ?',
                 min:'500',
                 max:'5000',
-                context:'',
+                context:'jobs',
                 subcategory:'',
                 p_id:'10'
             },
