@@ -1,6 +1,7 @@
  <ion-view title="/contest">
-	<menu-header ng-if="!fz"></menu-header>
+	<menu-header ng-if="!fz && !dmz"></menu-header>
 	<fz-menu-header ng-if="fz"></fz-menu-header>
+	<dmz-menu-header ng-if="dmz"></dmz-menu-header>
 	<menu-button></menu-button>
 	<loader ng-class="{'hide': !loader}"></loader>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">

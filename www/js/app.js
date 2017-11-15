@@ -180,7 +180,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 //$scope.manualprice = false;
                 $scope.game = $scope.data[$scope.index];
                 $scope.progress = (($scope.index)/$scope.data.length)*100;
-                if(location.hash.includes('fz') || $scope.wully == true){
+                if(location.hash.includes('dmz') || location.hash.includes('fz') || $scope.wully == true){
                    //$scope.test.price = $scope.test.second_price = 5;
                    $scope.test.price = $scope.test.second_price = Number($scope.game.max);
                     //angular.element(document.querySelectorAll('input[type="range"]'))[3].value =700;
@@ -929,7 +929,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
     
     myapp.directive('menuButton', function() {
       return {
-        template: '<a class="btn-menu main-color" ng-click="menuHide()" ng-class="{\'main-color\':wully !== true, \'wully-color\':wully==true || fz==true}"><i class="material-icons" style="font-size:35px">menu</i></a>'
+        templateUrl: 'views/menu-button.html'
       };
     });
 
@@ -992,6 +992,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         if($stateParams.mode === 'fz'){
             url = 'https://styleminions.co/api/fzleaderboard?q=';
             $scope.fz = true;
+        }
+        if($stateParams.mode === 'dmz'){
+            url = 'https://styleminions.co/api/dmzleaderboard?q=';
+            $scope.dmz = true;
         }
         $scope.getList = function(){
             $scope.loader = true;
@@ -1077,7 +1081,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
     //FASHION ZONE CONTROLLERS BELOW
     myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
 		angular.element(document.querySelector('body'))[0].style.borderTopColor='#f64348';
-        angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
+        //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
 		if(mocha.checkWindow() === true){
 			$state.go('/');
 		}
@@ -1309,14 +1313,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
     //DMZ CONTROLLERS BELOW
     myapp.controller('dmz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
 		angular.element(document.querySelector('body'))[0].style.borderTopColor='#00b3f0';
-        angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu dmz-color';
+        //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu dmz-color';
 		if(mocha.checkWindow() === true){
 			$state.go('/');
 		}
 		
 		$scope.dmz_data = [
 			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18950047_457101204639111_8252268334817476608_n.jpg',
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.44.1080.1080/22221390_533359833665379_7213411321822314496_n.jpg',
                 price:'2010',
                 question:'When was DMZ founded?',
                 min:'1991',
@@ -1326,7 +1330,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 p_id:'1'
             },
 			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21689320_127859157860810_5234811534567276544_n.jpg',
+                url:'https://cdn.technologyreview.com/i/legacy/hossein.rahnama.jpg',
                 price:'1',
                 question:'Who was the first executive director of DMZ?',
                 min:'0',
@@ -1335,14 +1339,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 subcategory:'',
                 p_id:'2',
                 options: [
-					{answer: 'Abdullah Snobar', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
-					{answer: 'Valerie Fox', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
-					{answer: 'Hussaam Ayyad', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14134779_987256658060687_458447697_n.jpg'},
-					{answer: 'Hussan Rahnama', url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small'}
+					{answer: 'Abdullah', url:'http://notablelife.com/media/2017/03/DMZ-Ryerson-Paul-Steward-Photography-19.jpg'},
+					{answer: 'Valerie', url:'http://www.womenofinfluence.ca/wp-content/uploads/2017/03/valerie-fox_featured-image.jpg'},
+					{answer: 'Hussaam', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1-5-e1485046459651.png'},
+					{answer: 'Hussan', url:'https://cdn.technologyreview.com/i/legacy/hossein.rahnama.jpg'}
 				]
             },
 			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18512847_296309494153999_6008173804130402304_n.jpg',
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/18513275_665066930370249_2577613984060407808_n.jpg',
                 price:'3',
                 question:'Which DMZ startup is building affordable educational tablets for children in poor countries?',
                 min:'0',
@@ -1351,15 +1355,15 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 subcategory:'',
                 p_id:'3',
                 options: [
-					{answer: 'Algocian', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
-					{answer: 'Erplain', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
-					{answer: 'Flybits', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14134779_987256658060687_458447697_n.jpg'},
-                    {answer: 'Rumie', url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small'}
+					{answer: 'Algocian', url:''},
+					{answer: 'Erplain', url:''},
+					{answer: 'Flybits', url:''},
+                    {answer: 'Rumie', url:''}
 				]
 
             },
 			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19052186_1688222418151349_804088633102434304_n.jpg',
+                url:'http://www.digitaljournal.com/img/6/8/1/5/3/0/i/1/1/6/o/SheldonLevyPage26big.jpg',
                 price:'1',
                 question:'Sheldon Levy is not the Ryerson president that helped launch DMZ? <p>0 - Yes</p> <p>1 - No</p>',
                 min:'0',
@@ -1378,14 +1382,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 subcategory:'',
                 p_id:'5',
 				options: [
-					{answer: 'Ahmed Saleh', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
-					{answer: 'Laith Shukri', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
-					{answer: 'Shane Flynn', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14134779_987256658060687_458447697_n.jpg'},
-					{answer: 'Hussaam Ayyad', url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small'}
+					{answer: 'Ahmed', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1605-e1486574518694.jpg'},
+					{answer: 'Laith', url:'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAegAAAAJGJlYzM3N2FkLWRmNzItNDY1Ni04MmE1LTEzMGVmMDM1ZjdlMA.jpg'},
+					{answer: 'Shane', url:'https://talent2tconference.com/wp-content/uploads/2017/09/Shane.png'},
+					{answer: 'Hussaam', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1-5-e1485046459651.png'}
 				]
             },
 			{
-                url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small',
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/18012099_1390680900975189_404795968953778176_n.jpg',
                 price:'312',
                 question:'How many startups have incubated and accelerated in DMZ since inception?',
                 min:'100',
@@ -1395,7 +1399,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 p_id:'6'
             },
 			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/22427059_141471486472588_9135289309950115840_n.jpg',
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/14583300_1313365472057447_5115198945936539648_n.jpg',
                 price:'61',
                 question:'How many startup members does DMZ currently have?',
                 min:'20',
@@ -1405,7 +1409,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 p_id:'7'
             },
 			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14583368_219840081783732_5908804998388514816_n.jpg',
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c136.0.808.808/13167230_1720280664926144_1775319026_n.jpg',
                 price:'391',
                 question:'How much investment has been raised by DMZ startups?',
                 min:'60',
@@ -1415,7 +1419,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 p_id:'8'
             },
 			{
-                url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg',
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/18443672_1638498986164746_5569293880953667584_n.jpg',
                 price:'3',
                 question:'Which DMZ startup is building an in-space telecommunication network for space-borne assets?',
                 min:'0',
@@ -1424,19 +1428,19 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 subcategory:'',
                 p_id:'9',
 				options: [
-					{answer: 'Fortuna AI', url:'http://fashionzone.ca/uploads/advisors/e5b202abb53bb394f9f365b8fa94fc95.jpg'},
-					{answer: 'Hubbli', url:'http://fashionzone.ca/uploads/advisors/1c10e7de5ce1414b04761b5296b7be4c.jpg'},
-					{answer: 'Komodo OpenLab', url:'http://fashionzone.ca/uploads/advisors/9ab1d98495e97433107f9119f91db587.jpg'},
-					{answer: 'Kepler Communications', url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg'}
+					{answer: 'Fortuna', url:''},
+					{answer: 'Hubbli', url:''},
+					{answer: 'Komodo', url:''},
+					{answer: 'Kepler', url:''}
                 ]
             },
 			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14550126_308480726183912_5838350698462314496_n.jpg',
+                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/21294394_508033522874860_3400474622133534720_n.jpg',
                 price:'2962',
                 question:'How many jobs have been created through DMZ?',
                 min:'500',
                 max:'5000',
-                context:'jobs',
+                context:'',
                 subcategory:'',
                 p_id:'10'
             },
@@ -1463,15 +1467,17 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 		$scope.switchUp = function(){
 			//console.log(game);
 			if($scope.safe($scope.game.options)){
-			   	$scope.game.url = $scope.game.options[$scope.test.price].url;
+                if(mocha.safe($scope.game.options[$scope.test.price].url)){
+                    $scope.game.url = $scope.game.options[$scope.test.price].url;
+                }
 				$scope.game.context =  $scope.game.options[$scope.test.price].answer;
 				if($scope.test.price !==  $scope.game.price){
-					//this will make sure that the player gets zero if they choose the wrong option
+                    //this will make sure that the player gets zero if they choose the wrong option
                     $scope.data[$scope.index].prediction = '100';
-				   }else{
+                }else{
                     $scope.data[$scope.index].prediction = $scope.test.price;
-				   }
-			   }
+                }
+            }
 		};
 		
 		$scope.dmzSubmit = function(){mocha.submitPrediction($scope)};
@@ -1483,7 +1489,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 		$scope.inputShow = function(){mocha.inputShow($scope)};
 		$scope.menuHide = function(){mocha.menuHide($scope)};
 		$scope.isPredict = function(){
-			if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') || $scope.game.question.includes('investment'))){
+            if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') 
+               || $scope.game.question.includes('investment'))){
 				return true;
 			}
         };
@@ -1525,7 +1532,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 $scope.contest.playtime = $scope.mocha.test.timePlayed;
                 $scope.contest.played_data = JSON.stringify(mocha.played_data);
                 $scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
-                $http.get('https://styleminions.co/api/fzcontest?name='+$scope.mocha.contest.name+"&phone="+
+                $http.get('https://styleminions.co/api/dmzcontest?name='+$scope.mocha.contest.name+"&phone="+
                 $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
                 +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
 				.then(function(res){
