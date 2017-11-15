@@ -337,7 +337,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         };
 	 
 	 this.inputShow = function($scope){
-            if($scope.show_points !== true){
+            if($scope.show_points !== true && !this.safe($scope.game.options)){
                 $scope.manualprice = true;
                 //unfortunately HTML range slider returns price as string instead of number
                 $scope.test.second_price = Number($scope.test.price);
