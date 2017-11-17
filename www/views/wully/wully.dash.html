@@ -1,5 +1,5 @@
-<ion-view title="/dash">
-<menu-header></menu-header>
+<ion-view title="/wullydash">
+<wully-menu-header></wully-menu-header>
 <menu-button></menu-button>
 <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
     <div class="container center-align">
@@ -8,13 +8,13 @@
               <div class="card-panel z-depth-1" style="margin-top:60px;">
                 <div class="row">
 <!--                    <img class="circle profile z-depth-3" src="https://scontent-yyz1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10888392_10153073531899736_2293866441272698715_n.jpg?oh=f6166190cf97f3fbaef5514d73598aea&oe=59A6B966">-->
-                    <img class="circle profile z-depth-3" ng-src="{{dashimage}}">
+                    <img class="circle profile z-depth-3" ng-src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/s150x150/16908361_720960684745218_2933981757210361856_a.jpg" >
                 </div>
 				<div class="clearfix"></div>
                 <div class="row">
                     <!--<div class="col">Tokens</div>
                     <div class="col">Points</div> -->
-					<div class="col">Predict the price, gain the most points and win $$ to shop anywhere.</div>
+					<div class="col">Welcome to Wully Outerwear's trivia game. Get the most points to win the $$ prize.</div>
                 </div>                 
 
               </div>
@@ -22,22 +22,21 @@
       </row>
         
       <row>
-          <div class="card-panel" ng-class="{'hide':thankyou !== true}">
-            <a class="btn btn-full btn-large waves-effect waves-light" 
-			   ng-class="{'wully-color': wully, 'main-color': !wully}">
+          <div class="card-panel" ng-class="{'hide':!mocha.playedAlready(prizeStartDate,prizeEndDate)}">
+            <a class="btn btn-full btn-large waves-effect waves-light btn-wully" ui-sref="/wullyleaderboard">
                 Thank you for playing!!
             </a>
-        </div>      
+          </div>      
       </row>
         
-      <row>
+      <!--<row>
           <div class="card-panel" ng-class="{'hide':wully === true}">
-              <!--<a ui-sref="/game" class="btn-green btn-floating btn-large waves-effect waves-light pulse"
+              <a ui-sref="/game" class="btn-green btn-floating btn-large waves-effect waves-light pulse"
                    ng-click="startTime()" disabled>
                     <i class="material-icons ">play_arrow</i>
-              </a>-->
+              </a>
               <a class="btn btn-full btn-large waves-effect waves-light btn-green" ng-click="startPrize()" 
-                 ng-disabled="wully === true || mocha.playedAlready(prizeStartDate,prizeEndDate)">
+                 ng-disabled="wully === true">
                 Prize Mode - $100 <i class="material-icons right">attach_money</i>
             </a>
           </div>
@@ -49,7 +48,7 @@
                 Practice Mode <i class="material-icons right">games</i>
             </a>
         </div>      
-      </row>       
+      </row>-->       
 <!--
       <row>
           <div class="card-panel">
@@ -70,8 +69,10 @@
       </row>-->
         
       <row>
-          <div class="card-panel" ng-class="{'hide':wully_dashboard < 2}">
-            <a class="btn btn-full btn-large waves-effect waves-light btn-wully" ng-click="startWully()" style="background-color:black" ng-disabled="wully==='cl'">
+          <div class="card-panel">
+            <a class="btn btn-full btn-large waves-effect waves-light" ng-click="startWully()" 
+            style="background-color:black"
+            ng-disabled="mocha.playedAlready(prizeStartDate,prizeEndDate)">
                 Start Game
             </a>
         </div>      

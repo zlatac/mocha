@@ -11,7 +11,7 @@ var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['sass','mix']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -48,4 +48,14 @@ gulp.task('git-check', function(done) {
     process.exit(1);
   }
   done();
+});
+
+gulp.task('mix', function(){
+  return gulp.src(['www/js/app.js', 'www/js/wully.js'])
+      .pipe(concat('main.js'))
+      .pipe(gulp.dest('www/js'));
+});
+
+gulp.task('watch', function() {
+  gulp.watch('www/js/*.js', ['mix']);
 });
