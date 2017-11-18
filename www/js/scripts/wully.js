@@ -10,7 +10,8 @@ myapp.directive('wullyResultModal', function() {
       templateUrl: 'views/wully/wully.result.html'          
     };
 });
-//WULLY is coming up then down CONTROLLERS BELOW
+
+//WULLY CONTROLLERS BELOW
 myapp.controller('wully.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='rgba(224, 24, 43, 0.91)';
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
@@ -149,7 +150,7 @@ myapp.controller('wully.dash.controller', function($scope,$location,$rootScope,$
             }
             $scope.game.context =  $scope.game.options[$scope.test.price].answer;
             if($scope.test.price !==  $scope.game.price){
-                //this will make sure that the player gets zero if they choose the wrong option
+                //this will make sure that the player gets zero points if they choose the wrong option
                 $scope.data[$scope.index].prediction = '100';
             }else{
                 $scope.data[$scope.index].prediction = $scope.test.price;

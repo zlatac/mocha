@@ -51,11 +51,11 @@ gulp.task('git-check', function(done) {
 });
 
 gulp.task('mix', function(){
-  return gulp.src(['www/js/app.js', 'www/js/wully.js'])
+  return gulp.src(['www/js/scripts/**/*.js'])
       .pipe(concat('main.js'))
       .pipe(gulp.dest('www/js'));
 });
 
 gulp.task('watch', function() {
-  gulp.watch('www/js/*.js', ['mix']);
+  gulp.watch('www/js/scripts/**/*.js', ['mix']);
 });
