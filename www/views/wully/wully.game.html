@@ -48,8 +48,7 @@
                 </div>
                 <form ng-class="{hide: show_points == true}" name="form">
                     <p class="range-field" ng-if="manualprice == false && !show_radio">
-                      <input type="range" class="wully-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" 
-                            ng-change="switchUp(game)" on-release="scroll()"/>
+                      <input type="range" class="wully-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-change="switchUp(game)"/>
                     </p>
                     <div class="row" ng-if="show_radio">
                         <div class="col">
@@ -67,7 +66,7 @@
                 <br>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-black animated fadeIn"
                    ng-click="wullySubmit()" ng-disabled="show_radio && !mocha.safe(form.group1.$modelValue)"
-                   ng-class="{'hide': show_points == true}" id="enter">
+                   ng-class="{'hide': show_points == true}">
                     <span>ENTER</span>
                 </a>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 wully-color"
