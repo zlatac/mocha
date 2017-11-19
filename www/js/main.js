@@ -1503,7 +1503,7 @@ myapp.directive('wullyResultModal', function() {
 });
 
 //WULLY CONTROLLERS BELOW
-myapp.controller('wully.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
+myapp.controller('wully.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha,$anchorScroll){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='rgba(224, 24, 43, 0.91)';
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
     if(mocha.checkWindow() === true){
@@ -1653,6 +1653,8 @@ myapp.controller('wully.dash.controller', function($scope,$location,$rootScope,$
         }else{
             $scope.show_radio = false;
         }
+
+        $scope.scroll();
     };
     
     $scope.wullySubmit = function(){mocha.submitPrediction($scope)};
@@ -1684,8 +1686,22 @@ myapp.controller('wully.dash.controller', function($scope,$location,$rootScope,$
     };
     $scope.radioFunc = function(){
         $scope.test.price = $scope.test.price_radio;
-        $scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no'
+        $scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no';
+        $scope.scroll();
     };
+
+    $scope.scroll = function(undo){
+        if(!$location.hash().includes('enter')){
+            $location.hash('enter');
+            $anchorScroll();
+            console.log('hey');
+        }
+        if(undo === false){
+            $location.hash('');
+            $anchorScroll();
+        }        
+    };
+
     
 });
 
