@@ -1,13 +1,9 @@
- <ion-view title="/contest">
-	<menu-header ng-if="!fz && !dmz && !wully && !lz"></menu-header>
-	<fz-menu-header ng-if="fz"></fz-menu-header>
-	<dmz-menu-header ng-if="dmz"></dmz-menu-header>
-	<wully-menu-header ng-if="wully"></wully-menu-header>
-	<lz-menu-header ng-if="lz"></lz-menu-header>
+<ion-view title="/lzanswer">
+	<lz-menu-header></lz-menu-header>
 	<menu-button></menu-button>
 	<loader ng-class="{'hide': !loader}"></loader>
-    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
-        <div class="container center-align" style="margin-top:50px;">
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" >
+        <div class="container center-align" style="margin-top:50px;" ng-controller="lz.dash.controller">
             <row>
 				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
 					<li class="item item z-depth-1" ng-click="getList()">
@@ -17,25 +13,33 @@
 							 <div class="handle"></div>
 						   </div>
 						</label>-->
-						<span class="badge badge-stable z-depth-1 hide">Top 20</span>
-						<span class="left"><i class="material-icons">refresh</i></span>
-					 Leaderboard
+						<!-- <span class="badge badge-stable z-depth-1 hide">Top 20</span>
+						<span class="left"><i class="material-icons">refresh</i></span> -->
+					 Answers
 					</li>
-					<li class="item" ng-repeat="x in leaderList" ng-class="{'list-me': x.thisplayer, 'z-depth-4': x.thisplayer}">
+					<li class="item" ng-repeat="x in lz_data">
 						 <div class="row" style="margin-bottom:0px;">
-							 <div class="col col-10" ng-if="$index !== 0"> {{$index + 1}}</div>
-							 <div class="col col-10" ng-if="$index == 0"><i class="fa fa-trophy" style="font-size:22px"></i></div>
-							 <div class="col col-60">{{x.name}}</div>
-							 <div class="col">{{x.points| number:0}} Pts</div>
+							 <div class="col col-10"> {{$index + 1}}</div>
+							 <!-- <div class="col col-10" ng-if="$index == 0"><i class="fa fa-trophy" style="font-size:22px"></i></div> -->
+							 <div class="col col-90">
+                                 <p style="white-space:normal;">{{x.question}}</p>
+                                 <p style="white-space:normal;" ng-if="!mocha.safe(x.options)">
+                                     <strong style="color:green;">Answer:</strong> {{(x.price == '1')? 'Yes' : (x.price == '0') ? 'No' : x.price}}
+                                 </p>
+                                 <p style="white-space:normal;" ng-if="mocha.safe(x.options)">
+                                     <strong style="color:green;">Answer:</strong> {{x.options[x.price].answer}}
+                                 </p>
+                             </div>
+							 <!-- <div class="col">{{x.points| number:0}} Pts</div> -->
 						 </div>
 					</li>
-					<li class="item list-me z-depth-4" ng-class="{'hide': thisPlayer}">
+					<!-- <li class="item list-me z-depth-4" ng-class="{'hide': thisPlayer}">
 						 <div class="row" style="margin-bottom:0px;">
 							 <div class="col col-10">- -</div>
 							 <div class="col col-60">{{player.name}}</div>
 							 <div class="col">{{player.points| number:0}} Pts</div>
 						 </div>
-					</li>
+					</li> -->
 <!--
 					<li class="item">
 						 <div class="row" style="margin-bottom:0px;">
