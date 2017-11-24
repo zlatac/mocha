@@ -24,10 +24,10 @@
 							 <div class="col col-90">
                                  <p style="white-space:normal;">{{x.question}}</p>
                                  <p style="white-space:normal;" ng-if="!mocha.safe(x.options)">
-                                     <strong style="color:green;">Answer:</strong> {{(x.price == '1')? 'Yes' : (x.price == '0') ? 'No' : x.price}}
+                                     <strong style="color:#ef4319;">Answer:</strong> {{(x.price == '1')? 'Yes' : (x.price == '0') ? 'No' : x.price}}
                                  </p>
                                  <p style="white-space:normal;" ng-if="mocha.safe(x.options)">
-                                     <strong style="color:green;">Answer:</strong> {{x.options[x.price].answer}}
+                                     <strong style="color:#ef4319;">Answer:</strong> {{x.options[x.price].answer}}
                                  </p>
                              </div>
 							 <!-- <div class="col">{{x.points| number:0}} Pts</div> -->
