@@ -1573,7 +1573,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/17076453_395943147440848_8888064781869645824_n.jpg',
+            url:'https://pbs.twimg.com/profile_images/890647564160311296/0KRdC6U4_400x400.jpg',
             price:'3',
             question:'Who did the LIZ partner with for the AI Legal Challenge?',
             min:'0',
@@ -1585,13 +1585,13 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
                 {answer: 'BMO ', url:'https://pbs.twimg.com/profile_images/797833739795595264/KHzGCVxn_400x400.jpg'},
                 {answer: 'Siemens', url:'https://pbs.twimg.com/profile_images/808958766628605952/yB14UlXl_400x400.jpg'},
                 {answer: 'Legal Aid Ontario', url:'https://pbs.twimg.com/profile_images/752493286334537729/Eae-dore_400x400.jpg'},
-                {answer: 'Attorney General', url:'https://pbs.twimg.com/profile_images/890647564160311296/0KRdC6U4_400x400.jpg'}
+                {answer: 'Ministry of the Attorney General', url:'https://pbs.twimg.com/profile_images/890647564160311296/0KRdC6U4_400x400.jpg'}
             ]
         },
         {
             url:'https://pbs.twimg.com/media/DGUZmzsUIAAgA1j.jpg',
             price:'2',
-            question:'The LIZ just launched a Global Initiative around?',
+            question:'The LIZ just launched a Global Initiative around what type of law?',
             min:'0',
             max:'3',
             context:'',
@@ -1651,7 +1651,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             p_id:'8'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/12818980_519161731596821_1859894505_n.jpg',
+            url:'https://pbs.twimg.com/media/DPrFx4CX0AEOi7V.jpg',
             price:'1',
             question:'The LIZ recently partnered with Osler for a successful Associate Innovation Challenge',
             min:'0',
@@ -1661,16 +1661,6 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             p_id:'9'
         },
         {
-            url:'https://pbs.twimg.com/media/DGUZmzsUIAAgA1j.jpg',
-            price:'1',
-            question:'LIZ doesn\'t own 5% of every alumni startup once they become profitable ventures?',
-            min:'0',
-            max:'1',
-            context:'',
-            subcategory:'',
-            p_id:'10'
-        },
-        {
             url:'https://pbs.twimg.com/media/DIaYD6yUwAIvWTK.jpg',
             price:'1',
             question:'LIZ has partnered with the Law Foundation of Ontario to run an initiative around?',
@@ -1678,7 +1668,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             max:'2',
             context:'',
             subcategory:'',
-            p_id:'11',
+            p_id:'10',
             options: [
                 {answer: 'Criminal Law', url:''},
                 {answer: 'Youth Access to Justice', url:''},
@@ -1693,7 +1683,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
     angular.copy($scope.lz_data,$scope.data);
     $scope.lz = true;
     $scope.prizeStartDate = moment('2017/11/28','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2017/11/29','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2017/11/29 19:30','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
