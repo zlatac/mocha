@@ -952,6 +952,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             url = 'https://styleminions.co/api/dmzleaderboard?q=';
             $scope.dmz = true;
         }
+        if($stateParams.mode === 'lz'){
+            url = 'https://styleminions.co/api/lzleaderboard?q=';
+            $scope.lz = true;
+        }
         $scope.getList = function(){
             $scope.loader = true;
             $http.get(url + gametime)

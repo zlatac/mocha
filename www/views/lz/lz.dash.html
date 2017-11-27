@@ -41,9 +41,20 @@
             </a>
           </div>
       </row>-->
+
+      <row>
+        <div class="card-panel">
+            <a class="btn btn-full btn-large waves-effect waves-light" ng-click="startLz()" 
+            style="background-color:#171717"
+            ng-disabled="mocha.playedAlready(prizeStartDate,prizeEndDate)">
+                Start Game
+            </a>
+        </div>      
+      </row>
+
       <row>
           <div class="card-panel">
-            <a class="btn btn-full btn-large waves-effect waves-light btn-grey" ui-sref="/lzanswer">
+            <a class="btn btn-full btn-large waves-effect waves-light btn-lz" ui-sref="/lzanswer">
                 Answers
             </a>
         </div>      
@@ -66,16 +77,6 @@
             </a>
         </div>      
       </row>-->
-        
-      <row>
-          <div class="card-panel">
-            <a class="btn btn-full btn-large waves-effect waves-light" ng-click="startLz()" 
-            style="background-color:#171717"
-            ng-disabled="mocha.playedAlready(prizeStartDate,prizeEndDate)">
-                Start Game
-            </a>
-        </div>      
-      </row>
         
     </div>    
 </ion-content>

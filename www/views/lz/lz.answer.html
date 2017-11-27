@@ -1,6 +1,6 @@
 <ion-view title="/lzanswer">
 	<lz-menu-header></lz-menu-header>
-	<menu-button></menu-button>
+	<menu-button ng-init="lz=true"></menu-button>
 	<loader ng-class="{'hide': !loader}"></loader>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" >
         <div class="container center-align" style="margin-top:50px;" ng-controller="lz.dash.controller">

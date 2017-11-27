@@ -21,17 +21,17 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
     
     $scope.lz_data = [
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21909710_115559839139284_2536705386933649408_n.jpg',
+            url:'https://pbs.twimg.com/media/DOslz-VXkAIT_Ql.jpg',
             price:'2015',
             question:'What year was LIZ founded?',
-            min:'1000',
-            max:'1500',
+            min:'1994',
+            max:'2017',
             context:'',
             subcategory:'',
             p_id:'1'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18950047_457101204639111_8252268334817476608_n.jpg',
+            url:'https://pbs.twimg.com/profile_images/875804768169480192/N62ZSo-a_400x400.jpg',
             price:'2',
             question:'Which LIZ startup automates the incorporation process for companies using smart technology?',
             min:'0',
@@ -40,10 +40,10 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             subcategory:'',
             p_id:'2',
             options: [
-                {answer: 'Legalbox', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15048227_218441365259697_2371854405990350848_n.jpg'},
-                {answer: 'Legalswipe', url:'https://pbs.twimg.com/media/DDRp6L6W0AApnUF.jpg:small'},
-                {answer: 'Founded', url:'https://pbs.twimg.com/media/DDU3598XYAEojTV.jpg:small'},
-                {answer: 'Loom Analytics', url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small'}
+                {answer: 'Legalbox', url:'https://pbs.twimg.com/profile_images/826534198940938243/Ytn1ZHQK_400x400.jpg'},
+                {answer: 'Legalswipe', url:'https://pbs.twimg.com/profile_images/719025068223758337/GnhaTm9i_400x400.jpg'},
+                {answer: 'Founded', url:'https://pbs.twimg.com/profile_images/919763209434918915/Xx5ZibzS_400x400.jpg'},
+                {answer: 'Loom Analytics', url:'https://pbs.twimg.com/profile_images/875804768169480192/N62ZSo-a_400x400.jpg'}
             ]
         },
         {
@@ -56,14 +56,14 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             subcategory:'',
             p_id:'3',
             options: [
-                {answer: 'BMO ', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15048227_218441365259697_2371854405990350848_n.jpg'},
-                {answer: 'Siemens Canada', url:'https://pbs.twimg.com/media/DDRp6L6W0AApnUF.jpg:small'},
-                {answer: 'Legal Aid Ontario', url:'https://pbs.twimg.com/media/DDU3598XYAEojTV.jpg:small'},
-                {answer: 'Ontario Ministry of the Attorney General', url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small'}
+                {answer: 'BMO ', url:'https://pbs.twimg.com/profile_images/797833739795595264/KHzGCVxn_400x400.jpg'},
+                {answer: 'Siemens', url:'https://pbs.twimg.com/profile_images/808958766628605952/yB14UlXl_400x400.jpg'},
+                {answer: 'Legal Aid Ontario', url:'https://pbs.twimg.com/profile_images/752493286334537729/Eae-dore_400x400.jpg'},
+                {answer: 'Attorney General', url:'https://pbs.twimg.com/profile_images/890647564160311296/0KRdC6U4_400x400.jpg'}
             ]
         },
         {
-            url:'https://scontent.cdninstagram.com/t51.2885-15/sh0.08/e35/p640x640/16583180_163288994176752_6167586102346514432_n.jpg',
+            url:'https://pbs.twimg.com/media/DGUZmzsUIAAgA1j.jpg',
             price:'2',
             question:'The LIZ just launched a Global Initiative around?',
             min:'0',
@@ -72,14 +72,14 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             subcategory:'',
             p_id:'4',
             options: [
-                {answer: 'Aboriginal Law', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15048227_218441365259697_2371854405990350848_n.jpg'},
-                {answer: 'Consumer Law', url:'https://pbs.twimg.com/media/DDRp6L6W0AApnUF.jpg:small'},
-                {answer: 'Family Law', url:'https://pbs.twimg.com/media/DDU3598XYAEojTV.jpg:small'},
-                {answer: 'Criminal Law', url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small'}
+                {answer: 'Aboriginal Law', url:''},
+                {answer: 'Consumer Law', url:''},
+                {answer: 'Family Law', url:''},
+                {answer: 'Criminal Law', url:''}
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18095282_224668581353323_7557851820467421184_n.jpg',
+            url:'https://pbs.twimg.com/media/DL4ebbFVAAA0KLF.jpg',
             price:'1',
             question:'Winners of the AI Legal Challenge can win up to $80,000 in seed funding?',
             min:'0',
@@ -89,7 +89,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             p_id:'5'                
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18382007_1384574631589888_4089628285422534656_n.jpg',
+            url:'https://pbs.twimg.com/media/DM2pthZVwAAkQOf.jpg',
             price:'17',
             question:'How many startups are currently active at the Legal Innovation Zone?',
             min:'8',
@@ -99,23 +99,23 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             p_id:'6'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18011469_1775695206076417_9048892774320963584_n.jpg',
+            url:'https://pbs.twimg.com/profile_images/775777754868551681/-uHIQj_b_400x400.jpg',
             price:'3',
             question:'Which startup won the Ontario A2J Challenge at the Legal Innovation Zone last year?',
             min:'0',
             max:'3',
-            context:'Weeks',
+            context:'',
             subcategory:'',
             p_id:'7',
             options: [
-                {answer: 'Legally Inc.', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15048227_218441365259697_2371854405990350848_n.jpg'},
-                {answer: 'NoticeConnect', url:'https://pbs.twimg.com/media/DDRp6L6W0AApnUF.jpg:small'},
-                {answer: 'Evichat', url:'https://pbs.twimg.com/media/DDU3598XYAEojTV.jpg:small'},
-                {answer: 'ParDONE', url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small'}
+                {answer: 'Legally Inc.', url:'https://pbs.twimg.com/profile_images/770622149061206016/dYoA4cDe_400x400.jpg'},
+                {answer: 'NoticeConnect', url:'https://pbs.twimg.com/media/DFHFzJaUQAE3bMG.jpg'},
+                {answer: 'Evichat', url:'https://pbs.twimg.com/profile_images/872920905827074048/M5r9pQGI_400x400.jpg'},
+                {answer: 'ParDONE', url:'https://pbs.twimg.com/profile_images/775777754868551681/-uHIQj_b_400x400.jpg'}
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15101788_599006020224290_2198237972321533952_n.jpg',
+            url:'https://pbs.twimg.com/media/DM2x_YpXUAEAVaD.jpg',
             price:'12',
             question:'How many advisors are available to LIZ startups?',
             min:'4',
@@ -135,9 +135,9 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             p_id:'9'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21372233_306885123111795_3977466434258206720_n.jpg',
-            price:'0',
-            question:'LIZ owns 5% of every alumni startup once they become profitable ventures?',
+            url:'https://pbs.twimg.com/media/DGUZmzsUIAAgA1j.jpg',
+            price:'1',
+            question:'LIZ doesn\'t own 5% of every alumni startup once they become profitable ventures?',
             min:'0',
             max:'1',
             context:'',
@@ -145,7 +145,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             p_id:'10'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21372233_306885123111795_3977466434258206720_n.jpg',
+            url:'https://pbs.twimg.com/media/DIaYD6yUwAIvWTK.jpg',
             price:'1',
             question:'LIZ has partnered with the Law Foundation of Ontario to run an initiative around?',
             min:'0',
@@ -154,9 +154,9 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             subcategory:'',
             p_id:'11',
             options: [
-                {answer: 'Criminal Law', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15048227_218441365259697_2371854405990350848_n.jpg'},
-                {answer: 'Youth Access to Justice', url:'https://pbs.twimg.com/media/DDRp6L6W0AApnUF.jpg:small'},
-                {answer: 'Consumer Issues', url:'https://pbs.twimg.com/media/DDU3598XYAEojTV.jpg:small'}
+                {answer: 'Criminal Law', url:''},
+                {answer: 'Youth Access to Justice', url:''},
+                {answer: 'Consumer Issues', url:''}
             ]
         }
         
@@ -260,7 +260,7 @@ myapp.controller('lz.contest.controller', function($scope,$location,$state,$stat
             $scope.contest.played_data = JSON.stringify(mocha.played_data);
             //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
             $scope.contest.signup = 0;
-            $http.get('https://styleminions.co/api/dmzcontest?name='+$scope.mocha.contest.name+"&phone="+
+            $http.get('https://styleminions.co/api/lzcontest?name='+$scope.mocha.contest.name+"&phone="+
             $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
             +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
             .then(function(res){
