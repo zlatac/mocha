@@ -1697,6 +1697,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
     $scope.lz = true;
     $scope.prizeStartDate = moment('2017/11/28','YYYY/MM/DD');
     $scope.prizeEndDate = moment('2017/11/28 19:30','YYYY/MM/DD kk:mm');
+    $scope.gameEndTime = moment('2017/11/28 19:00','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
