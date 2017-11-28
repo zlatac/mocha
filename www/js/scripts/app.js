@@ -162,7 +162,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       })
       .state("/lzanswer", {
         url: "/lzanswer",
-        templateUrl : "views/lz/lz.answer.html"
+        templateUrl : "views/lz/lz.answer.html",
+        controller: "lz.answer.controller"
       })
       .state("/lzleaderboard", {
         url: "/lzleaderboard",
@@ -201,6 +202,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 if(!$scope.data[$scope.index].hasOwnProperty('prediction')){
                     //for situations where prediction is automatically inserted by other functions
                     $scope.data[$scope.index].prediction = $scope.test.price;
+                }
+                if($scope.game.min === '0' & $scope.game.max === '1'){
+                    //for situation where its a yes or no question and we need the right radio button model data
+                    $scope.test.price = $scope.test.price_radio;
                 }
 				var prediction = $scope.data[$scope.index].prediction;
                 //$scope.index++;
@@ -463,7 +468,15 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 			 }
 		 }
 		 return false;
-	 };
+     };
+     
+     this.gameEnded = function(end){
+        let now = moment();
+        if(end.isBefore(now) === true){
+            return true;
+        }
+        return false;
+     };
 	 
 	 this.randomize = function(array) {
 			//Algorithm to shuffle an array

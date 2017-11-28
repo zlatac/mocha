@@ -3,7 +3,7 @@
 	<menu-button ng-init="lz=true"></menu-button>
 	<loader ng-class="{'hide': !loader}"></loader>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" >
-        <div class="container center-align" style="margin-top:50px;" ng-controller="lz.dash.controller">
+        <div class="container center-align" style="margin-top:50px;">
             <row>
 				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
 					<li class="item item z-depth-1" ng-click="getList()">
@@ -17,7 +17,19 @@
 						<span class="left"><i class="material-icons">refresh</i></span> -->
 					 Answers
 					</li>
-					<li class="item" ng-repeat="x in lz_data">
+
+					<li class="item animated fadeInUp" ng-if="showanswer === false">
+						<div class="row" style="margin-bottom:0px;">
+							<div class="col">
+								<p style="white-space:normal;">
+									Answers will be displayed immediately after the game ends at <strong style="color:#ef4319;">7:30pm</strong>.
+								</p>
+							</div>
+							
+						</div>
+				   </li>
+
+					<li class="item animated fadeInUp" ng-repeat="x in mocha.lz_data" ng-if="showanswer === true">
 						 <div class="row" style="margin-bottom:0px;">
 							 <div class="col col-10"> {{$index + 1}}</div>
 							 <!-- <div class="col col-10" ng-if="$index == 0"><i class="fa fa-trophy" style="font-size:22px"></i></div> -->

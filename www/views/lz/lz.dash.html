@@ -23,7 +23,7 @@
         
       <row>
           <div class="card-panel" ng-class="{'hide':!mocha.playedAlready(prizeStartDate,prizeEndDate)}">
-            <a class="btn btn-full btn-large waves-effect waves-light btn-lz" ui-sref="/lzleaderboard">
+            <a class="btn btn-full btn-large waves-effect waves-light btn-black" ui-sref="/lzleaderboard">
                 Thank you for playing!!
             </a>
           </div>      
@@ -46,7 +46,7 @@
         <div class="card-panel">
             <a class="btn btn-full btn-large waves-effect waves-light" ng-click="startLz()" 
             style="background-color:#171717"
-            ng-disabled="mocha.playedAlready(prizeStartDate,prizeEndDate)">
+            ng-disabled="mocha.playedAlready(prizeStartDate,prizeEndDate) || mocha.gameEnded(prizeEndDate)">
                 Start Game
             </a>
         </div>      

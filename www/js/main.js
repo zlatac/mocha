@@ -162,7 +162,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       })
       .state("/lzanswer", {
         url: "/lzanswer",
-        templateUrl : "views/lz/lz.answer.html"
+        templateUrl : "views/lz/lz.answer.html",
+        controller: "lz.answer.controller"
       })
       .state("/lzleaderboard", {
         url: "/lzleaderboard",
@@ -201,6 +202,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 if(!$scope.data[$scope.index].hasOwnProperty('prediction')){
                     //for situations where prediction is automatically inserted by other functions
                     $scope.data[$scope.index].prediction = $scope.test.price;
+                }
+                if($scope.game.min === '0' & $scope.game.max === '1'){
+                    //for situation where its a yes or no question and we need the right radio button model data
+                    $scope.test.price = $scope.test.price_radio;
                 }
 				var prediction = $scope.data[$scope.index].prediction;
                 //$scope.index++;
@@ -463,7 +468,15 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 			 }
 		 }
 		 return false;
-	 };
+     };
+     
+     this.gameEnded = function(end){
+        let now = moment();
+        if(end.isBefore(now) === true){
+            return true;
+        }
+        return false;
+     };
 	 
 	 this.randomize = function(array) {
 			//Algorithm to shuffle an array
@@ -1683,7 +1696,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
     angular.copy($scope.lz_data,$scope.data);
     $scope.lz = true;
     $scope.prizeStartDate = moment('2017/11/28','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2017/11/29 19:30','YYYY/MM/DD kk:mm');
+    $scope.prizeEndDate = moment('2017/11/28 19:30','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
@@ -1694,6 +1707,8 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
     $scope.hide_question = false;
     $scope.show_radio = false;
     mocha.lz = true;
+    mocha.lz_data = $scope.lz_data;
+    mocha.prizeEndDate = $scope.prizeEndDate;
     //console.log($scope.data);
     
     
@@ -1710,6 +1725,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             }else{
                 $scope.data[$scope.index].prediction = $scope.test.price;
             }
+            
         }
 
         if($scope.game.min === '0' & $scope.game.max === '1'){
@@ -1774,8 +1790,7 @@ myapp.controller('lz.contest.controller', function($scope,$location,$state,$stat
             $scope.contest.points = $scope.mocha.test.point_earned;
             $scope.contest.playtime = $scope.mocha.test.timePlayed;
             $scope.contest.played_data = JSON.stringify(mocha.played_data);
-            //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
-            $scope.contest.signup = 0;
+            $scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
             $http.get('https://styleminions.co/api/lzcontest?name='+$scope.mocha.contest.name+"&phone="+
             $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
             +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
@@ -1793,6 +1808,24 @@ myapp.controller('lz.contest.controller', function($scope,$location,$state,$stat
         }
     };
 
+    
+});
+
+myapp.controller('lz.answer.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
+    $scope.mocha = mocha;
+    $scope.showanswer = null;
+    //var prizeEndDate = moment('2017/11/27 18:56','YYYY/MM/DD kk:mm');
+    var check = $interval(function(){
+        let now = moment();
+        if(mocha.prizeEndDate.isBefore(now)){
+            console.log('see the answers');
+            $interval.cancel(check);
+            $scope.showanswer = true;
+        }else{
+            console.log('wait for a while');
+            $scope.showanswer = false;
+        }
+    }, 1000, 6000);
     
 });
 //WULLY DIRECTIVES
