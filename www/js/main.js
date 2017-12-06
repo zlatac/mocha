@@ -900,38 +900,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       return {
         templateUrl: 'views/menu-header.html' 
       };
-    });
-
-    myapp.directive('fzMenuHeader', function() {
-        return {
-          templateUrl: 'views/fz/fz.menu-header.html'
-        };
-    });
-
-    myapp.directive('dmzMenuHeader', function() {
-        return {
-          templateUrl: 'views/dmz/dmz.menu-header.html'
-        };
-    });
+    });   
 
 	myapp.directive('resultModal', function() {
       return {
         templateUrl: 'views/result.html'
       };
     });
-
-    myapp.directive('fzResultModal', function() {
-        return {
-          templateUrl: 'views/fz/fz.result.html'          
-        };
-    });
-
-    myapp.directive('dmzResultModal', function() {
-        return {
-          templateUrl: 'views/dmz/dmz.result.html'          
-        };
-    });
-
+    
     myapp.directive('selectType', function() {
       return {
         link: function(scope, elem, attrs){
@@ -1049,494 +1025,514 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 			
 		});
 	});
+myapp.directive('dmzMenuHeader', function() {
+    return {
+      templateUrl: 'views/dmz/dmz.menu-header.html'
+    };
+});
 
-    //FASHION ZONE CONTROLLERS BELOW
-    myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
-		angular.element(document.querySelector('body'))[0].style.borderTopColor='#f64348';
-        //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
-		if(mocha.checkWindow() === true){
-			$state.go('/');
-		}
-		
-		$scope.fz_data = [
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18950047_457101204639111_8252268334817476608_n.jpg',
-                price:'729',
-                question:'Predict the price of this wully Jacket.',
-                min:'500',
-                max:'1000',
-                context:'',
-                subcategory:'jacket',
-                p_id:'1'
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21689320_127859157860810_5234811534567276544_n.jpg',
-                price:'2013',
-                question:'When was fashion zone founded.',
-                min:'1998',
-                max:'2018',
-                context:'',
-                subcategory:'',
-                p_id:'2'
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18512847_296309494153999_6008173804130402304_n.jpg',
-                price:'595',
-                question:'Predict the price of this ledaveed duffle bag.',
-                min:'400',
-                max:'1000',
-                context:'',
-                subcategory:'duffle bag',
-                p_id:'3'
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19052186_1688222418151349_804088633102434304_n.jpg',
-                price:'1',
-                question:'Did 20/20 Armor recently acquire a client in Quebec? <p>1 - Yes</p> <p>0 - No</p>',
-                min:'0',
-                max:'1',
-                context:'',
-                subcategory:'',
-                p_id:'4'
-            },
-			{
-                url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small',
-                price:'2',
-                question:'Who is the director of community at Fashion Zone?',
-                min:'0',
-                max:'3',
-                context:'',
-                subcategory:'',
-                p_id:'5',
-				options: [
-					{answer: 'Olga', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
-					{answer: 'Olena', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
-					{answer: 'Andrea', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14134779_987256658060687_458447697_n.jpg'},
-					{answer: 'Robert', url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small'}
-				]
-            },
-			{
-                url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small',
-                price:'2',
-                question:'Which Joe Fresh Centre member recently spoke at the startup fashion week?',
-                min:'0',
-                max:'3',
-                context:'',
-                subcategory:'',
-                p_id:'6',
-				options: [
-					{answer: 'James', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15048227_218441365259697_2371854405990350848_n.jpg'},
-					{answer: 'Michelle', url:'https://pbs.twimg.com/media/DDRp6L6W0AApnUF.jpg:small'},
-					{answer: 'Ahmer', url:'https://pbs.twimg.com/media/DDU3598XYAEojTV.jpg:small'},
-					{answer: 'Lindsay', url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small'}
-				]
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/22427059_141471486472588_9135289309950115840_n.jpg',
-                price:'175',
-                question:'What is the monthly fee for Fashion Zone\'s full desk membership if you have a Ryerson student in your team?',
-                min:'100',
-                max:'600',
-                context:'',
-                subcategory:'',
-                p_id:'7'
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14583368_219840081783732_5908804998388514816_n.jpg',
-                price:'1',
-                question:'Do Fashion Zone members have access to the DMZ space in New York? <p>1 - No</p> <p>0 - Yes</p>',
-                min:'0',
-                max:'1',
-                context:'',
-                subcategory:'',
-                p_id:'8'
-            },
-			{
-                url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg',
-                price:'1',
-                question:'Who is the social media advisor for Fashion Zone?',
-                min:'0',
-                max:'3',
-                context:'',
-                subcategory:'',
-                p_id:'9',
-				options: [
-					{answer: 'Lyndon', url:'http://fashionzone.ca/uploads/advisors/e5b202abb53bb394f9f365b8fa94fc95.jpg'},
-					{answer: 'Cammi', url:'http://fashionzone.ca/uploads/advisors/1c10e7de5ce1414b04761b5296b7be4c.jpg'},
-					{answer: 'Rebecca', url:'http://fashionzone.ca/uploads/advisors/9ab1d98495e97433107f9119f91db587.jpg'},
-					{answer: 'Steve', url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg'}
-				]
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14550126_308480726183912_5838350698462314496_n.jpg',
-                price:'52',
-                question:'Predict the price of this nudypatooty crop top.',
-                min:'30',
-                max:'100',
-                context:'',
-                subcategory:'crop top',
-                p_id:'10'
-            },
-		];
-		
-        
-        $scope.data = [];
-        angular.copy($scope.fz_data,$scope.data);
-        $scope.fz = true;
-        $scope.prizeStartDate = moment('2017/11/07','YYYY/MM/DD');
-        $scope.prizeEndDate = moment('2017/11/10','YYYY/MM/DD');
-        //$scope.game = $scope.data[0];
-        $scope.index = 0;
-        $scope.game = $scope.data[$scope.index];
-        $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
-        $scope.test.price = $scope.test.second_price = Number($scope.game.max);
-        mocha.startTime($scope);
-        $scope.mocha = mocha; // expose service to the view
-        $scope.hide_question = false;
-        mocha.fz = true;
-        console.log($scope.data);
-        
-		
-		$scope.switchUp = function(){
-			//console.log(game);
-			if($scope.safe($scope.game.options)){
-			   	$scope.game.url = $scope.game.options[$scope.test.price].url;
-				$scope.game.context =  $scope.game.options[$scope.test.price].answer;
-				if($scope.test.price !==  $scope.game.price){
-					//this will make sure that the player gets zero if they choose the wrong option
-                    $scope.data[$scope.index].prediction = '100';
-				   }else{
-                    $scope.data[$scope.index].prediction = $scope.test.price;
-				   }
-			   }
-		};
-		
-		$scope.fzSubmit = function(){mocha.submitPrediction($scope)};
-		$scope.fzNextProduct = function(){
-			mocha.nextProduct($scope);
-			$scope.switchUp();
-		};
-		$scope.resetGame = function(){mocha.resetGame($scope)};
-		$scope.inputShow = function(){mocha.inputShow($scope)};
-		$scope.menuHide = function(){mocha.menuHide($scope)};
-		$scope.isPredict = function(){
-			if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') || $scope.game.question.includes('fee'))){
-				return true;
-			}
-        };
-        $scope.startFz = function(){
-            $state.go('/fzgame');
-        };
-        $scope.goContest = function(){
-            $scope.test.hideModal = true;
-            mocha.test = $scope.test;
-            if(mocha.safe(localStorage.name)){
-                //Pull saved user data if it exists
-                mocha.contest.name = localStorage.name;
-                mocha.contest.phone = Number(localStorage.phone);
-            }
-            $state.go('/fzcontest');
-        };
-		
-    });
+myapp.directive('dmzResultModal', function() {
+    return {
+      templateUrl: 'views/dmz/dmz.result.html'          
+    };
+});
+
+//DMZ CONTROLLERS BELOW
+myapp.controller('dmz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
+    angular.element(document.querySelector('body'))[0].style.borderTopColor='#00b3f0';
+    //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu dmz-color';
+    if(mocha.checkWindow() === true){
+        $state.go('/');
+    }
     
-    myapp.controller('fz.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
-        $scope.screen_big = mocha.checkWindow();
-        if($scope.screen_big !== true){
-            //This mimics a real life game loading thing. this can definitely be optimized later.
-            $timeout(function(){
-                $state.go('/fzdash');
-            },3000);
-        }
-        
-    });
+    $scope.dmz_data = [
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.44.1080.1080/22221390_533359833665379_7213411321822314496_n.jpg',
+            price:'2010',
+            question:'When was DMZ founded?',
+            min:'1991',
+            max:'2017',
+            context:'',
+            subcategory:'',
+            p_id:'1'
+        },
+        {
+            url:'https://cdn.technologyreview.com/i/legacy/hossein.rahnama.jpg',
+            price:'1',
+            question:'Who was the first executive director of DMZ?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'2',
+            options: [
+                {answer: 'Abdullah', url:'http://notablelife.com/media/2017/03/DMZ-Ryerson-Paul-Steward-Photography-19.jpg'},
+                {answer: 'Valerie', url:'http://www.womenofinfluence.ca/wp-content/uploads/2017/03/valerie-fox_featured-image.jpg'},
+                {answer: 'Hussaam', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1-5-e1485046459651.png'},
+                {answer: 'Hussan', url:'https://cdn.technologyreview.com/i/legacy/hossein.rahnama.jpg'}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/18513275_665066930370249_2577613984060407808_n.jpg',
+            price:'3',
+            question:'Which DMZ startup is building affordable educational tablets for children in poor countries?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'3',
+            options: [
+                {answer: 'Algocian', url:''},
+                {answer: 'Erplain', url:''},
+                {answer: 'Flybits', url:''},
+                {answer: 'Rumie', url:''}
+            ]
+
+        },
+        {
+            url:'http://www.digitaljournal.com/img/6/8/1/5/3/0/i/1/1/6/o/SheldonLevyPage26big.jpg',
+            price:'1',
+            question:'Sheldon Levy is the Ryerson president that helped launch DMZ? <p>- Yes</p> <p>- No</p>',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'4'
+        },
+        {
+            url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small',
+            price:'2',
+            question:'Who is the Startup Services Lead at DMZ?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'5',
+            options: [
+                {answer: 'Ahmed', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1605-e1486574518694.jpg'},
+                {answer: 'Calypso', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1785-e1486573711279.jpg'},
+                {answer: 'Shane', url:'https://talent2tconference.com/wp-content/uploads/2017/09/Shane.png'},
+                {answer: 'Hussaam', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1-5-e1485046459651.png'}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/18012099_1390680900975189_404795968953778176_n.jpg',
+            price:'312',
+            question:'How many startups have incubated and accelerated in DMZ since inception?',
+            min:'100',
+            max:'600',
+            context:'',
+            subcategory:'',
+            p_id:'6'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/14583300_1313365472057447_5115198945936539648_n.jpg',
+            price:'61',
+            question:'How many startup members does DMZ currently have?',
+            min:'20',
+            max:'200',
+            context:'',
+            subcategory:'',
+            p_id:'7'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c136.0.808.808/13167230_1720280664926144_1775319026_n.jpg',
+            price:'391',
+            question:'How much investment has been raised by DMZ startups?',
+            min:'60',
+            max:'500',
+            context:'million',
+            subcategory:'',
+            p_id:'8'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/18443672_1638498986164746_5569293880953667584_n.jpg',
+            price:'3',
+            question:'Which DMZ startup is building an in-space telecommunication network for space-borne assets?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'9',
+            options: [
+                {answer: 'Fortuna', url:''},
+                {answer: 'Hubbli', url:''},
+                {answer: 'Komodo', url:''},
+                {answer: 'Kepler', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/21294394_508033522874860_3400474622133534720_n.jpg',
+            price:'2962',
+            question:'How many jobs have been created through DMZ?',
+            min:'500',
+            max:'5000',
+            context:'jobs',
+            subcategory:'',
+            p_id:'10'
+        },
+    ];
     
-    myapp.controller('fz.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
-        $scope.mocha = mocha;
-        $scope.mocha.contest.signup =true;
-        $scope.contestSubmit = function(form){
-			if(form.$valid){
-                $scope.contest = {};
-				$scope.contest.timestamp = moment().toISOString();
-				$scope.contest.points = $scope.mocha.test.point_earned;
-                $scope.contest.playtime = $scope.mocha.test.timePlayed;
-                $scope.contest.played_data = JSON.stringify(mocha.played_data);
-                $scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
-                $http.get('https://styleminions.co/api/fzcontest?name='+$scope.mocha.contest.name+"&phone="+
-                $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
-                +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
-				.then(function(res){
-					localStorage.name = $scope.mocha.contest.name;
-					localStorage.phone = $scope.mocha.contest.phone;
-					localStorage.prizeplaydate = moment().toISOString();
-					//$scope.thankyou = true;
-					//$scope.resetGame('dash');
-					$state.go('/fzleaderboard');
-				});
-			}else{
-				console.log('fuck no form not valid');
-				console.log(form);
-			}
-        };
-
-        
-    });
-
-    //DMZ CONTROLLERS BELOW
-    myapp.controller('dmz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
-		angular.element(document.querySelector('body'))[0].style.borderTopColor='#00b3f0';
-        //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu dmz-color';
-		if(mocha.checkWindow() === true){
-			$state.go('/');
-		}
-		
-		$scope.dmz_data = [
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.44.1080.1080/22221390_533359833665379_7213411321822314496_n.jpg',
-                price:'2010',
-                question:'When was DMZ founded?',
-                min:'1991',
-                max:'2017',
-                context:'',
-                subcategory:'',
-                p_id:'1'
-            },
-			{
-                url:'https://cdn.technologyreview.com/i/legacy/hossein.rahnama.jpg',
-                price:'1',
-                question:'Who was the first executive director of DMZ?',
-                min:'0',
-                max:'3',
-                context:'',
-                subcategory:'',
-                p_id:'2',
-                options: [
-					{answer: 'Abdullah', url:'http://notablelife.com/media/2017/03/DMZ-Ryerson-Paul-Steward-Photography-19.jpg'},
-					{answer: 'Valerie', url:'http://www.womenofinfluence.ca/wp-content/uploads/2017/03/valerie-fox_featured-image.jpg'},
-					{answer: 'Hussaam', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1-5-e1485046459651.png'},
-					{answer: 'Hussan', url:'https://cdn.technologyreview.com/i/legacy/hossein.rahnama.jpg'}
-				]
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/18513275_665066930370249_2577613984060407808_n.jpg',
-                price:'3',
-                question:'Which DMZ startup is building affordable educational tablets for children in poor countries?',
-                min:'0',
-                max:'3',
-                context:'',
-                subcategory:'',
-                p_id:'3',
-                options: [
-					{answer: 'Algocian', url:''},
-					{answer: 'Erplain', url:''},
-					{answer: 'Flybits', url:''},
-                    {answer: 'Rumie', url:''}
-				]
-
-            },
-			{
-                url:'http://www.digitaljournal.com/img/6/8/1/5/3/0/i/1/1/6/o/SheldonLevyPage26big.jpg',
-                price:'1',
-                question:'Sheldon Levy is the Ryerson president that helped launch DMZ? <p>- Yes</p> <p>- No</p>',
-                min:'0',
-                max:'1',
-                context:'',
-                subcategory:'',
-                p_id:'4'
-            },
-			{
-                url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small',
-                price:'2',
-                question:'Who is the Startup Services Lead at DMZ?',
-                min:'0',
-                max:'3',
-                context:'',
-                subcategory:'',
-                p_id:'5',
-				options: [
-					{answer: 'Ahmed', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1605-e1486574518694.jpg'},
-					{answer: 'Calypso', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1785-e1486573711279.jpg'},
-					{answer: 'Shane', url:'https://talent2tconference.com/wp-content/uploads/2017/09/Shane.png'},
-					{answer: 'Hussaam', url:'https://dmz.ryerson.ca/wp-content/uploads/2017/01/DMZ-Ryerson-Paul-Steward-Photography-1-5-e1485046459651.png'}
-				]
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/18012099_1390680900975189_404795968953778176_n.jpg',
-                price:'312',
-                question:'How many startups have incubated and accelerated in DMZ since inception?',
-                min:'100',
-                max:'600',
-                context:'',
-                subcategory:'',
-                p_id:'6'
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/14583300_1313365472057447_5115198945936539648_n.jpg',
-                price:'61',
-                question:'How many startup members does DMZ currently have?',
-                min:'20',
-                max:'200',
-                context:'',
-                subcategory:'',
-                p_id:'7'
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c136.0.808.808/13167230_1720280664926144_1775319026_n.jpg',
-                price:'391',
-                question:'How much investment has been raised by DMZ startups?',
-                min:'60',
-                max:'500',
-                context:'million',
-                subcategory:'',
-                p_id:'8'
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/18443672_1638498986164746_5569293880953667584_n.jpg',
-                price:'3',
-                question:'Which DMZ startup is building an in-space telecommunication network for space-borne assets?',
-                min:'0',
-                max:'3',
-                context:'',
-                subcategory:'',
-                p_id:'9',
-				options: [
-					{answer: 'Fortuna', url:''},
-					{answer: 'Hubbli', url:''},
-					{answer: 'Komodo', url:''},
-					{answer: 'Kepler', url:''}
-                ]
-            },
-			{
-                url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c180.0.720.720/21294394_508033522874860_3400474622133534720_n.jpg',
-                price:'2962',
-                question:'How many jobs have been created through DMZ?',
-                min:'500',
-                max:'5000',
-                context:'jobs',
-                subcategory:'',
-                p_id:'10'
-            },
-		];
-		
-        
-        $scope.data = [];
-        angular.copy($scope.dmz_data,$scope.data);
-        $scope.dmz = true;
-        $scope.prizeStartDate = moment('2017/11/15','YYYY/MM/DD');
-        $scope.prizeEndDate = moment('2017/11/20','YYYY/MM/DD');
-        //$scope.game = $scope.data[0];
-        $scope.index = 0;
-        $scope.game = $scope.data[$scope.index];
-        $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
-        $scope.test.price = $scope.test.second_price = Number($scope.game.max);
-        mocha.startTime($scope);
-        $scope.mocha = mocha; // expose service to the view
-        $scope.hide_question = false;
-        $scope.show_radio = false;
-        mocha.dmz = true;
-        //console.log($scope.data);
-        
-		
-		$scope.switchUp = function(){
-			//console.log(game);
-			if($scope.safe($scope.game.options)){
-                if(mocha.safe($scope.game.options[$scope.test.price].url)){
-                    $scope.game.url = $scope.game.options[$scope.test.price].url;
-                }
-				$scope.game.context =  $scope.game.options[$scope.test.price].answer;
-				if($scope.test.price !==  $scope.game.price){
-                    //this will make sure that the player gets zero if they choose the wrong option
-                    $scope.data[$scope.index].prediction = '100';
-                }else{
-                    $scope.data[$scope.index].prediction = $scope.test.price;
-                }
+    
+    $scope.data = [];
+    angular.copy($scope.dmz_data,$scope.data);
+    $scope.dmz = true;
+    $scope.prizeStartDate = moment('2017/11/15','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2017/11/20','YYYY/MM/DD');
+    //$scope.game = $scope.data[0];
+    $scope.index = 0;
+    $scope.game = $scope.data[$scope.index];
+    $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
+    $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+    mocha.startTime($scope);
+    $scope.mocha = mocha; // expose service to the view
+    $scope.hide_question = false;
+    $scope.show_radio = false;
+    mocha.dmz = true;
+    //console.log($scope.data);
+    
+    
+    $scope.switchUp = function(){
+        //console.log(game);
+        if($scope.safe($scope.game.options)){
+            if(mocha.safe($scope.game.options[$scope.test.price].url)){
+                $scope.game.url = $scope.game.options[$scope.test.price].url;
             }
-
-            if($scope.game.min === '0' & $scope.game.max === '1'){
-                $scope.show_radio = true;
+            $scope.game.context =  $scope.game.options[$scope.test.price].answer;
+            if($scope.test.price !==  $scope.game.price){
+                //this will make sure that the player gets zero if they choose the wrong option
+                $scope.data[$scope.index].prediction = '100';
             }else{
-                $scope.show_radio = false;
+                $scope.data[$scope.index].prediction = $scope.test.price;
             }
-		};
-		
-		$scope.dmzSubmit = function(){mocha.submitPrediction($scope)};
-		$scope.dmzNextProduct = function(){
-			mocha.nextProduct($scope);
-			$scope.switchUp();
-		};
-		$scope.resetGame = function(){mocha.resetGame($scope)};
-		$scope.inputShow = function(){mocha.inputShow($scope)};
-		$scope.menuHide = function(){mocha.menuHide($scope)};
-		$scope.isPredict = function(){
-            if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') 
-               || $scope.game.question.includes('investment'))){
-				return true;
-			}
-        };
-        $scope.startDmz = function(){
-            $state.go('/dmzgame');
-        };
-        $scope.goContest = function(){
-            $scope.test.hideModal = true;
-            mocha.test = $scope.test;
-            if(mocha.safe(localStorage.name)){
-                //Pull saved user data if it exists
-                mocha.contest.name = localStorage.name;
-                mocha.contest.phone = Number(localStorage.phone);
-            }
-            $state.go('/dmzcontest');
-        };
-        $scope.radioFunc = function(){
-            $scope.test.price = $scope.test.price_radio;
-            $scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no'
-        };
-		
-    });
-    
-    myapp.controller('dmz.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
-        $scope.screen_big = mocha.checkWindow();
-        if($scope.screen_big !== true){
-            //This mimics a real life game loading thing. this can definitely be optimized later.
-            $timeout(function(){
-                $state.go('/dmzdash');
-            },3000);
         }
-        
-    });
+
+        if($scope.game.min === '0' & $scope.game.max === '1'){
+            $scope.show_radio = true;
+        }else{
+            $scope.show_radio = false;
+        }
+    };
     
-    myapp.controller('dmz.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
-        $scope.mocha = mocha;
-        $scope.mocha.contest.signup =true;
-        $scope.contestSubmit = function(form){
-			if(form.$valid){
-                $scope.contest = {};
-				$scope.contest.timestamp = moment().toISOString();
-				$scope.contest.points = $scope.mocha.test.point_earned;
-                $scope.contest.playtime = $scope.mocha.test.timePlayed;
-                $scope.contest.played_data = JSON.stringify(mocha.played_data);
-                //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
-                $scope.contest.signup = 0;
-                $http.get('https://styleminions.co/api/dmzcontest?name='+$scope.mocha.contest.name+"&phone="+
-                $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
-                +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
-				.then(function(res){
-					localStorage.name = $scope.mocha.contest.name;
-					localStorage.phone = $scope.mocha.contest.phone;
-					localStorage.prizeplaydate = moment().toISOString();
-					//$scope.thankyou = true;
-					//$scope.resetGame('dash');
-					$state.go('/dmzleaderboard');
-				});
-			}else{
-				console.log('fuck no form not valid');
-				//console.log(form);
-			}
-        };
+    $scope.dmzSubmit = function(){mocha.submitPrediction($scope)};
+    $scope.dmzNextProduct = function(){
+        mocha.nextProduct($scope);
+        $scope.switchUp();
+    };
+    $scope.resetGame = function(){mocha.resetGame($scope)};
+    $scope.inputShow = function(){mocha.inputShow($scope)};
+    $scope.menuHide = function(){mocha.menuHide($scope)};
+    $scope.isPredict = function(){
+        if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') 
+           || $scope.game.question.includes('investment'))){
+            return true;
+        }
+    };
+    $scope.startDmz = function(){
+        $state.go('/dmzgame');
+    };
+    $scope.goContest = function(){
+        $scope.test.hideModal = true;
+        mocha.test = $scope.test;
+        if(mocha.safe(localStorage.name)){
+            //Pull saved user data if it exists
+            mocha.contest.name = localStorage.name;
+            mocha.contest.phone = Number(localStorage.phone);
+        }
+        $state.go('/dmzcontest');
+    };
+    $scope.radioFunc = function(){
+        $scope.test.price = $scope.test.price_radio;
+        $scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no'
+    };
+    
+});
 
-        
-    });
+myapp.controller('dmz.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.screen_big = mocha.checkWindow();
+    if($scope.screen_big !== true){
+        //This mimics a real life game loading thing. this can definitely be optimized later.
+        $timeout(function(){
+            $state.go('/dmzdash');
+        },3000);
+    }
+    
+});
 
+myapp.controller('dmz.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.mocha = mocha;
+    $scope.mocha.contest.signup =true;
+    $scope.contestSubmit = function(form){
+        if(form.$valid){
+            $scope.contest = {};
+            $scope.contest.timestamp = moment().toISOString();
+            $scope.contest.points = $scope.mocha.test.point_earned;
+            $scope.contest.playtime = $scope.mocha.test.timePlayed;
+            $scope.contest.played_data = JSON.stringify(mocha.played_data);
+            //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
+            $scope.contest.signup = 0;
+            $http.get('https://styleminions.co/api/dmzcontest?name='+$scope.mocha.contest.name+"&phone="+
+            $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
+            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
+            .then(function(res){
+                localStorage.name = $scope.mocha.contest.name;
+                localStorage.phone = $scope.mocha.contest.phone;
+                localStorage.prizeplaydate = moment().toISOString();
+                //$scope.thankyou = true;
+                //$scope.resetGame('dash');
+                $state.go('/dmzleaderboard');
+            });
+        }else{
+            console.log('fuck no form not valid');
+            //console.log(form);
+        }
+    };
 
+    
+});
+myapp.directive('fzMenuHeader', function() {
+    return {
+      templateUrl: 'views/fz/fz.menu-header.html'
+    };
+});
+
+myapp.directive('fzResultModal', function() {
+    return {
+      templateUrl: 'views/fz/fz.result.html'          
+    };
+});
+
+//FASHION ZONE CONTROLLERS BELOW
+myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
+    angular.element(document.querySelector('body'))[0].style.borderTopColor='#f64348';
+    //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu wully-color';
+    if(mocha.checkWindow() === true){
+        $state.go('/');
+    }
+    
+    $scope.fz_data = [
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18950047_457101204639111_8252268334817476608_n.jpg',
+            price:'729',
+            question:'Predict the price of this wully Jacket.',
+            min:'500',
+            max:'1000',
+            context:'',
+            subcategory:'jacket',
+            p_id:'1'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/21689320_127859157860810_5234811534567276544_n.jpg',
+            price:'2013',
+            question:'When was fashion zone founded.',
+            min:'1998',
+            max:'2018',
+            context:'',
+            subcategory:'',
+            p_id:'2'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18512847_296309494153999_6008173804130402304_n.jpg',
+            price:'595',
+            question:'Predict the price of this ledaveed duffle bag.',
+            min:'400',
+            max:'1000',
+            context:'',
+            subcategory:'duffle bag',
+            p_id:'3'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19052186_1688222418151349_804088633102434304_n.jpg',
+            price:'1',
+            question:'Did 20/20 Armor recently acquire a client in Quebec? <p>1 - Yes</p> <p>0 - No</p>',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'4'
+        },
+        {
+            url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small',
+            price:'2',
+            question:'Who is the director of community at Fashion Zone?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'5',
+            options: [
+                {answer: 'Olga', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14240740_307522816281498_488219416_n.jpg'},
+                {answer: 'Olena', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20633240_302904566847350_2678176726286073856_n.jpg'},
+                {answer: 'Andrea', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14134779_987256658060687_458447697_n.jpg'},
+                {answer: 'Robert', url:'https://pbs.twimg.com/media/C_JMKWvV0AAy5YU.jpg:small'}
+            ]
+        },
+        {
+            url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small',
+            price:'2',
+            question:'Which Joe Fresh Centre member recently spoke at the startup fashion week?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'6',
+            options: [
+                {answer: 'James', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/15048227_218441365259697_2371854405990350848_n.jpg'},
+                {answer: 'Michelle', url:'https://pbs.twimg.com/media/DDRp6L6W0AApnUF.jpg:small'},
+                {answer: 'Ahmer', url:'https://pbs.twimg.com/media/DDU3598XYAEojTV.jpg:small'},
+                {answer: 'Lindsay', url:'https://pbs.twimg.com/media/DKU6SOmVYAAcq-8.jpg:small'}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/22427059_141471486472588_9135289309950115840_n.jpg',
+            price:'175',
+            question:'What is the monthly fee for Fashion Zone\'s full desk membership if you have a Ryerson student in your team?',
+            min:'100',
+            max:'600',
+            context:'',
+            subcategory:'',
+            p_id:'7'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14583368_219840081783732_5908804998388514816_n.jpg',
+            price:'1',
+            question:'Do Fashion Zone members have access to the DMZ space in New York? <p>1 - No</p> <p>0 - Yes</p>',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'8'
+        },
+        {
+            url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg',
+            price:'1',
+            question:'Who is the social media advisor for Fashion Zone?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'9',
+            options: [
+                {answer: 'Lyndon', url:'http://fashionzone.ca/uploads/advisors/e5b202abb53bb394f9f365b8fa94fc95.jpg'},
+                {answer: 'Cammi', url:'http://fashionzone.ca/uploads/advisors/1c10e7de5ce1414b04761b5296b7be4c.jpg'},
+                {answer: 'Rebecca', url:'http://fashionzone.ca/uploads/advisors/9ab1d98495e97433107f9119f91db587.jpg'},
+                {answer: 'Steve', url:'http://fashionzone.ca/uploads/advisors/3fa2e2fff61dd45b561318cab516aa74.jpg'}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/14550126_308480726183912_5838350698462314496_n.jpg',
+            price:'52',
+            question:'Predict the price of this nudypatooty crop top.',
+            min:'30',
+            max:'100',
+            context:'',
+            subcategory:'crop top',
+            p_id:'10'
+        },
+    ];
+    
+    
+    $scope.data = [];
+    angular.copy($scope.fz_data,$scope.data);
+    $scope.fz = true;
+    $scope.prizeStartDate = moment('2017/11/07','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2017/11/10','YYYY/MM/DD');
+    //$scope.game = $scope.data[0];
+    $scope.index = 0;
+    $scope.game = $scope.data[$scope.index];
+    $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
+    $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+    mocha.startTime($scope);
+    $scope.mocha = mocha; // expose service to the view
+    $scope.hide_question = false;
+    mocha.fz = true;
+    console.log($scope.data);
+    
+    
+    $scope.switchUp = function(){
+        //console.log(game);
+        if($scope.safe($scope.game.options)){
+               $scope.game.url = $scope.game.options[$scope.test.price].url;
+            $scope.game.context =  $scope.game.options[$scope.test.price].answer;
+            if($scope.test.price !==  $scope.game.price){
+                //this will make sure that the player gets zero if they choose the wrong option
+                $scope.data[$scope.index].prediction = '100';
+               }else{
+                $scope.data[$scope.index].prediction = $scope.test.price;
+               }
+           }
+    };
+    
+    $scope.fzSubmit = function(){mocha.submitPrediction($scope)};
+    $scope.fzNextProduct = function(){
+        mocha.nextProduct($scope);
+        $scope.switchUp();
+    };
+    $scope.resetGame = function(){mocha.resetGame($scope)};
+    $scope.inputShow = function(){mocha.inputShow($scope)};
+    $scope.menuHide = function(){mocha.menuHide($scope)};
+    $scope.isPredict = function(){
+        if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') || $scope.game.question.includes('fee'))){
+            return true;
+        }
+    };
+    $scope.startFz = function(){
+        $state.go('/fzgame');
+    };
+    $scope.goContest = function(){
+        $scope.test.hideModal = true;
+        mocha.test = $scope.test;
+        if(mocha.safe(localStorage.name)){
+            //Pull saved user data if it exists
+            mocha.contest.name = localStorage.name;
+            mocha.contest.phone = Number(localStorage.phone);
+        }
+        $state.go('/fzcontest');
+    };
+    
+});
+
+myapp.controller('fz.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.screen_big = mocha.checkWindow();
+    if($scope.screen_big !== true){
+        //This mimics a real life game loading thing. this can definitely be optimized later.
+        $timeout(function(){
+            $state.go('/fzdash');
+        },3000);
+    }
+    
+});
+
+myapp.controller('fz.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.mocha = mocha;
+    $scope.mocha.contest.signup =true;
+    $scope.contestSubmit = function(form){
+        if(form.$valid){
+            $scope.contest = {};
+            $scope.contest.timestamp = moment().toISOString();
+            $scope.contest.points = $scope.mocha.test.point_earned;
+            $scope.contest.playtime = $scope.mocha.test.timePlayed;
+            $scope.contest.played_data = JSON.stringify(mocha.played_data);
+            $scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
+            $http.get('https://styleminions.co/api/fzcontest?name='+$scope.mocha.contest.name+"&phone="+
+            $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
+            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
+            .then(function(res){
+                localStorage.name = $scope.mocha.contest.name;
+                localStorage.phone = $scope.mocha.contest.phone;
+                localStorage.prizeplaydate = moment().toISOString();
+                //$scope.thankyou = true;
+                //$scope.resetGame('dash');
+                $state.go('/fzleaderboard');
+            });
+        }else{
+            console.log('fuck no form not valid');
+            console.log(form);
+        }
+    };
+
+    
+});
 //LEGAL ZONE DIRECTIVES
 myapp.directive('lzMenuHeader', function() {
     return {
