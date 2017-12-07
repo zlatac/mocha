@@ -171,6 +171,38 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         controller: "leaderboard.controller",
         params: {mode: 'lz'},
         cache: false
+      })
+      .state("/nlsdash", {
+        url: "/nlsdash",
+        templateUrl : "views/nls/nls.dash.html",
+	  	controller: "nls.dash.controller"
+      })
+      .state("/nlsgame", {
+        url: "/nlsgame",
+        templateUrl : "views/nls/nls.game.html",
+        controller: "nls.dash.controller"
+      })
+      .state("/nlslogin", {
+        url: "/nlslogin",
+        templateUrl : "views/nls/nls.login.html",
+        controller: "nls.login.controller"
+      })
+      .state("/nlscontest", {
+        url: "/nlscontest",
+        templateUrl : "views/nls/nls.contest.html",
+        controller: "nls.contest.controller"
+      })
+      .state("/nlsanswer", {
+        url: "/nlsanswer",
+        templateUrl : "views/nls/nls.answer.html",
+        controller: "nls.answer.controller"
+      })
+      .state("/nlsleaderboard", {
+        url: "/nlsleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'nls'},
+        cache: false
       });
     $urlRouterProvider.otherwise('/');
 })
@@ -285,6 +317,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             //when prediction is more than 200% of the value
             if(pChange >= 2 || pChange <= 0){
                 return 0;
+            }
+
+            //when there is no right or wrong answer. price must have the string 'survey'
+            if(realPrice === 'survey'){
+                return 750;
             }
             
             //when prediction is more than 100% of the real value
@@ -536,7 +573,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             //$scope.menuhide = 0;
             $scope.game = $scope.data[$scope.index];
             if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))
-            && (!location.hash.includes('wully')) && (!location.hash.includes('lz'))){
+            && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
                     $state.go('/dash');

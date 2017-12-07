@@ -1,6 +1,6 @@
-<ion-view title="/lzanswer">
-	<lz-menu-header></lz-menu-header>
-	<menu-button ng-init="lz=true"></menu-button>
+<ion-view title="/nlsanswer">
+	<nls-menu-header></nls-menu-header>
+	<menu-button ng-init="nls=true"></menu-button>
 	<loader ng-class="{'hide': !loader}"></loader>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" >
         <div class="container center-align" style="margin-top:50px;">
@@ -29,7 +29,7 @@
 						</div>
 				   </li>
 
-					<li class="item animated fadeInUp" ng-repeat="x in mocha.lz_data" ng-if="showanswer === true">
+					<li class="item animated fadeInUp" ng-repeat="x in mocha.nls_data" ng-if="showanswer === true">
 						 <div class="row" style="margin-bottom:0px;">
 							 <div class="col col-10"> {{$index + 1}}</div>
 							 <!-- <div class="col col-10" ng-if="$index == 0"><i class="fa fa-trophy" style="font-size:22px"></i></div> -->

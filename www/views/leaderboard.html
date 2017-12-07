@@ -1,9 +1,10 @@
  <ion-view title="/contest">
-	<menu-header ng-if="!fz && !dmz && !wully && !lz"></menu-header>
+	<menu-header ng-if="!fz && !dmz && !wully && !lz && !nls"></menu-header>
 	<fz-menu-header ng-if="fz"></fz-menu-header>
 	<dmz-menu-header ng-if="dmz"></dmz-menu-header>
 	<wully-menu-header ng-if="wully"></wully-menu-header>
 	<lz-menu-header ng-if="lz"></lz-menu-header>
+	<nls-menu-header ng-if="nls"></nls-menu-header>
 	<menu-button></menu-button>
 	<loader ng-class="{'hide': !loader}"></loader>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">

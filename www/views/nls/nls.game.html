@@ -1,6 +1,6 @@
-<ion-view title="/lzgame">
-	<lz-result-modal></lz-result-modal>
-    <lz-menu-header></lz-menu-header>
+<ion-view title="/nlsgame">
+	<nls-result-modal></nls-result-modal>
+    <nls-menu-header></nls-menu-header>
 	<menu-button></menu-button>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
         <div class="center-align">
@@ -15,7 +15,7 @@
                        ng-class="{hide:game.subcategory == ''|| show_points == true}">{{game.subcategory}}</div>
                   <img ng-src="{{game.url}}" ng-style="newstyle = (show_points == true)?{filter:'blur(10px)'}:null">
 				  <div class="shield"></div>
-                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-lz points-box"
+                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-nls points-box"
                      ng-class="{'hide': show_points == true}">
                       <span>750 </span><span class="tiny-points">pts</span>
                   </a>
@@ -26,8 +26,9 @@
                   <div class="qlayer" ng-class="{'hide':show_points == true || hide_question == true}" ng-bind-html="game.question" on-touch="hide_question = true" on-release="hide_question = false"></div>
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
-                  <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}" style="font-size:27px;">
-                      <span ng-class="{hide:isPredict() !== true}">$</span><span ng-class="{hide:mocha.safe(game.options)||show_radio}">{{test.price}}</span> {{game.context}} 
+                  <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}">
+                      <span ng-class="{hide:isPredict() !== true}">$</span><span ng-class="{hide:mocha.safe(game.options)||show_radio}">{{test.price}}</span> 
+                      <span ng-class="{hide:isPredict() == true}">{{game.context}}</span> 
                       <span class="right"><i class="material-icons" ng-class="{hide:show_points == true||mocha.safe(game.options)||show_radio}">edit</i></span>
                   </p>
     
@@ -48,7 +49,7 @@
                 </div>
                 <form ng-class="{hide: show_points == true}" name="form">
                     <p class="range-field" ng-if="manualprice == false && !show_radio">
-                      <input type="range" class="lz-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-change="switchUp(game)"/>
+                      <input type="range" class="nls-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-change="switchUp(game)"/>
                     </p>
                     <div class="row" ng-if="show_radio">
                         <div class="col">
@@ -65,13 +66,13 @@
                 </form>
                 <br>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-black animated fadeIn"
-                   ng-click="lzSubmit()" ng-disabled="show_radio && !mocha.safe(form.group1.$modelValue)"
+                   ng-click="nlsSubmit()" ng-disabled="show_radio && !mocha.safe(form.group1.$modelValue)"
                    ng-class="{'hide': show_points == true}" id="enter">
                     <span>ENTER</span>
                 </a>
-                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-lz"
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-nls"
                    ng-class="{'hide': show_points !== true}"
-				   ng-click="lzNextProduct()">
+				   ng-click="nlsNextProduct()">
                     <span>NEXT</span> <i class="material-icons right">chevron_right</i>
 <!--
                         <div class="preloader-wrapper small active">

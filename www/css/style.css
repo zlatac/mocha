@@ -262,3 +262,18 @@ li.item{
 .btn-lz{
   background-color:#ef4319 !important;
 }
+.btn-nls{
+  background-color: #5C96CE !important;
+}
+input[type=range].nls-range::-webkit-slider-thumb {
+  background-color: #5C96CE;
+  height: 30px;
+  width: 30px;
+  margin-top: -12px;
+}
+input[type=range].nls-range::-moz-range-thumb {
+  background-color: #5C96CE;
+}
+input[type=range].nls-range::-ms-thumb {
+  background-color: #5C96CE;
+}
