@@ -42,7 +42,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
             question:'For how long has Canada been an independent country?',
             min:'50',
             max:'300',
-            context:'',
+            context:'years',
             subcategory:'',
             p_id:'2'
         },
@@ -115,7 +115,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18251596_423583818007092_6429849582967980032_n.jpg',
             price:'1',
-            question:'Can you get a visa to live and develop your own business in Canada?',
+            question:'Can you get a visa to develop your own business in Canada?',
             min:'0',
             max:'1',
             context:'',
@@ -145,7 +145,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/17933857_1093543380751227_8388722233245171712_n.jpg',
             price:'51',
-            question:'What percentage of Toronto\'s population aren\'t born in Toronto?',
+            question:'What percentage of Toronto\'s population isn\'t born in Toronto?',
             min:'5',
             max:'100',
             context:'%',
@@ -185,12 +185,10 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21689961_276224896210936_4024863915220402176_n.jpg',
             price:'survey',
-            question:`How much would you pay for a program that includes technical visits to more than 30 Canadian companies, accelerators,
-            incubators, 2h of Consultancy with Canadian experts in developing business in Canada, 
-            networking events with Canadian startup leaders and IT training by a Canadian company?`,
-            min:'40',
-            max:'500',
-            context:'$',
+            question:'How much would you invest in a program that takes you to explore candian startups and accelerators?',
+            min:'5000',
+            max:'10000',
+            context:'R$',
             subcategory:'',
             p_id:'16'
         },
@@ -255,7 +253,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
            || $scope.game.question.includes('investment'))){
             return true;
         }
-        if($scope.game.context === '$'){
+        if(mocha.safe($scope.game.context) && $scope.game.context.includes('$')){
             return true;
         }
     };
