@@ -1,0 +1,83 @@
+<ion-view title="/borodash">
+<boro-menu-header></boro-menu-header>
+<menu-button></menu-button>
+<ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
+    <div class="container center-align">
+      <row>
+          <div class="col" style="margin-top:50px;">
+              <div class="card-panel z-depth-1" style="margin-top:60px;">
+                <div class="row">
+<!--                    <img class="circle profile z-depth-3" src="https://scontent-yyz1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10888392_10153073531899736_2293866441272698715_n.jpg?oh=f6166190cf97f3fbaef5514d73598aea&oe=59A6B966">-->
+                    <img class="circle profile z-depth-3" ng-src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/16583985_1830776947187218_8117990636189122560_a.jpg" >
+                </div>
+				<div class="clearfix"></div>
+                <div class="row">
+                    <!--<div class="col">Tokens</div>
+                    <div class="col">Points</div> -->
+					<div class="col">Welcome to boro's trivia game. Get the most points to win the $$ prize.</div>
+                </div>                 
+
+              </div>
+          </div>
+      </row>
+        
+      <row>
+          <div class="card-panel" ng-class="{'hide':!mocha.playedAlready(prizeStartDate,prizeEndDate)}">
+            <a class="btn btn-full btn-large waves-effect waves-light btn-black" ui-sref="/boroleaderboard">
+                Thank you for playing!!
+            </a>
+          </div>      
+      </row>
+        
+      <!--<row>
+          <div class="card-panel" ng-class="{'hide':wully === true}">
+              <a ui-sref="/game" class="btn-green btn-floating btn-large waves-effect waves-light pulse"
+                   ng-click="startTime()" disabled>
+                    <i class="material-icons ">play_arrow</i>
+              </a>
+              <a class="btn btn-full btn-large waves-effect waves-light btn-green" ng-click="startPrize()" 
+                 ng-disabled="wully === true">
+                Prize Mode - $100 <i class="material-icons right">attach_money</i>
+            </a>
+          </div>
+      </row>-->
+
+      <row>
+        <div class="card-panel">
+            <a class="btn btn-full btn-large waves-effect waves-light" ng-click="startBoro()" 
+            style="background-color:#171717"
+            ng-disabled="mocha.playedAlready(prizeStartDate,prizeEndDate)">
+                Start Game
+            </a>
+        </div>      
+      </row>
+
+      <row>
+          <div class="card-panel">
+            <a class="btn btn-full btn-large waves-effect waves-light btn-boro" ui-sref="/boroanswer">
+                Answers
+            </a>
+        </div>      
+      </row>       
+<!--
+      <row>
+          <div class="card-panel">
+            <a class="btn btn-full btn-large waves-effect waves-light btn-tfw" ui-sref="/game" ng-click="startTime()">
+                Toronto Fashion Week <span class="right">
+                <img src="https://pbs.twimg.com/profile_images/853271103510372352/JMp5u6Vn_400x400.jpg" style="width:40px;margin-top:5px;border-radius:50%;"></span>
+            </a>
+        </div>      
+      </row>
+-->
+      <!--<row>
+          <div class="card-panel">
+            <a class="btn btn-full btn-large waves-effect waves-light btn-wully" ng-click="startWully()" style="background-color:black" ng-disabled="wully==='cl'">
+                Wully Outerwear <span class="right">
+                <img src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/s150x150/16908361_720960684745218_2933981757210361856_a.jpg" style="width:40px;margin-top:5px;border-radius:50%;"></span>
+            </a>
+        </div>      
+      </row>-->
+        
+    </div>    
+</ion-content>
+</ion-view>

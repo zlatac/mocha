@@ -203,6 +203,38 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         controller: "leaderboard.controller",
         params: {mode: 'nls'},
         cache: false
+      })
+      .state("/borodash", {
+        url: "/borodash",
+        templateUrl : "views/boro/boro.dash.html",
+	  	controller: "boro.dash.controller"
+      })
+      .state("/borogame", {
+        url: "/borogame",
+        templateUrl : "views/boro/boro.game.html",
+        controller: "boro.dash.controller"
+      })
+      .state("/borologin", {
+        url: "/borologin",
+        templateUrl : "views/boro/boro.login.html",
+        controller: "boro.login.controller"
+      })
+      .state("/borocontest", {
+        url: "/borocontest",
+        templateUrl : "views/boro/boro.contest.html",
+        controller: "boro.contest.controller"
+      })
+      .state("/boroanswer", {
+        url: "/boroanswer",
+        templateUrl : "views/boro/boro.answer.html",
+        controller: "boro.answer.controller"
+      })
+      .state("/boroleaderboard", {
+        url: "/boroleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'boro'},
+        cache: false
       });
     $urlRouterProvider.otherwise('/');
 })
@@ -573,7 +605,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             //$scope.menuhide = 0;
             $scope.game = $scope.data[$scope.index];
             if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))
-            && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))){
+            && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))
+            && (!location.hash.includes('boro'))){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
                     $state.go('/dash');
@@ -989,10 +1022,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 console.log(res);
                 $scope.leaderList = [];
                 $scope.thisPlayer = false;
-                var number = localStorage.phone;
+                var number = (mocha.safe(localStorage.phone)) ? localStorage.phone : null;
+                var email = (mocha.safe(localStorage.email)) ? localStorage.email : null;
                 var list = res.data;
                 list.forEach(function(item){
-                    if(item.phone === number){
+                    if((mocha.safe(item.phone) && item.phone === number) || (mocha.safe(item.email) && item.email === email)){
                         item.thisplayer = true;
                         $scope.thisPlayer = true;
                         if(!localStorage.hasOwnProperty('points')){

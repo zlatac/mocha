@@ -277,3 +277,18 @@ input[type=range].nls-range::-moz-range-thumb {
 input[type=range].nls-range::-ms-thumb {
   background-color: #5C96CE;
 }
+.btn-boro{
+  background-color: #008489 !important;
+}
+input[type=range].boro-range::-webkit-slider-thumb {
+  background-color: #008489;
+  height: 30px;
+  width: 30px;
+  margin-top: -12px;
+}
+input[type=range].boro-range::-moz-range-thumb {
+  background-color: #008489;
+}
+input[type=range].boro-range::-ms-thumb {
+  background-color: #008489;
+}

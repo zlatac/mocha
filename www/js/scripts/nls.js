@@ -19,95 +19,290 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
         $state.go('/');
     }
     
+    // $scope.nls_data = [
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20686715_141651436334024_7875736373112602624_n.jpg',
+    //         price:'1',
+    //         question:'What\'s Canada\'s most popular food?',
+    //         min:'0',
+    //         max:'3',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'1',
+    //         options: [
+    //             {answer: 'Burger', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21435368_495444827474387_8279421719358210048_n.jpg'},
+    //             {answer: 'Poutine', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23421740_542027096136543_6088780208448471040_n.jpg'},
+    //             {answer: 'Pizza', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23507133_156576184953361_289457645876674560_n.jpg'},
+    //             {answer: 'Burrito', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20686715_141651436334024_7875736373112602624_n.jpg'}
+    //         ]
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/19120414_271228573283019_1335674875607515136_n.jpg',
+    //         price:'150',
+    //         question:'For how long has Canada been an independent country?',
+    //         min:'50',
+    //         max:'300',
+    //         context:'years',
+    //         subcategory:'',
+    //         p_id:'2'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18581342_1331186293603166_2850323134383390720_n.jpg',
+    //         price:'3',
+    //         question:'How do Canadians typically end a phrase? ',
+    //         min:'0',
+    //         max:'3',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'3',
+    //         options: [
+    //             {answer: 'ok', url:''},
+    //             {answer: 'neh', url:''},
+    //             {answer: 'alrighty', url:''},
+    //             {answer: 'eh', url:''}
+    //         ]
+    //     },
+    //     {
+    //         url:'https://pbs.twimg.com/media/DO8-IBaWsAAG7sJ.jpg',
+    //         price:'1',
+    //         question:'In Manitoba, Canada, you have to leave your car doors unlocked in case of a bear attack',
+    //         min:'0',
+    //         max:'1',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'4'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20902290_732602140257917_9177391336754511872_n.jpg',
+    //         price:'1.42',
+    //         question:'How long is a flight from Toronto to New York?',
+    //         min:'0.42',
+    //         max:'5.42',
+    //         context:'hours',
+    //         subcategory:'',
+    //         p_id:'5'                
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/19985613_292352497904223_2565680700896313344_n.jpg',
+    //         price:'50',
+    //         question:'How many immigration programs does Canada offer to potential immigrants?',
+    //         min:'20',
+    //         max:'100',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'6'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18299308_312981482454284_7852578553697665024_n.jpg',
+    //         price:'6',
+    //         question:'How long can Brazilians stay in Canada as a tourist?',
+    //         min:'2',
+    //         max:'12',
+    //         context:'months',
+    //         subcategory:'',
+    //         p_id:'7'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18161024_206946959811816_861075835438759936_n.jpg',
+    //         price:'26',
+    //         question:'How many startup incubators and accelerators are accredited by the startup visa program?',
+    //         min:'5',
+    //         max:'50',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'8'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18251596_423583818007092_6429849582967980032_n.jpg',
+    //         price:'1',
+    //         question:'Can you get a visa to develop your own business in Canada?',
+    //         min:'0',
+    //         max:'1',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'9'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21688987_796701347168151_7615492347459010560_n.jpg',
+    //         price:'200',
+    //         question:'How many IT talents do Canadian companies plan to hire by 2019?',
+    //         min:'20',
+    //         max:'500',
+    //         context:'thousand',
+    //         subcategory:'',
+    //         p_id:'10'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21690325_275768359592351_7888265419780259840_n.jpg',
+    //         price:'14',
+    //         question:'How long does it usually take for a Canadian company to bring a Brazilian IT professional to Canada',
+    //         min:'5',
+    //         max:'30',
+    //         context:'days',
+    //         subcategory:'',
+    //         p_id:'11'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/17933857_1093543380751227_8388722233245171712_n.jpg',
+    //         price:'51',
+    //         question:'What percentage of Toronto\'s population isn\'t born in Toronto?',
+    //         min:'5',
+    //         max:'100',
+    //         context:'%',
+    //         subcategory:'',
+    //         p_id:'12'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18095984_659848654219908_4977467299033251840_n.jpg',
+    //         price:'60',
+    //         question:'How much is it to open your own business a sole proprietor in Ontario?',
+    //         min:'10',
+    //         max:'150',
+    //         context:'$',
+    //         subcategory:'',
+    //         p_id:'13'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21576705_1938832166333282_8519165385071656960_n.jpg',
+    //         price:'1',
+    //         question:'You don\'t need a special type of visa to open your business in Ontario?',
+    //         min:'0',
+    //         max:'1',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'14'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18160360_215201732304368_7562590307561242624_n.jpg',
+    //         price:'survey',
+    //         question:'Would you come to Toronto to explore the innovation ecosystem and opportunities for your startup, company or IT career?',
+    //         min:'0',
+    //         max:'1',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'15'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21689961_276224896210936_4024863915220402176_n.jpg',
+    //         price:'survey',
+    //         question:'How much would you invest in a program that takes you to explore candian startups and accelerators?',
+    //         min:'5000',
+    //         max:'10000',
+    //         context:'R$',
+    //         subcategory:'',
+    //         p_id:'16'
+    //     },
+        
+    // ];
+
+    //Salmans book launch event questions
     $scope.nls_data = [
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20686715_141651436334024_7875736373112602624_n.jpg',
             price:'1',
-            question:'What\'s Canada\'s most popular food?',
+            question:`What's the capital of Brazil?`,
             min:'0',
             max:'3',
             context:'',
             subcategory:'',
             p_id:'1',
             options: [
-                {answer: 'Burger', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21435368_495444827474387_8279421719358210048_n.jpg'},
-                {answer: 'Poutine', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23421740_542027096136543_6088780208448471040_n.jpg'},
-                {answer: 'Pizza', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23507133_156576184953361_289457645876674560_n.jpg'},
-                {answer: 'Burrito', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20686715_141651436334024_7875736373112602624_n.jpg'}
+                {answer: 'São Paulo', url:''},
+                {answer: 'Brasília', url:''},
+                {answer: 'Rio de Janeiro', url:''},
+                {answer: 'Buenos Aires', url:''}
             ]
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/19120414_271228573283019_1335674875607515136_n.jpg',
-            price:'150',
-            question:'For how long has Canada been an independent country?',
-            min:'50',
-            max:'300',
+            price:'3',
+            question:`What's the largest city in the Americas?`,
+            min:'0',
+            max:'3',
             context:'years',
             subcategory:'',
-            p_id:'2'
+            p_id:'2',
+            options: [
+                {answer: 'Toronto', url:''},
+                {answer: 'Mexico City', url:''},
+                {answer: 'New York', url:''},
+                {answer: 'São Paulo', url:''}
+            ]
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18581342_1331186293603166_2850323134383390720_n.jpg',
-            price:'3',
-            question:'How do Canadians typically end a phrase? ',
+            price:'2',
+            question:'What language do Brazilians speak?',
             min:'0',
             max:'3',
             context:'',
             subcategory:'',
             p_id:'3',
             options: [
-                {answer: 'ok', url:''},
-                {answer: 'neh', url:''},
-                {answer: 'alrighty', url:''},
-                {answer: 'eh', url:''}
+                {answer: 'Brazilian', url:''},
+                {answer: 'Spanish', url:''},
+                {answer: 'Portuguese', url:''},
+                {answer: 'Tupi-guarani', url:''}
             ]
         },
         {
             url:'https://pbs.twimg.com/media/DO8-IBaWsAAG7sJ.jpg',
-            price:'1',
-            question:'In Manitoba, Canada, you have to leave your car doors unlocked in case of a bear attack',
-            min:'0',
-            max:'1',
-            context:'',
+            price:'2.56',
+            question:'$1.00 CAD is equal to how many Brazilian Real (R$)?',
+            min:'0.56',
+            max:'10.56',
+            context:'R$',
             subcategory:'',
             p_id:'4'
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20902290_732602140257917_9177391336754511872_n.jpg',
-            price:'1.42',
-            question:'How long is a flight from Toronto to New York?',
-            min:'0.42',
-            max:'5.42',
-            context:'hours',
+            price:'3',
+            question:'What city is Latin America\'s HQ of 65% of Fortune 500 companies?',
+            min:'0',
+            max:'3',
+            context:'',
             subcategory:'',
-            p_id:'5'                
+            p_id:'5',
+            options: [
+                {answer: 'Buenos Aires', url:''},
+                {answer: 'Mexico City', url:''},
+                {answer: 'Santiago', url:''},
+                {answer: 'São Paulo', url:''}
+            ]               
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/19985613_292352497904223_2565680700896313344_n.jpg',
-            price:'50',
-            question:'How many immigration programs does Canada offer to potential immigrants?',
-            min:'20',
-            max:'100',
+            price:'1',
+            question:`What's the leading city for FDI (Foreign Direct Investment) in Latin America?`,
+            min:'0',
+            max:'3',
             context:'',
             subcategory:'',
-            p_id:'6'
+            p_id:'6',
+            options: [
+                {answer: 'Buenos Aires', url:''},
+                {answer: 'São Paulo', url:''},
+                {answer: 'Fortaleza', url:''},
+                {answer: 'Monterrey', url:''}
+            ] 
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18299308_312981482454284_7852578553697665024_n.jpg',
-            price:'6',
-            question:'How long can Brazilians stay in Canada as a tourist?',
-            min:'2',
-            max:'12',
-            context:'months',
+            price:'1',
+            question:'In 2018, Canadians won\'t need a visa to travel to Brazil? ',
+            min:'0',
+            max:'1',
+            context:'',
             subcategory:'',
             p_id:'7'
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18161024_206946959811816_861075835438759936_n.jpg',
-            price:'26',
-            question:'How many startup incubators and accelerators are accredited by the startup visa program?',
+            price:'170',
+            question:'How many fintechs are in Brazil?',
             min:'5',
-            max:'50',
+            max:'500',
             context:'',
             subcategory:'',
             p_id:'8'
@@ -115,7 +310,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18251596_423583818007092_6429849582967980032_n.jpg',
             price:'1',
-            question:'Can you get a visa to develop your own business in Canada?',
+            question:'Brazil is home to 50% of Latin America\'s startups',
             min:'0',
             max:'1',
             context:'',
@@ -124,74 +319,30 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21688987_796701347168151_7615492347459010560_n.jpg',
-            price:'200',
-            question:'How many IT talents do Canadian companies plan to hire by 2019?',
-            min:'20',
-            max:'500',
-            context:'thousand',
+            price:'survey',
+            question:'Would you explore Brazilian innovation and tech ecosystem and main touristic points during Canadian winter?',
+            min:'0',
+            max:'1',
+            context:'',
             subcategory:'',
             p_id:'10'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21690325_275768359592351_7888265419780259840_n.jpg',
-            price:'14',
-            question:'How long does it usually take for a Canadian company to bring a Brazilian IT professional to Canada',
-            min:'5',
-            max:'30',
-            context:'days',
-            subcategory:'',
-            p_id:'11'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/17933857_1093543380751227_8388722233245171712_n.jpg',
-            price:'51',
-            question:'What percentage of Toronto\'s population isn\'t born in Toronto?',
-            min:'5',
-            max:'100',
-            context:'%',
-            subcategory:'',
-            p_id:'12'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18095984_659848654219908_4977467299033251840_n.jpg',
-            price:'60',
-            question:'How much is it to open your own business a sole proprietor in Ontario?',
-            min:'10',
-            max:'150',
-            context:'$',
-            subcategory:'',
-            p_id:'13'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21576705_1938832166333282_8519165385071656960_n.jpg',
-            price:'1',
-            question:'You don\'t need a special type of visa to open your business in Ontario?',
-            min:'0',
-            max:'1',
-            context:'',
-            subcategory:'',
-            p_id:'14'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18160360_215201732304368_7562590307561242624_n.jpg',
-            price:'survey',
-            question:'Would you come to Toronto to explore the innovation ecosystem and opportunities for your startup, company or IT career?',
-            min:'0',
-            max:'1',
-            context:'',
-            subcategory:'',
-            p_id:'15'
-        },
-        {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21689961_276224896210936_4024863915220402176_n.jpg',
-            price:'survey',
-            question:'How much would you invest in a program that takes you to explore candian startups and accelerators?',
-            min:'5000',
-            max:'10000',
-            context:'R$',
+            price:'3',
+            question:'Which company can connect your business to the main Brazilian tech players?',
+            min:'0',
+            max:'3',
+            context:'',
             subcategory:'',
-            p_id:'16'
-        },
+            p_id:'11',
+            options: [
+                {answer: 'Hatchery', url:''},
+                {answer: 'LatAm Startups', url:''},
+                {answer: 'PanAm Mexico', url:''},
+                {answer: 'Next level startups', url:''}
+            ] 
+        }
         
     ];
     

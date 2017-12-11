@@ -203,6 +203,38 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         controller: "leaderboard.controller",
         params: {mode: 'nls'},
         cache: false
+      })
+      .state("/borodash", {
+        url: "/borodash",
+        templateUrl : "views/boro/boro.dash.html",
+	  	controller: "boro.dash.controller"
+      })
+      .state("/borogame", {
+        url: "/borogame",
+        templateUrl : "views/boro/boro.game.html",
+        controller: "boro.dash.controller"
+      })
+      .state("/borologin", {
+        url: "/borologin",
+        templateUrl : "views/boro/boro.login.html",
+        controller: "boro.login.controller"
+      })
+      .state("/borocontest", {
+        url: "/borocontest",
+        templateUrl : "views/boro/boro.contest.html",
+        controller: "boro.contest.controller"
+      })
+      .state("/boroanswer", {
+        url: "/boroanswer",
+        templateUrl : "views/boro/boro.answer.html",
+        controller: "boro.answer.controller"
+      })
+      .state("/boroleaderboard", {
+        url: "/boroleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'boro'},
+        cache: false
       });
     $urlRouterProvider.otherwise('/');
 })
@@ -573,7 +605,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             //$scope.menuhide = 0;
             $scope.game = $scope.data[$scope.index];
             if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))
-            && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))){
+            && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))
+            && (!location.hash.includes('boro'))){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
                     $state.go('/dash');
@@ -989,10 +1022,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 console.log(res);
                 $scope.leaderList = [];
                 $scope.thisPlayer = false;
-                var number = localStorage.phone;
+                var number = (mocha.safe(localStorage.phone)) ? localStorage.phone : null;
+                var email = (mocha.safe(localStorage.email)) ? localStorage.email : null;
                 var list = res.data;
                 list.forEach(function(item){
-                    if(item.phone === number){
+                    if((mocha.safe(item.phone) && item.phone === number) || (mocha.safe(item.email) && item.email === email)){
                         item.thisplayer = true;
                         $scope.thisPlayer = true;
                         if(!localStorage.hasOwnProperty('points')){
@@ -1062,6 +1096,285 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 			
 		});
 	});
+//BORO DIRECTIVES
+myapp.directive('boroMenuHeader', function() {
+    return {
+      templateUrl: 'views/boro/boro.menu-header.html'
+    };
+});
+
+myapp.directive('boroResultModal', function() {
+    return {
+      templateUrl: 'views/boro/boro.result.html'          
+    };
+});
+
+//BORO CONTROLLERS BELOW
+myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
+    angular.element(document.querySelector('body'))[0].style.borderTopColor='#008489';
+    //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu boro-color';
+    if(mocha.checkWindow() === true){
+        $state.go('/');
+    }
+    
+    $scope.boro_data = [
+        {
+            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/Nude-Lace-Gown-Front.jpg?fit=862%2C1024&ssl=1',
+            price:'3',
+            question:'What\'s the brand name of this dress?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'1',
+            options: [
+                {answer: 'Ted Baker', url:''},
+                {answer: 'Vera Wang', url:''},
+                {answer: 'BCBG', url:''},
+                {answer: 'None of the above', url:''}
+            ]
+        },
+        {
+            url:'https://i0.wp.com/boroit.ca/wp-content/uploads/terani-silver-gown-1.jpg?fit=862%2C1024&ssl=1',
+            price:'94',
+            question:'Predict the rental price of this dress?',
+            min:'50',
+            max:'110',
+            context:'$',
+            subcategory:'dress',
+            p_id:'2'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/25007210_148212529158646_8907124790167339008_n.jpg',
+            price:'survey',
+            question:'What type of event can you rent for?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'3',
+            options: [
+                {answer: 'Dinner', url:''},
+                {answer: 'gala', url:''},
+                {answer: 'wedding', url:''},
+                {answer: 'All of the Above', url:''}
+            ]
+        },
+        {
+            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/self-portrait-lace-yellow.jpg?fit=862%2C1024&ssl=1',
+            price:'1',
+            question:'Was this dress the most rented item of the Summer in 2017?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'4'
+        },
+        {
+            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/black-sheep-green-front.jpg?fit=862%2C1024&ssl=1',
+            price:'1',
+            question:'What was the most rented dress of the Fall?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'5',
+            options: [
+                {answer: 'A', url:'https://i0.wp.com/boroit.ca/wp-content/uploads/bluesparkle-front.jpg?fit=862%2C1024&ssl=1'},
+                {answer: 'B', url:'https://i0.wp.com/boroit.ca/wp-content/uploads/keepsake-navy-lace-e1508767115758.jpg?fit=600%2C713&ssl=1'},
+                {answer: 'C', url:'https://i1.wp.com/boroit.ca/wp-content/uploads/keepsake-2-piece.f.jpg?fit=862%2C1024&ssl=1'},
+                {answer: 'D', url:'https://i2.wp.com/boroit.ca/wp-content/uploads/black-sheep-green-front.jpg?fit=862%2C1024&ssl=1'}
+            ]                
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23734241_132513780784119_7008778111810535424_n.jpg',
+            price:'3',
+            question:'How much water do you save each time you use Boro instead of buying new?',
+            min:'2',
+            max:'7',
+            context:'bathtubs',
+            subcategory:'',
+            p_id:'6'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24175221_414973372250811_7636663641420333056_n.jpg',
+            price:'3500',
+            question:'if you use Boro once per month for a year, this leads to the a savings of ?',
+            min:'2500',
+            max:'5000',
+            context:'$',
+            subcategory:'',
+            p_id:'7'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24178022_130806320921631_23203702550560768_n.jpg',
+            price:'survey',
+            question:'How does Boro deliver to it\'s customers? ',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'8',
+            options: [
+                {answer: 'hand-delivery', url:''},
+                {answer: 'mail', url:''},
+                {answer: 'pickup', url:''},
+                {answer: 'Any of the above', url:''}
+            ]
+        },
+        {
+            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/ted-baker-front.jpg?fit=600%2C713&ssl=1',
+            price:'550',
+            question:'Predict the real price of this dress?',
+            min:'400',
+            max:'870',
+            context:'',
+            subcategory:'dress',
+            p_id:'9'
+        }
+    ];
+    
+    $scope.data = [];
+    angular.copy($scope.boro_data,$scope.data);
+    $scope.boro = true;
+    $scope.prizeStartDate = moment('2017/11/28','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2017/11/28 19:30','YYYY/MM/DD kk:mm');
+    $scope.gameEndTime = moment('2017/11/28 19:00','YYYY/MM/DD kk:mm');
+    //$scope.game = $scope.data[0];
+    $scope.index = 0;
+    $scope.game = $scope.data[$scope.index];
+    $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
+    $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+    mocha.startTime($scope);
+    $scope.mocha = mocha; // expose service to the view
+    $scope.hide_question = false;
+    $scope.show_radio = false;
+    mocha.boro = true;
+    mocha.boro_data = $scope.boro_data;
+    mocha.prizeEndDate = $scope.prizeEndDate;
+    //console.log($scope.data);
+    
+    
+    $scope.switchUp = function(){
+        //console.log(game);
+        if($scope.safe($scope.game.options)){
+            if(mocha.safe($scope.game.options[$scope.test.price].url)){
+                $scope.game.url = $scope.game.options[$scope.test.price].url;
+            }
+            $scope.game.context =  $scope.game.options[$scope.test.price].answer;
+            if($scope.test.price !==  $scope.game.price){
+                //this will make sure that the player gets zero points if they choose the wrong option
+                $scope.data[$scope.index].prediction = '100';
+            }else{
+                $scope.data[$scope.index].prediction = $scope.test.price;
+            }
+            
+        }
+
+        if($scope.game.min === '0' & $scope.game.max === '1'){
+            $scope.show_radio = true;
+        }else{
+            $scope.show_radio = false;
+        }
+    };
+    
+    $scope.boroSubmit = function(){mocha.submitPrediction($scope)};
+    $scope.boroNextProduct = function(){
+        mocha.nextProduct($scope);
+        $scope.switchUp();
+    };
+    $scope.resetGame = function(){mocha.resetGame($scope)};
+    $scope.inputShow = function(){mocha.inputShow($scope)};
+    $scope.menuHide = function(){mocha.menuHide($scope)};
+    $scope.isPredict = function(){
+        if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') 
+           || $scope.game.question.includes('investment'))){
+            return true;
+        }
+        if(mocha.safe($scope.game.context) && $scope.game.context.includes('$')){
+            return true;
+        }
+    };
+    $scope.startBoro = function(){
+        $state.go('/borogame');
+    };
+    $scope.goContest = function(){
+        $scope.test.hideModal = true;
+        mocha.test = $scope.test;
+        if(mocha.safe(localStorage.name)){
+            //Pull saved user data if it exists
+            mocha.contest.name = localStorage.name;
+            mocha.contest.phone = Number(localStorage.phone);
+        }
+        $state.go('/borocontest');
+    };
+    $scope.radioFunc = function(){
+        $scope.test.price = $scope.test.price_radio;
+        $scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no';
+    };
+    
+});
+
+myapp.controller('boro.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.screen_big = mocha.checkWindow();
+    if($scope.screen_big !== true){
+        //This mimics a real life game loading thing. this can definitely be optimized later.
+        $timeout(function(){
+            $state.go('/borodash');
+        },3000);
+    }
+    
+});
+
+myapp.controller('boro.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.mocha = mocha;
+    $scope.mocha.contest.signup =true;
+    $scope.contestSubmit = function(form){
+        if(form.$valid){
+            $scope.contest = {};
+            $scope.contest.timestamp = moment().toISOString();
+            $scope.contest.points = $scope.mocha.test.point_earned;
+            $scope.contest.playtime = $scope.mocha.test.timePlayed;
+            $scope.contest.played_data = JSON.stringify(mocha.played_data);
+            //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
+            $scope.contest.signup = 0;
+            $http.get('https://styleminions.co/api/borocontest?name='+$scope.mocha.contest.name+"&email="+
+            $scope.mocha.contest.email+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
+            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
+            .then(function(res){
+                localStorage.name = $scope.mocha.contest.name;
+                localStorage.email = $scope.mocha.contest.email;
+                localStorage.prizeplaydate = moment().toISOString();
+                //$scope.thankyou = true;
+                //$scope.resetGame('dash');
+                $state.go('/boroleaderboard');
+            });
+        }else{
+            console.log('fuck no form not valid');
+            //console.log(form);
+        }
+    };
+
+    
+});
+
+myapp.controller('boro.answer.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
+    $scope.mocha = mocha;
+    $scope.showanswer = null;
+    //var prizeEndDate = moment('2017/11/27 18:56','YYYY/MM/DD kk:mm');
+    var check = $interval(function(){
+        let now = moment();
+        if(mocha.prizeEndDate.isBefore(now)){
+            console.log('see the answers');
+            $interval.cancel(check);
+            $scope.showanswer = true;
+        }else{
+            console.log('wait for a while');
+            $scope.showanswer = false;
+        }
+    }, 1000, 6000);
+    
+});
 myapp.directive('dmzMenuHeader', function() {
     return {
       templateUrl: 'views/dmz/dmz.menu-header.html'
@@ -1883,95 +2196,290 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
         $state.go('/');
     }
     
+    // $scope.nls_data = [
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20686715_141651436334024_7875736373112602624_n.jpg',
+    //         price:'1',
+    //         question:'What\'s Canada\'s most popular food?',
+    //         min:'0',
+    //         max:'3',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'1',
+    //         options: [
+    //             {answer: 'Burger', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21435368_495444827474387_8279421719358210048_n.jpg'},
+    //             {answer: 'Poutine', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23421740_542027096136543_6088780208448471040_n.jpg'},
+    //             {answer: 'Pizza', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23507133_156576184953361_289457645876674560_n.jpg'},
+    //             {answer: 'Burrito', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20686715_141651436334024_7875736373112602624_n.jpg'}
+    //         ]
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/19120414_271228573283019_1335674875607515136_n.jpg',
+    //         price:'150',
+    //         question:'For how long has Canada been an independent country?',
+    //         min:'50',
+    //         max:'300',
+    //         context:'years',
+    //         subcategory:'',
+    //         p_id:'2'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18581342_1331186293603166_2850323134383390720_n.jpg',
+    //         price:'3',
+    //         question:'How do Canadians typically end a phrase? ',
+    //         min:'0',
+    //         max:'3',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'3',
+    //         options: [
+    //             {answer: 'ok', url:''},
+    //             {answer: 'neh', url:''},
+    //             {answer: 'alrighty', url:''},
+    //             {answer: 'eh', url:''}
+    //         ]
+    //     },
+    //     {
+    //         url:'https://pbs.twimg.com/media/DO8-IBaWsAAG7sJ.jpg',
+    //         price:'1',
+    //         question:'In Manitoba, Canada, you have to leave your car doors unlocked in case of a bear attack',
+    //         min:'0',
+    //         max:'1',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'4'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20902290_732602140257917_9177391336754511872_n.jpg',
+    //         price:'1.42',
+    //         question:'How long is a flight from Toronto to New York?',
+    //         min:'0.42',
+    //         max:'5.42',
+    //         context:'hours',
+    //         subcategory:'',
+    //         p_id:'5'                
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/19985613_292352497904223_2565680700896313344_n.jpg',
+    //         price:'50',
+    //         question:'How many immigration programs does Canada offer to potential immigrants?',
+    //         min:'20',
+    //         max:'100',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'6'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18299308_312981482454284_7852578553697665024_n.jpg',
+    //         price:'6',
+    //         question:'How long can Brazilians stay in Canada as a tourist?',
+    //         min:'2',
+    //         max:'12',
+    //         context:'months',
+    //         subcategory:'',
+    //         p_id:'7'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18161024_206946959811816_861075835438759936_n.jpg',
+    //         price:'26',
+    //         question:'How many startup incubators and accelerators are accredited by the startup visa program?',
+    //         min:'5',
+    //         max:'50',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'8'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18251596_423583818007092_6429849582967980032_n.jpg',
+    //         price:'1',
+    //         question:'Can you get a visa to develop your own business in Canada?',
+    //         min:'0',
+    //         max:'1',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'9'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21688987_796701347168151_7615492347459010560_n.jpg',
+    //         price:'200',
+    //         question:'How many IT talents do Canadian companies plan to hire by 2019?',
+    //         min:'20',
+    //         max:'500',
+    //         context:'thousand',
+    //         subcategory:'',
+    //         p_id:'10'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21690325_275768359592351_7888265419780259840_n.jpg',
+    //         price:'14',
+    //         question:'How long does it usually take for a Canadian company to bring a Brazilian IT professional to Canada',
+    //         min:'5',
+    //         max:'30',
+    //         context:'days',
+    //         subcategory:'',
+    //         p_id:'11'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/17933857_1093543380751227_8388722233245171712_n.jpg',
+    //         price:'51',
+    //         question:'What percentage of Toronto\'s population isn\'t born in Toronto?',
+    //         min:'5',
+    //         max:'100',
+    //         context:'%',
+    //         subcategory:'',
+    //         p_id:'12'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18095984_659848654219908_4977467299033251840_n.jpg',
+    //         price:'60',
+    //         question:'How much is it to open your own business a sole proprietor in Ontario?',
+    //         min:'10',
+    //         max:'150',
+    //         context:'$',
+    //         subcategory:'',
+    //         p_id:'13'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21576705_1938832166333282_8519165385071656960_n.jpg',
+    //         price:'1',
+    //         question:'You don\'t need a special type of visa to open your business in Ontario?',
+    //         min:'0',
+    //         max:'1',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'14'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18160360_215201732304368_7562590307561242624_n.jpg',
+    //         price:'survey',
+    //         question:'Would you come to Toronto to explore the innovation ecosystem and opportunities for your startup, company or IT career?',
+    //         min:'0',
+    //         max:'1',
+    //         context:'',
+    //         subcategory:'',
+    //         p_id:'15'
+    //     },
+    //     {
+    //         url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21689961_276224896210936_4024863915220402176_n.jpg',
+    //         price:'survey',
+    //         question:'How much would you invest in a program that takes you to explore candian startups and accelerators?',
+    //         min:'5000',
+    //         max:'10000',
+    //         context:'R$',
+    //         subcategory:'',
+    //         p_id:'16'
+    //     },
+        
+    // ];
+
+    //Salmans book launch event questions
     $scope.nls_data = [
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20686715_141651436334024_7875736373112602624_n.jpg',
             price:'1',
-            question:'What\'s Canada\'s most popular food?',
+            question:`What's the capital of Brazil?`,
             min:'0',
             max:'3',
             context:'',
             subcategory:'',
             p_id:'1',
             options: [
-                {answer: 'Burger', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21435368_495444827474387_8279421719358210048_n.jpg'},
-                {answer: 'Poutine', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23421740_542027096136543_6088780208448471040_n.jpg'},
-                {answer: 'Pizza', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23507133_156576184953361_289457645876674560_n.jpg'},
-                {answer: 'Burrito', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20686715_141651436334024_7875736373112602624_n.jpg'}
+                {answer: 'São Paulo', url:''},
+                {answer: 'Brasília', url:''},
+                {answer: 'Rio de Janeiro', url:''},
+                {answer: 'Buenos Aires', url:''}
             ]
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/19120414_271228573283019_1335674875607515136_n.jpg',
-            price:'150',
-            question:'For how long has Canada been an independent country?',
-            min:'50',
-            max:'300',
+            price:'3',
+            question:`What's the largest city in the Americas?`,
+            min:'0',
+            max:'3',
             context:'years',
             subcategory:'',
-            p_id:'2'
+            p_id:'2',
+            options: [
+                {answer: 'Toronto', url:''},
+                {answer: 'Mexico City', url:''},
+                {answer: 'New York', url:''},
+                {answer: 'São Paulo', url:''}
+            ]
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18581342_1331186293603166_2850323134383390720_n.jpg',
-            price:'3',
-            question:'How do Canadians typically end a phrase? ',
+            price:'2',
+            question:'What language do Brazilians speak?',
             min:'0',
             max:'3',
             context:'',
             subcategory:'',
             p_id:'3',
             options: [
-                {answer: 'ok', url:''},
-                {answer: 'neh', url:''},
-                {answer: 'alrighty', url:''},
-                {answer: 'eh', url:''}
+                {answer: 'Brazilian', url:''},
+                {answer: 'Spanish', url:''},
+                {answer: 'Portuguese', url:''},
+                {answer: 'Tupi-guarani', url:''}
             ]
         },
         {
             url:'https://pbs.twimg.com/media/DO8-IBaWsAAG7sJ.jpg',
-            price:'1',
-            question:'In Manitoba, Canada, you have to leave your car doors unlocked in case of a bear attack',
-            min:'0',
-            max:'1',
-            context:'',
+            price:'2.56',
+            question:'$1.00 CAD is equal to how many Brazilian Real (R$)?',
+            min:'0.56',
+            max:'10.56',
+            context:'R$',
             subcategory:'',
             p_id:'4'
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20902290_732602140257917_9177391336754511872_n.jpg',
-            price:'1.42',
-            question:'How long is a flight from Toronto to New York?',
-            min:'0.42',
-            max:'5.42',
-            context:'hours',
+            price:'3',
+            question:'What city is Latin America\'s HQ of 65% of Fortune 500 companies?',
+            min:'0',
+            max:'3',
+            context:'',
             subcategory:'',
-            p_id:'5'                
+            p_id:'5',
+            options: [
+                {answer: 'Buenos Aires', url:''},
+                {answer: 'Mexico City', url:''},
+                {answer: 'Santiago', url:''},
+                {answer: 'São Paulo', url:''}
+            ]               
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/19985613_292352497904223_2565680700896313344_n.jpg',
-            price:'50',
-            question:'How many immigration programs does Canada offer to potential immigrants?',
-            min:'20',
-            max:'100',
+            price:'1',
+            question:`What's the leading city for FDI (Foreign Direct Investment) in Latin America?`,
+            min:'0',
+            max:'3',
             context:'',
             subcategory:'',
-            p_id:'6'
+            p_id:'6',
+            options: [
+                {answer: 'Buenos Aires', url:''},
+                {answer: 'São Paulo', url:''},
+                {answer: 'Fortaleza', url:''},
+                {answer: 'Monterrey', url:''}
+            ] 
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/s1080x1080/e35/18299308_312981482454284_7852578553697665024_n.jpg',
-            price:'6',
-            question:'How long can Brazilians stay in Canada as a tourist?',
-            min:'2',
-            max:'12',
-            context:'months',
+            price:'1',
+            question:'In 2018, Canadians won\'t need a visa to travel to Brazil? ',
+            min:'0',
+            max:'1',
+            context:'',
             subcategory:'',
             p_id:'7'
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18161024_206946959811816_861075835438759936_n.jpg',
-            price:'26',
-            question:'How many startup incubators and accelerators are accredited by the startup visa program?',
+            price:'170',
+            question:'How many fintechs are in Brazil?',
             min:'5',
-            max:'50',
+            max:'500',
             context:'',
             subcategory:'',
             p_id:'8'
@@ -1979,7 +2487,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18251596_423583818007092_6429849582967980032_n.jpg',
             price:'1',
-            question:'Can you get a visa to develop your own business in Canada?',
+            question:'Brazil is home to 50% of Latin America\'s startups',
             min:'0',
             max:'1',
             context:'',
@@ -1988,74 +2496,30 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21688987_796701347168151_7615492347459010560_n.jpg',
-            price:'200',
-            question:'How many IT talents do Canadian companies plan to hire by 2019?',
-            min:'20',
-            max:'500',
-            context:'thousand',
+            price:'survey',
+            question:'Would you explore Brazilian innovation and tech ecosystem and main touristic points during Canadian winter?',
+            min:'0',
+            max:'1',
+            context:'',
             subcategory:'',
             p_id:'10'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21690325_275768359592351_7888265419780259840_n.jpg',
-            price:'14',
-            question:'How long does it usually take for a Canadian company to bring a Brazilian IT professional to Canada',
-            min:'5',
-            max:'30',
-            context:'days',
-            subcategory:'',
-            p_id:'11'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/17933857_1093543380751227_8388722233245171712_n.jpg',
-            price:'51',
-            question:'What percentage of Toronto\'s population isn\'t born in Toronto?',
-            min:'5',
-            max:'100',
-            context:'%',
-            subcategory:'',
-            p_id:'12'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18095984_659848654219908_4977467299033251840_n.jpg',
-            price:'60',
-            question:'How much is it to open your own business a sole proprietor in Ontario?',
-            min:'10',
-            max:'150',
-            context:'$',
-            subcategory:'',
-            p_id:'13'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21576705_1938832166333282_8519165385071656960_n.jpg',
-            price:'1',
-            question:'You don\'t need a special type of visa to open your business in Ontario?',
-            min:'0',
-            max:'1',
-            context:'',
-            subcategory:'',
-            p_id:'14'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/18160360_215201732304368_7562590307561242624_n.jpg',
-            price:'survey',
-            question:'Would you come to Toronto to explore the innovation ecosystem and opportunities for your startup, company or IT career?',
-            min:'0',
-            max:'1',
-            context:'',
-            subcategory:'',
-            p_id:'15'
-        },
-        {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21689961_276224896210936_4024863915220402176_n.jpg',
-            price:'survey',
-            question:'How much would you invest in a program that takes you to explore candian startups and accelerators?',
-            min:'5000',
-            max:'10000',
-            context:'R$',
+            price:'3',
+            question:'Which company can connect your business to the main Brazilian tech players?',
+            min:'0',
+            max:'3',
+            context:'',
             subcategory:'',
-            p_id:'16'
-        },
+            p_id:'11',
+            options: [
+                {answer: 'Hatchery', url:''},
+                {answer: 'LatAm Startups', url:''},
+                {answer: 'PanAm Mexico', url:''},
+                {answer: 'Next level startups', url:''}
+            ] 
+        }
         
     ];
     
