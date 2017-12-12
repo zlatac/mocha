@@ -56,6 +56,6 @@ gulp.task('mix', function(){
       .pipe(gulp.dest('www/js'));
 });
 
-gulp.task('watch', function() {
+gulp.task('build', function() {
   gulp.watch('www/js/scripts/**/*.js', ['mix']);
 });

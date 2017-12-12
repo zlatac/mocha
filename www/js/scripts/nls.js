@@ -350,9 +350,9 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
     $scope.data = [];
     angular.copy($scope.nls_data,$scope.data);
     $scope.nls = true;
-    $scope.prizeStartDate = moment('2017/11/28','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2017/11/28 19:30','YYYY/MM/DD kk:mm');
-    $scope.gameEndTime = moment('2017/11/28 19:00','YYYY/MM/DD kk:mm');
+    $scope.prizeStartDate = moment('2017/12/11','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2017/12/12 18:00','YYYY/MM/DD kk:mm');
+    $scope.gameEndTime = moment('2017/12/12 18:00','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
@@ -474,7 +474,6 @@ myapp.controller('nls.contest.controller', function($scope,$location,$state,$sta
 myapp.controller('nls.answer.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
     $scope.mocha = mocha;
     $scope.showanswer = null;
-    //var prizeEndDate = moment('2017/11/27 18:56','YYYY/MM/DD kk:mm');
     var check = $interval(function(){
         let now = moment();
         if(mocha.prizeEndDate.isBefore(now)){

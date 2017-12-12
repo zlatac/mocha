@@ -263,6 +263,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
     this.played_data = []; 
     this.submitPrediction = function($scope){
             if($scope.index < $scope.data.length){
+                //reconcile price prediction for consistent points
+                if($scope.manualprice === true){
+                    $scope.test.price = $scope.test.second_price;
+                }    
                 if(!$scope.data[$scope.index].hasOwnProperty('prediction')){
                     //for situations where prediction is automatically inserted by other functions
                     $scope.data[$scope.index].prediction = $scope.test.price;
@@ -271,15 +275,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                     //for situation where its a yes or no question and we need the right radio button model data
                     $scope.test.price = $scope.test.price_radio;
                 }
-				var prediction = $scope.data[$scope.index].prediction;
-                //$scope.index++;
-                //$scope.game = $scope.data[$scope.index];
-                
-                //reconcile price prediction for consistent points
-                if($scope.manualprice === true)
-                    $scope.test.price = $scope.test.second_price;
-                
-                $scope.test.point_earned = $scope.data[$scope.index].point =  this.pointsMath($scope.index,prediction,$scope);
+
+				var prediction = $scope.data[$scope.index].prediction;                
+                $scope.data[$scope.index].raw_answer = $scope.test.price;
+                $scope.test.point_earned = $scope.data[$scope.index].point = this.pointsMath($scope.index,prediction,$scope);
                 //$scope.data[$scope.index].point = pointsMath($scope.index,x);
                 $scope.show_points = true;
                 $scope.manualprice = false;
@@ -998,10 +997,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 		//$timeout(function(){$scope.loader = false;},3000)
         var gametime = moment('2017/10/16','YYYY/MM/DD').toISOString();
         var url = 'https://styleminions.co/api/leaderboard?q=';
+        var database_table = '';
         if(mocha.safe($stateParams.mode)){
             //Default API FOR DEMOS. No need to build backend yet till its necessary
-            url = 'https://styleminions.co/api/dmzleaderboard?q=';
+            url = 'https://styleminions.co/api/apileaderboard?q=';
             $scope[$stateParams.mode] = true;
+            database_table = '&table='+ $stateParams.mode;
         }
         if($stateParams.mode === 'fz'){
             url = 'https://styleminions.co/api/fzleaderboard?q=';
@@ -1017,7 +1018,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         }
         $scope.getList = function(){
             $scope.loader = true;
-            $http.get(url + gametime)
+            $http.get(url + gametime + database_table)
             .then(function(res){
                 console.log(res);
                 $scope.leaderList = [];

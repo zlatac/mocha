@@ -263,6 +263,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
     this.played_data = []; 
     this.submitPrediction = function($scope){
             if($scope.index < $scope.data.length){
+                //reconcile price prediction for consistent points
+                if($scope.manualprice === true){
+                    $scope.test.price = $scope.test.second_price;
+                }    
                 if(!$scope.data[$scope.index].hasOwnProperty('prediction')){
                     //for situations where prediction is automatically inserted by other functions
                     $scope.data[$scope.index].prediction = $scope.test.price;
@@ -271,15 +275,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                     //for situation where its a yes or no question and we need the right radio button model data
                     $scope.test.price = $scope.test.price_radio;
                 }
-				var prediction = $scope.data[$scope.index].prediction;
-                //$scope.index++;
-                //$scope.game = $scope.data[$scope.index];
-                
-                //reconcile price prediction for consistent points
-                if($scope.manualprice === true)
-                    $scope.test.price = $scope.test.second_price;
-                
-                $scope.test.point_earned = $scope.data[$scope.index].point =  this.pointsMath($scope.index,prediction,$scope);
+
+				var prediction = $scope.data[$scope.index].prediction;                
+                $scope.data[$scope.index].raw_answer = $scope.test.price;
+                $scope.test.point_earned = $scope.data[$scope.index].point = this.pointsMath($scope.index,prediction,$scope);
                 //$scope.data[$scope.index].point = pointsMath($scope.index,x);
                 $scope.show_points = true;
                 $scope.manualprice = false;
@@ -998,10 +997,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 		//$timeout(function(){$scope.loader = false;},3000)
         var gametime = moment('2017/10/16','YYYY/MM/DD').toISOString();
         var url = 'https://styleminions.co/api/leaderboard?q=';
+        var database_table = '';
         if(mocha.safe($stateParams.mode)){
             //Default API FOR DEMOS. No need to build backend yet till its necessary
-            url = 'https://styleminions.co/api/dmzleaderboard?q=';
+            url = 'https://styleminions.co/api/apileaderboard?q=';
             $scope[$stateParams.mode] = true;
+            database_table = '&table='+ $stateParams.mode;
         }
         if($stateParams.mode === 'fz'){
             url = 'https://styleminions.co/api/fzleaderboard?q=';
@@ -1017,7 +1018,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         }
         $scope.getList = function(){
             $scope.loader = true;
-            $http.get(url + gametime)
+            $http.get(url + gametime + database_table)
             .then(function(res){
                 console.log(res);
                 $scope.leaderList = [];
@@ -1338,9 +1339,11 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
             $scope.contest.played_data = JSON.stringify(mocha.played_data);
             //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
             $scope.contest.signup = 0;
+            $scope.contest.size = Number($scope.mocha.contest.dress_size);
             $http.get('https://styleminions.co/api/borocontest?name='+$scope.mocha.contest.name+"&email="+
             $scope.mocha.contest.email+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
-            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
+            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup
+            +"&dress_size="+$scope.contest.size)
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
                 localStorage.email = $scope.mocha.contest.email;
@@ -1349,6 +1352,7 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
                 //$scope.resetGame('dash');
                 $state.go('/boroleaderboard');
             });
+            console.log($scope.contest);
         }else{
             console.log('fuck no form not valid');
             //console.log(form);
@@ -2527,9 +2531,9 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
     $scope.data = [];
     angular.copy($scope.nls_data,$scope.data);
     $scope.nls = true;
-    $scope.prizeStartDate = moment('2017/11/28','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2017/11/28 19:30','YYYY/MM/DD kk:mm');
-    $scope.gameEndTime = moment('2017/11/28 19:00','YYYY/MM/DD kk:mm');
+    $scope.prizeStartDate = moment('2017/12/11','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2017/12/12 18:00','YYYY/MM/DD kk:mm');
+    $scope.gameEndTime = moment('2017/12/12 18:00','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
@@ -2651,7 +2655,6 @@ myapp.controller('nls.contest.controller', function($scope,$location,$state,$sta
 myapp.controller('nls.answer.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
     $scope.mocha = mocha;
     $scope.showanswer = null;
-    //var prizeEndDate = moment('2017/11/27 18:56','YYYY/MM/DD kk:mm');
     var check = $interval(function(){
         let now = moment();
         if(mocha.prizeEndDate.isBefore(now)){

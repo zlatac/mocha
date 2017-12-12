@@ -240,9 +240,11 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
             $scope.contest.played_data = JSON.stringify(mocha.played_data);
             //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
             $scope.contest.signup = 0;
+            $scope.contest.size = Number($scope.mocha.contest.dress_size);
             $http.get('https://styleminions.co/api/borocontest?name='+$scope.mocha.contest.name+"&email="+
             $scope.mocha.contest.email+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
-            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
+            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup
+            +"&dress_size="+$scope.contest.size)
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
                 localStorage.email = $scope.mocha.contest.email;
@@ -251,6 +253,7 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
                 //$scope.resetGame('dash');
                 $state.go('/boroleaderboard');
             });
+            console.log($scope.contest);
         }else{
             console.log('fuck no form not valid');
             //console.log(form);
