@@ -334,7 +334,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         arr.forEach(function(item){
             let capture = {};
             capture.p_id = item.p_id;
-            capture.prediction = item.prediction;
+            capture.raw_answer = item.raw_answer;
             newArr.push(capture);
         });
         return newArr
