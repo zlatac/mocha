@@ -342,8 +342,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
                 {answer: 'PanAm Mexico', url:''},
                 {answer: 'Next level startups', url:''}
             ] 
-        }
-        
+        }        
     ];
     
     

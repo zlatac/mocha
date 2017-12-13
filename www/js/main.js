@@ -1339,7 +1339,7 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
             $scope.contest.played_data = JSON.stringify(mocha.played_data);
             //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
             $scope.contest.signup = 0;
-            $scope.contest.size = Number($scope.mocha.contest.dress_size);
+            $scope.contest.size = $scope.mocha.contest.dress_size;
             $http.get('https://styleminions.co/api/borocontest?name='+$scope.mocha.contest.name+"&email="+
             $scope.mocha.contest.email+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
             +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup
@@ -2523,8 +2523,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
                 {answer: 'PanAm Mexico', url:''},
                 {answer: 'Next level startups', url:''}
             ] 
-        }
-        
+        }        
     ];
     
     
