@@ -520,7 +520,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         };
 	 
 	 this.checkWindow = function(){
-            if($window.innerWidth > 600){
+            if($window.innerWidth > 600 && $window.innerWidth > 768){
+                //768px is for tablet (ipad)
                 //console.log('screen  to big');
                 return true;
             }
@@ -944,7 +945,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         }
         
         function checkWindow(){
-            if($window.innerWidth > 600){
+            if($window.innerWidth > 600 && $window.innerWidth > 768){
                 //console.log('screen  to big');
                 $scope.screen_big = true;
             }

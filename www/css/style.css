@@ -74,6 +74,14 @@ span.card-title {
   left: 37%;
   background-color: rgba(165, 165, 165, 0.6);
 }
+@media only screen and (min-width: 601px){
+  .profile{
+    left: 43%;
+  }
+  .btn-menu{
+    right:-3% !important;
+  }
+}
 .btn-menu {
 position: fixed;
 /*right: 5%;
