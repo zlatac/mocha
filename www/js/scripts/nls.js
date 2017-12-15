@@ -362,6 +362,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
     $scope.hide_question = false;
     $scope.show_radio = false;
     mocha.nls = true;
+    mocha.appName = 'mocha_'+'nls';
     mocha.nls_data = $scope.nls_data;
     mocha.prizeEndDate = $scope.prizeEndDate;
     //console.log($scope.data);
@@ -456,7 +457,8 @@ myapp.controller('nls.contest.controller', function($scope,$location,$state,$sta
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
                 localStorage.phone = $scope.mocha.contest.phone;
-                localStorage.prizeplaydate = moment().toISOString();
+                //This allows a player to play games from different clients on MochaX without any clash
+                localStorage[mocha.appName] = JSON.stringify({'prizeplaydate':moment().toISOString()});
                 //$scope.thankyou = true;
                 //$scope.resetGame('dash');
                 $state.go('/nlsleaderboard');
@@ -473,6 +475,7 @@ myapp.controller('nls.contest.controller', function($scope,$location,$state,$sta
 myapp.controller('nls.answer.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
     $scope.mocha = mocha;
     $scope.showanswer = null;
+    $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
     var check = $interval(function(){
         let now = moment();
         if(mocha.prizeEndDate.isBefore(now)){

@@ -528,8 +528,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 	 };
 	 
 	 this.playedAlready = function(start, end){
-		 if(localStorage.hasOwnProperty('prizeplaydate') && this.safe(localStorage.prizeplaydate)){
-			 let dateStored = moment(localStorage.prizeplaydate);
+		 if(this.safe(localStorage[this.appName]) && JSON.parse(localStorage[this.appName]).hasOwnProperty('prizeplaydate')){
+             let appStorage = JSON.parse(localStorage[this.appName]);
+             let playDate = appStorage.prizeplaydate;
+			 let dateStored = moment(playDate);
 			 let afterStart = dateStored.isAfter(start);
 			 let beforeEnd = dateStored.isBefore(end);
 			 if(afterStart == true && beforeEnd == true){
@@ -1211,7 +1213,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24178022_130806320921631_23203702550560768_n.jpg',
             price:'survey',
-            question:'How does Boro deliver to it\'s customers? ',
+            question:'How does Boro deliver to its customers? ',
             min:'0',
             max:'3',
             context:'',
@@ -1227,7 +1229,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
         {
             url:'https://i2.wp.com/boroit.ca/wp-content/uploads/ted-baker-front.jpg?fit=600%2C713&ssl=1',
             price:'550',
-            question:'Predict the real price of this dress?',
+            question:'Predict the retail price of this dress?',
             min:'400',
             max:'870',
             context:'',
@@ -1239,9 +1241,9 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
     $scope.data = [];
     angular.copy($scope.boro_data,$scope.data);
     $scope.boro = true;
-    $scope.prizeStartDate = moment('2017/11/28','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2017/11/28 19:30','YYYY/MM/DD kk:mm');
-    $scope.gameEndTime = moment('2017/11/28 19:00','YYYY/MM/DD kk:mm');
+    $scope.prizeStartDate = moment('2017/12/14','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2017/12/29 00:00','YYYY/MM/DD kk:mm');
+    $scope.gameEndTime = moment('2017/12/29 00:00','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
@@ -1252,6 +1254,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
     $scope.hide_question = false;
     $scope.show_radio = false;
     mocha.boro = true;
+    mocha.appName = 'mocha_'+'boro';
     mocha.boro_data = $scope.boro_data;
     mocha.prizeEndDate = $scope.prizeEndDate;
     //console.log($scope.data);
@@ -1348,7 +1351,8 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
                 localStorage.email = $scope.mocha.contest.email;
-                localStorage.prizeplaydate = moment().toISOString();
+                //This allows a player to play games from different clients on MochaX without any clash
+                localStorage[mocha.appName] = JSON.stringify({'prizeplaydate':moment().toISOString()});
                 //$scope.thankyou = true;
                 //$scope.resetGame('dash');
                 $state.go('/boroleaderboard');
@@ -1366,6 +1370,7 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
 myapp.controller('boro.answer.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
     $scope.mocha = mocha;
     $scope.showanswer = null;
+    $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
     //var prizeEndDate = moment('2017/11/27 18:56','YYYY/MM/DD kk:mm');
     var check = $interval(function(){
         let now = moment();
@@ -2544,6 +2549,7 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
     $scope.hide_question = false;
     $scope.show_radio = false;
     mocha.nls = true;
+    mocha.appName = 'mocha_'+'nls';
     mocha.nls_data = $scope.nls_data;
     mocha.prizeEndDate = $scope.prizeEndDate;
     //console.log($scope.data);
@@ -2638,7 +2644,8 @@ myapp.controller('nls.contest.controller', function($scope,$location,$state,$sta
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
                 localStorage.phone = $scope.mocha.contest.phone;
-                localStorage.prizeplaydate = moment().toISOString();
+                //This allows a player to play games from different clients on MochaX without any clash
+                localStorage[mocha.appName] = JSON.stringify({'prizeplaydate':moment().toISOString()});
                 //$scope.thankyou = true;
                 //$scope.resetGame('dash');
                 $state.go('/nlsleaderboard');
@@ -2655,6 +2662,7 @@ myapp.controller('nls.contest.controller', function($scope,$location,$state,$sta
 myapp.controller('nls.answer.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
     $scope.mocha = mocha;
     $scope.showanswer = null;
+    $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
     var check = $interval(function(){
         let now = moment();
         if(mocha.prizeEndDate.isBefore(now)){

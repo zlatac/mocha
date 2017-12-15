@@ -528,8 +528,10 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 	 };
 	 
 	 this.playedAlready = function(start, end){
-		 if(localStorage.hasOwnProperty('prizeplaydate') && this.safe(localStorage.prizeplaydate)){
-			 let dateStored = moment(localStorage.prizeplaydate);
+		 if(this.safe(localStorage[this.appName]) && JSON.parse(localStorage[this.appName]).hasOwnProperty('prizeplaydate')){
+             let appStorage = JSON.parse(localStorage[this.appName]);
+             let playDate = appStorage.prizeplaydate;
+			 let dateStored = moment(playDate);
 			 let afterStart = dateStored.isAfter(start);
 			 let beforeEnd = dateStored.isBefore(end);
 			 if(afterStart == true && beforeEnd == true){
