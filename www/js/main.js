@@ -212,7 +212,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       .state("/borogame", {
         url: "/borogame",
         templateUrl : "views/boro/boro.game.html",
-        controller: "boro.dash.controller"
+        controller: "boro.dash.controller",
+      })
+      .state("/borostore", {
+        url: "/borostore",
+        templateUrl : "views/boro/boro.game.html",
+        controller: "boro.dash.controller",
+        cache: false
       })
       .state("/borologin", {
         url: "/borologin",
@@ -322,7 +328,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 this.getTokens($scope);
                 $scope.test.hideModal = false;
                 this.played_data = this.getPlayedData($scope.data);
-                this.takeChunk($scope);
+                //this.takeChunk($scope);
                 //$location.path('/final');
                 //angular.element(document.querySelector('.modal')).modal('open');
             }
@@ -1049,6 +1055,16 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             });
         };
         $scope.getList();
+
+        if(mocha.safe(mocha.appName) && mocha.inStore === true){
+            //Send screen to dash page when app is in the store
+            $timeout(function(){
+                //get the client name for the location
+                var appname = mocha.appName.slice(6,mocha.appName.length);
+                var location = '/'+ appname +'dash';
+                $state.go(location);
+            },60000);
+        }
         
         function report(list){
             //analytics avg report for each question that was predicted to get value perception of consumer/service product.
@@ -1115,7 +1131,13 @@ myapp.directive('boroResultModal', function() {
 
 //BORO CONTROLLERS BELOW
 myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
-    angular.element(document.querySelector('body'))[0].style.borderTopColor='#008489';
+    if(mocha.inStore == true){
+        //in store color
+        angular.element(document.querySelector('body'))[0].style.borderTopColor='#101010e6';
+    }else{
+        //default color
+        angular.element(document.querySelector('body'))[0].style.borderTopColor='#008489';
+    }
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu boro-color';
     if(mocha.checkWindow() === true){
         $state.go('/');
@@ -1257,6 +1279,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
     mocha.appName = 'mocha_'+'boro';
     mocha.boro_data = $scope.boro_data;
     mocha.prizeEndDate = $scope.prizeEndDate;
+    $scope.storeMode = 0;
     //console.log($scope.data);
     
     
@@ -1288,7 +1311,10 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
         mocha.nextProduct($scope);
         $scope.switchUp();
     };
-    $scope.resetGame = function(){mocha.resetGame($scope)};
+    $scope.resetGame = function(){
+        angular.copy($scope.boro_data,$scope.data);
+        mocha.resetGame($scope);
+    };
     $scope.inputShow = function(){mocha.inputShow($scope)};
     $scope.menuHide = function(){mocha.menuHide($scope)};
     $scope.isPredict = function(){
@@ -1301,7 +1327,11 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
         }
     };
     $scope.startBoro = function(){
-        $state.go('/borogame');
+        if(mocha.inStore === true){
+            $state.go('/borostore');
+        }else{
+            $state.go('/borogame');
+        }
     };
     $scope.goContest = function(){
         $scope.test.hideModal = true;
@@ -1316,6 +1346,13 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
     $scope.radioFunc = function(){
         $scope.test.price = $scope.test.price_radio;
         $scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no';
+    };
+    $scope.inStore = function(){
+        $scope.storeMode++;
+        if($scope.storeMode >= 2){
+            angular.element(document.querySelector('body'))[0].style.borderTopColor='#101010e6';
+            mocha.inStore = true;
+        }      
     };
     
 });

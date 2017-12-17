@@ -212,7 +212,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
       .state("/borogame", {
         url: "/borogame",
         templateUrl : "views/boro/boro.game.html",
-        controller: "boro.dash.controller"
+        controller: "boro.dash.controller",
+      })
+      .state("/borostore", {
+        url: "/borostore",
+        templateUrl : "views/boro/boro.game.html",
+        controller: "boro.dash.controller",
+        cache: false
       })
       .state("/borologin", {
         url: "/borologin",
@@ -322,7 +328,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 this.getTokens($scope);
                 $scope.test.hideModal = false;
                 this.played_data = this.getPlayedData($scope.data);
-                this.takeChunk($scope);
+                //this.takeChunk($scope);
                 //$location.path('/final');
                 //angular.element(document.querySelector('.modal')).modal('open');
             }
@@ -1049,6 +1055,16 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             });
         };
         $scope.getList();
+
+        if(mocha.safe(mocha.appName) && mocha.inStore === true){
+            //Send screen to dash page when app is in the store
+            $timeout(function(){
+                //get the client name for the location
+                var appname = mocha.appName.slice(6,mocha.appName.length);
+                var location = '/'+ appname +'dash';
+                $state.go(location);
+            },60000);
+        }
         
         function report(list){
             //analytics avg report for each question that was predicted to get value perception of consumer/service product.

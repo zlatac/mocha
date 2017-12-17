@@ -8,7 +8,9 @@
               <div class="card-panel z-depth-1" style="margin-top:60px;">
                 <div class="row">
 <!--                    <img class="circle profile z-depth-3" src="https://scontent-yyz1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10888392_10153073531899736_2293866441272698715_n.jpg?oh=f6166190cf97f3fbaef5514d73598aea&oe=59A6B966">-->
-                    <img class="circle profile z-depth-3" ng-src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/16583985_1830776947187218_8117990636189122560_a.jpg" >
+                    <img class="circle profile z-depth-3" 
+                         ng-src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/16583985_1830776947187218_8117990636189122560_a.jpg"
+                         ng-click="inStore()" >
                 </div>
 				<div class="clearfix"></div>
                 <div class="row">
@@ -22,7 +24,7 @@
       </row>
         
       <row>
-          <div class="card-panel" ng-class="{'hide':!mocha.playedAlready(prizeStartDate,prizeEndDate)}">
+          <div class="card-panel" ng-class="{'hide':!mocha.playedAlready(prizeStartDate,prizeEndDate) ||mocha.inStore == true}">
             <a class="btn btn-full btn-large waves-effect waves-light btn-black" ui-sref="/boroleaderboard">
                 Thank you for playing!!
             </a>
@@ -46,7 +48,7 @@
         <div class="card-panel">
             <a class="btn btn-full btn-large waves-effect waves-light" ng-click="startBoro()" 
             style="background-color:#171717"
-            ng-disabled="mocha.playedAlready(prizeStartDate,prizeEndDate)">
+            ng-disabled="mocha.playedAlready(prizeStartDate,prizeEndDate) && mocha.inStore !== true">
                 Start Game
             </a>
         </div>      
