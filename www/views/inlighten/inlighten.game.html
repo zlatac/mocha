@@ -1,9 +1,9 @@
-<ion-view title="/borogame">
-	<boro-result-modal></boro-result-modal>
-    <boro-menu-header></boro-menu-header>
+<ion-view title="/inlightengame">
+	<inlighten-result-modal></inlighten-result-modal>
+    <inlighten-menu-header></inlighten-menu-header>
 	<menu-button></menu-button>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
-        <div class="center-align" ng-class="{'container': mocha.inStore == true}">
+        <div class="center-align">
           <div class="row">
             <div class="col">
               <div class="card">
@@ -15,7 +15,7 @@
                        ng-class="{hide:game.subcategory == ''|| show_points == true}">{{game.subcategory}}</div>
                   <img ng-src="{{game.url}}" ng-style="newstyle = (show_points == true)?{filter:'blur(10px)'}:null">
 				  <div class="shield"></div>
-                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-boro points-box"
+                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-inlighten points-box"
                      ng-class="{'hide': show_points == true}">
                       <span>750 </span><span class="tiny-points">pts</span>
                   </a>
@@ -49,7 +49,7 @@
                 </div>
                 <form ng-class="{hide: show_points == true}" name="form">
                     <p class="range-field" ng-if="manualprice == false && !show_radio">
-                      <input type="range" class="boro-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-change="switchUp(game)"/>
+                      <input type="range" class="inlighten-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-change="switchUp(game)"/>
                     </p>
                     <div class="row" ng-if="show_radio">
                         <div class="col">
@@ -66,13 +66,13 @@
                 </form>
                 <br>
                 <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-black animated fadeIn"
-                   ng-click="boroSubmit()" ng-disabled="show_radio && !mocha.safe(form.group1.$modelValue)"
+                   ng-click="inlightenSubmit()" ng-disabled="show_radio && !mocha.safe(form.group1.$modelValue)"
                    ng-class="{'hide': show_points == true}" id="enter">
                     <span>ENTER</span>
                 </a>
-                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-boro"
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-inlighten"
                    ng-class="{'hide': show_points !== true}"
-				   ng-click="boroNextProduct()">
+				   ng-click="inlightenNextProduct()">
                     <span>NEXT</span> <i class="material-icons right">chevron_right</i>
 <!--
                         <div class="preloader-wrapper small active">

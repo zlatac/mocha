@@ -1,0 +1,87 @@
+<ion-view title="/inlightenanswer">
+	<inlighten-menu-header></inlighten-menu-header>
+	<menu-button ng-init="inlighten=true"></menu-button>
+	<loader ng-class="{'hide': !loader}"></loader>
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" >
+        <div class="container center-align" style="margin-top:50px;">
+            <row>
+				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
+					<li class="item item z-depth-1" ng-click="getList()">
+						<!--<label class="toggle">
+						   <input type="checkbox">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>-->
+						<!-- <span class="badge badge-stable z-depth-1 hide">Top 20</span>
+						<span class="left"><i class="material-icons">refresh</i></span> -->
+					 Answers
+					</li>
+
+					<li class="item animated fadeInUp" ng-if="showanswer === false">
+						<div class="row" style="margin-bottom:0px;">
+							<div class="col">
+								<p style="white-space:normal;">
+									Answers will be displayed immediately after the game ends at <strong style="color:#5C96CE;">{{showEndDate}}</strong>.
+								</p>
+							</div>
+							
+						</div>
+				   </li>
+
+					<li class="item animated fadeInUp" ng-repeat="x in mocha.inlighten_data" ng-if="showanswer === true">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10"> {{$index + 1}}</div>
+							 <!-- <div class="col col-10" ng-if="$index == 0"><i class="fa fa-trophy" style="font-size:22px"></i></div> -->
+							 <div class="col col-90">
+                                 <p style="white-space:normal;">{{x.question}}</p>
+                                 <p style="white-space:normal;" ng-if="!mocha.safe(x.options)">
+                                     <strong style="color:#5C96CE;">Answer:</strong> {{(x.price == '1')? 'Yes' : (x.price == '0') ? 'No' : x.price}}
+                                 </p>
+                                 <p style="white-space:normal;" ng-if="mocha.safe(x.options)">
+                                     <strong style="color:#5C96CE;">Answer:</strong> {{x.options[x.price].answer}}
+                                 </p>
+                             </div>
+							 <!-- <div class="col">{{x.points| number:0}} Pts</div> -->
+						 </div>
+					</li>
+					<!-- <li class="item list-me z-depth-4" ng-class="{'hide': thisPlayer}">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10">- -</div>
+							 <div class="col col-60">{{player.name}}</div>
+							 <div class="col">{{player.points| number:0}} Pts</div>
+						 </div>
+					</li> -->
+<!--
+					<li class="item">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10"> 15</div>
+							 <div class="col col-60">Diana</div>
+							 <div class="col">3,445 Pts</div>
+						 </div>
+					</li>
+					<li class="item list-me z-depth-4">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10"> 19</div>
+							 <div class="col col-60">Olivia</div>
+							 <div class="col">4,356 Pts</div>
+						 </div>
+					</li>
+					<li class="item">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10"> 20</div>
+							 <div class="col col-60">Emily</div>
+							 <div class="col">2,378 Pts</div>
+						 </div>
+					</li>
+-->
+					
+				</ul>
+               
+			</row>
+           
+        
+        </div>
+        
+    </ion-content>
+</ion-view>

@@ -300,3 +300,18 @@ input[type=range].boro-range::-moz-range-thumb {
 input[type=range].boro-range::-ms-thumb {
   background-color: #008489;
 }
+.btn-inlighten{
+  background-color: #fe4d00 !important;
+}
+input[type=range].inlighten-range::-webkit-slider-thumb {
+  background-color: #fe4d00;
+  height: 30px;
+  width: 30px;
+  margin-top: -12px;
+}
+input[type=range].inlighten-range::-moz-range-thumb {
+  background-color: #fe4d00;
+}
+input[type=range].inlighten-range::-ms-thumb {
+  background-color: #fe4d00;
+}

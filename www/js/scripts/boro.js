@@ -146,8 +146,8 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
     angular.copy($scope.boro_data,$scope.data);
     $scope.boro = true;
     $scope.prizeStartDate = moment('2017/12/14','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2017/12/29 00:00','YYYY/MM/DD kk:mm');
-    $scope.gameEndTime = moment('2017/12/29 00:00','YYYY/MM/DD kk:mm');
+    $scope.prizeEndDate = moment('2017/12/29 23:59','YYYY/MM/DD kk:mm');
+    $scope.gameEndTime = moment('2017/12/29 23:59','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
@@ -167,7 +167,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
     
     $scope.switchUp = function(){
         //console.log(game);
-        if($scope.safe($scope.game.options)){
+        if(mocha.safe($scope.game.options)){
             if(mocha.safe($scope.game.options[$scope.test.price].url)){
                 $scope.game.url = $scope.game.options[$scope.test.price].url;
             }
@@ -187,6 +187,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             $scope.show_radio = false;
         }
     };
+    $scope.switchUp();
     
     $scope.boroSubmit = function(){mocha.submitPrediction($scope)};
     $scope.boroNextProduct = function(){

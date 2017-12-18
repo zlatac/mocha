@@ -1,0 +1,27 @@
+<ion-view title="/inlightencontest">
+    <ion-content class="has-header">
+        <div class="container center-align">
+            <div class="sp animated flipInX">
+                <div class="row">
+                    <form name="contestForm" ng-submit="contestSubmit(contestForm)" style="width:100%" novalidate>
+                          <input type="text" name="name" placeholder="Full Name" ng-model="mocha.contest.name" class="animated" 
+								 ng-class="{'hasError': nameError = contestForm.name.$invalid && contestForm.$submitted,'shake': nameError}" required>
+                                 <input type="email" name="email" placeholder="Email" ng-model="mocha.contest.email" class="animated"
+                                 ng-class="{'hasError': phoneError = contestForm.email.$invalid && contestForm.$submitted, 'shake': phoneError}"required>
+                          <!-- <div class="switch" style="margin-bottom:20px;">
+                            <label>
+                              <input type="checkbox" ng-model="mocha.contest.signup">
+                              <span class="lever"></span>
+                            </label>
+                            <span>I am interested in a gaming pilot project for my brand.</span>
+                          </div> -->
+                          <input type="submit" class="waves-effect waves-light btn-inlighten btn-large z-depth-4" value="Submit">
+                    </form>
+                </div>
+            </div>
+           
+        
+        </div>
+        
+    </ion-content>
+</ion-view>

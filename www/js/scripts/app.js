@@ -241,6 +241,38 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         controller: "leaderboard.controller",
         params: {mode: 'boro'},
         cache: false
+      })
+      .state("/inlightendash", {
+        url: "/inlightendash",
+        templateUrl : "views/inlighten/inlighten.dash.html",
+	  	controller: "inlighten.dash.controller"
+      })
+      .state("/inlightengame", {
+        url: "/inlightengame",
+        templateUrl : "views/inlighten/inlighten.game.html",
+        controller: "inlighten.dash.controller"
+      })
+      .state("/inlightenlogin", {
+        url: "/inlightenlogin",
+        templateUrl : "views/inlighten/inlighten.login.html",
+        controller: "inlighten.login.controller"
+      })
+      .state("/inlightencontest", {
+        url: "/inlightencontest",
+        templateUrl : "views/inlighten/inlighten.contest.html",
+        controller: "inlighten.contest.controller"
+      })
+      .state("/inlightenanswer", {
+        url: "/inlightenanswer",
+        templateUrl : "views/inlighten/inlighten.answer.html",
+        controller: "inlighten.answer.controller"
+      })
+      .state("/inlightenleaderboard", {
+        url: "/inlightenleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'inlighten'},
+        cache: false
       });
     $urlRouterProvider.otherwise('/');
 })
@@ -312,10 +344,9 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 //$scope.manualprice = false;
                 $scope.game = $scope.data[$scope.index];
                 $scope.progress = (($scope.index)/$scope.data.length)*100;
-                if(location.hash.includes('dmz') || location.hash.includes('fz') || $scope.wully == true){
-                   //$scope.test.price = $scope.test.second_price = 5;
+                if(this.safe($scope.game.options)){
+                   //this sets up the data flow when the question has multiple options and we need to see the last option by default
                    $scope.test.price = $scope.test.second_price = Number($scope.game.max);
-                    //angular.element(document.querySelectorAll('input[type="range"]'))[3].value =700;
                 }
                 this.pullNextImage(null,$scope);
                 //$scope.modal.show();
@@ -614,7 +645,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $scope.game = $scope.data[$scope.index];
             if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))
             && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))
-            && (!location.hash.includes('boro'))){
+            && (!location.hash.includes('boro')) && (!location.hash.includes('inlighten'))){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
                     $state.go('/dash');
