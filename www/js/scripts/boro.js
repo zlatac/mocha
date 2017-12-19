@@ -189,7 +189,9 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
     };
     $scope.switchUp();
     
-    $scope.boroSubmit = function(){mocha.submitPrediction($scope)};
+    $scope.boroSubmit = function(){
+        mocha.submitPrediction($scope);
+    };
     $scope.boroNextProduct = function(){
         mocha.nextProduct($scope);
         $scope.switchUp();

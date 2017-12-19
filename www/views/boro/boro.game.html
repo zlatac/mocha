@@ -24,6 +24,8 @@
                       <span>{{test.point_earned}}/750 </span><span class="tiny-points">pts</span>
                   </a>
                   <div class="qlayer" ng-class="{'hide':show_points == true || hide_question == true}" ng-bind-html="game.question" on-touch="hide_question = true" on-release="hide_question = false"></div>
+                  <!-- This line below is specific to Boro -->
+                  <div class="qlayer" ng-class="{'hide':game.p_id !== '6' || show_points == false}" ng-bind-html="'Answer: '+game.price" ></div>
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
                   <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}" style="font-size:33px;">
