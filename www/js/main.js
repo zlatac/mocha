@@ -2034,7 +2034,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21569167_302413943568029_6996929289178316800_n.jpg',
             price:'1',
-            question:'Can this Inlighten jacket be washed in machine & dryer without destroying the technology in it?',
+            question:'Are inlighten jackets machine washable?',
             min:'0',
             max:'1',
             context:'',
@@ -2044,7 +2044,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21690263_1947825728790866_3082305188602576896_n.jpg',
             price:'1',
-            question:'Where is the EDM party capital of the world?',
+            question:'What\'s the EDM party capital of the world?',
             min:'0',
             max:'3',
             context:'',
