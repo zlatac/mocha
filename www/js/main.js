@@ -1256,7 +1256,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24175221_414973372250811_7636663641420333056_n.jpg',
             price:'3500',
-            question:'if you use Boro once per month for a year, this leads to the a savings of ?',
+            question:'if you use Boro once per month for a year, this leads to a savings of ?',
             min:'2500',
             max:'5000',
             context:'$',
@@ -1412,8 +1412,8 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
             $scope.contest.points = $scope.mocha.test.point_earned;
             $scope.contest.playtime = $scope.mocha.test.timePlayed;
             $scope.contest.played_data = JSON.stringify(mocha.played_data);
-            //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
-            $scope.contest.signup = 0;
+            $scope.contest.signup = (mocha.inStore == true)? 1 : 0;//signup means the player played in the store
+            //$scope.contest.signup = 0;
             $scope.contest.size = $scope.mocha.contest.dress_size;
             $http.get('https://styleminions.co/api/borocontest?name='+$scope.mocha.contest.name+"&email="+
             $scope.mocha.contest.email+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
