@@ -254,10 +254,12 @@ myapp.controller('boro.login.controller', function($scope,$location,$state,$stat
 });
 
 myapp.controller('boro.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.loader = false;
     $scope.mocha = mocha;
     $scope.mocha.contest.signup =true;
     $scope.contestSubmit = function(form){
         if(form.$valid){
+            $scope.loader = true;
             $scope.contest = {};
             $scope.contest.timestamp = moment().toISOString();
             $scope.contest.points = $scope.mocha.test.point_earned;
@@ -273,11 +275,13 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
                 localStorage.email = $scope.mocha.contest.email;
+                localStorage[mocha.appName+'_points'] = $scope.contest.points;
                 //This allows a player to play games from different clients on MochaX without any clash
                 localStorage[mocha.appName] = JSON.stringify({'prizeplaydate':moment().toISOString()});
                 //$scope.thankyou = true;
                 //$scope.resetGame('dash');
                 $state.go('/boroleaderboard');
+                $scope.loader = false;
             });
             console.log($scope.contest);
         }else{

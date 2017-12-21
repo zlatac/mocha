@@ -440,10 +440,12 @@ myapp.controller('nls.login.controller', function($scope,$location,$state,$state
 });
 
 myapp.controller('nls.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.loader = false;
     $scope.mocha = mocha;
     $scope.mocha.contest.signup =true;
     $scope.contestSubmit = function(form){
         if(form.$valid){
+            $scope.loader = true;
             $scope.contest = {};
             $scope.contest.timestamp = moment().toISOString();
             $scope.contest.points = $scope.mocha.test.point_earned;
@@ -457,11 +459,13 @@ myapp.controller('nls.contest.controller', function($scope,$location,$state,$sta
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
                 localStorage.phone = $scope.mocha.contest.phone;
+                localStorage[mocha.appName+'_points'] = $scope.contest.points;
                 //This allows a player to play games from different clients on MochaX without any clash
                 localStorage[mocha.appName] = JSON.stringify({'prizeplaydate':moment().toISOString()});
                 //$scope.thankyou = true;
                 //$scope.resetGame('dash');
                 $state.go('/nlsleaderboard');
+                $scope.loader = false;
             });
         }else{
             console.log('fuck no form not valid');
