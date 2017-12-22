@@ -1435,6 +1435,7 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
             console.log($scope.contest);
         }else{
             console.log('fuck no form not valid');
+            navigator.vibrate(1000);
             //console.log(form);
         }
     };
