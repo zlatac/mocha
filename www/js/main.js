@@ -1010,6 +1010,28 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         templateUrl: 'views/menu-header.html' 
       };
     });   
+    
+    myapp.directive('footNote', function($timeout) {
+        //to use this directive all you have to do is set property $scope.footnote to true and set $scope.footnote_msg to whatever string.
+        //automatially it will diappear for good after user slides the foot note away. Then reactivate again with above instruction.
+      return {
+        template: `
+            <div class="bar bar-footer footnote animated fadeInUp" ng-init="footnote_hide = true"
+                 ng-class="{'fadeOutRight': !footnote, 'hide':!footnote && footnote_hide}" 
+                 on-swipe="footnote = false; footnote_hide = false">
+                <div class="title" ng-bind-html="footnote_msg"></div>
+            </div>`,
+        link: function($scope,element,attrs){
+            element.bind('touchend',function(){
+                //hide the foot note after slide out animation or else it will keep showing up and sliding away
+                $timeout(function(){
+                    //element[0].childNodes[1].style.display = 'none';
+                    $scope.footnote_hide = true;
+                },3000);
+            });
+        }
+      };
+    });   
 
 	myapp.directive('resultModal', function() {
       return {
@@ -1385,7 +1407,9 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
         $scope.storeMode++;
         if($scope.storeMode >= 2){
             angular.element(document.querySelector('body'))[0].style.borderTopColor='#101010e6';
+            $scope.footnote_msg = 'Store Mode Activated';
             mocha.inStore = true;
+            $scope.footnote = true;
         }      
     };
     

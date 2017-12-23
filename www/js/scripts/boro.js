@@ -236,7 +236,9 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
         $scope.storeMode++;
         if($scope.storeMode >= 2){
             angular.element(document.querySelector('body'))[0].style.borderTopColor='#101010e6';
+            $scope.footnote_msg = 'Store Mode Activated';
             mocha.inStore = true;
+            $scope.footnote = true;
         }      
     };
     

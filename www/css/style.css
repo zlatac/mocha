@@ -236,9 +236,9 @@ margin: auto !important;
 li.item{
 	margin: 10px 0;
 }
-.list-me {
-	background-color: #cf30d6;
-    color: white;
+.list-me, .footnote {
+  color: white;
+  background: linear-gradient(135deg,#cf30d6,red);
 }
 .loader{
 	height: 100%;
