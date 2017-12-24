@@ -349,9 +349,9 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
     $scope.data = [];
     angular.copy($scope.nls_data,$scope.data);
     $scope.nls = true;
-    $scope.prizeStartDate = moment('2017/12/11','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2017/12/27 18:00','YYYY/MM/DD kk:mm');
-    $scope.gameEndTime = moment('2017/12/27 18:00','YYYY/MM/DD kk:mm');
+    $scope.prizeStartDate = moment('2017/12/23','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2017/12/31 23:59','YYYY/MM/DD kk:mm');
+    $scope.gameEndTime = moment('2017/12/31 23:59','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
@@ -453,8 +453,8 @@ myapp.controller('nls.contest.controller', function($scope,$location,$state,$sta
             $scope.contest.played_data = JSON.stringify(mocha.played_data);
             //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
             $scope.contest.signup = 0;
-            $http.get('https://styleminions.co/api/nlscontest?name='+$scope.mocha.contest.name+"&phone="+
-            $scope.mocha.contest.phone+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
+            $http.get('https://styleminions.co/api/nlscontest?name='+$scope.mocha.contest.name+"&email="+
+            $scope.mocha.contest.email+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
             +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
