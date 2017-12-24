@@ -3067,7 +3067,7 @@ myapp.controller('nls.contest.controller', function($scope,$location,$state,$sta
             +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
-                localStorage.phone = $scope.mocha.contest.phone;
+                localStorage.email = $scope.mocha.contest.email;
                 localStorage[mocha.appName+'_points'] = $scope.contest.points;
                 //This allows a player to play games from different clients on MochaX without any clash
                 localStorage[mocha.appName] = JSON.stringify({'prizeplaydate':moment().toISOString()});
