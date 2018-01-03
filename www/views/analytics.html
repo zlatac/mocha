@@ -1,0 +1,58 @@
+<ion-view title="/analytics">
+	<menu-header ng-if="!fz && !dmz && !wully && !lz && !nls && !boro && !inlighten"></menu-header>
+	<fz-menu-header ng-if="fz"></fz-menu-header>
+	<dmz-menu-header ng-if="dmz"></dmz-menu-header>
+	<wully-menu-header ng-if="wully"></wully-menu-header>
+	<lz-menu-header ng-if="lz"></lz-menu-header>
+	<nls-menu-header ng-if="nls"></nls-menu-header>
+	<boro-menu-header ng-if="boro"></boro-menu-header>
+	<inlighten-menu-header ng-if="inlighten"></inlighten-menu-header>
+	<menu-button></menu-button>
+	<loader ng-class="{'hide': !loader}"></loader>
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
+        <div class="container center-align" style="margin-top:50px;">
+            <row ng-class="{'hide': validate}">
+                <input class="col" type="text" name="passtext" ng-model="mocha.passtext" placeholder="Password" style="margin-top: 20%;"/>
+                <button class="btn list-me col" ng-click="authorize()">Authorize</button>
+            </row>
+            <row ng-class="{'hide':!validate}">
+				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
+					<li class="item item z-depth-1" ng-click="getAnalytics()">
+						<!--<label class="toggle">
+						   <input type="checkbox">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>-->
+						<span class="left"><i class="material-icons">refresh</i></span>
+					 Analytics
+					</li>
+					<li class="item">
+						 <div class="row">
+							 <div>Total Players: {{result.length}}</div>
+						 </div>
+						 <div class="row">
+							 <div>First Played: {{firstplayer}}</div>
+						 </div>
+						 <div class="row">
+                            <div>Last Played: {{lastplayer}}</div>
+						 </div>
+                    </li>
+                    <li class="item list-me btn btn-large" ng-click="download()">
+                        <i class="material-icons left">file_download</i> Download players data
+                    </li>
+                    <div class="progress" ng-class="{'hide':!csvloader}">
+                            <div class="indeterminate"></div>
+                    </div>
+					
+
+					
+				</ul>
+               
+			</row>
+           
+        
+        </div>
+        
+    </ion-content>
+</ion-view>

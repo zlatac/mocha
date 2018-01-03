@@ -204,6 +204,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         params: {mode: 'nls'},
         cache: false
       })
+      .state("/nlsanalytics", {
+        url: "/nlsanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'nls'},
+        cache: false
+      })
       .state("/borodash", {
         url: "/borodash",
         templateUrl : "views/boro/boro.dash.html",
@@ -239,6 +246,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         url: "/boroleaderboard",
         templateUrl : "views/leaderboard.html",
         controller: "leaderboard.controller",
+        params: {mode: 'boro'},
+        cache: false
+      })
+      .state("/boroanalytics", {
+        url: "/boroanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
         params: {mode: 'boro'},
         cache: false
       })
@@ -1168,4 +1182,81 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
 			$scope.loader = false;
 			
 		});
+	});
+    
+    myapp.controller('analytics.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+
+        $scope.result = [];
+        $scope.validate = false;
+        $scope.csvloader = false;
+        $scope.mocha = mocha;
+        if(mocha.safe($stateParams.mode)){
+            //Default API FOR DEMOS. No need to build backend yet till its necessary
+            url = 'https://styleminions.co/api/apianalytics?q=null';
+            $scope[$stateParams.mode] = true;
+            database_table = '&table='+ $stateParams.mode;
+        }
+        
+        $scope.getAnalytics = function(){
+            $scope.loader = true;
+            $http.get(url + database_table)
+            .then(function(res){
+                $scope.result = res.data;
+                var lastitem = $scope.result.length - 1;
+                $scope.firstplayer = moment($scope.result[0].time).format('hh:mm a, DD/MM/YYYY');
+                $scope.lastplayer = moment($scope.result[lastitem].time).format('hh:mm a, DD/MM/YYYY');
+
+            })
+            .then(function(){
+                $scope.loader = false;
+            });
+        };
+
+        $scope.download = function(){
+            $scope.csvloader = true;
+            var csvData = Papa.unparse(csvPrep($scope.result));
+            var fileData = 'data:text/csv;charset=utf-8,' + csvData;
+            var filename = mocha.appName + '.csv';
+            var link = document.createElement('a');
+            //link.setAttribute('href', 'data:text/txt;charset=utf-8,hello worlds');
+            link.setAttribute('href', fileData);
+            link.setAttribute('download', filename);
+            link.click();
+            $scope.csvloader = false;
+            //console.log(csvData);
+        };
+
+        function csvPrep(obj){
+            var question = mocha[mocha.appName.slice(6,mocha.appName.length) + '_data'];
+            //console.log(question,'variable');
+            obj.forEach(function(item){
+                var date = item.time;
+                var gamedata = JSON.parse(item.played_data);
+                delete item.id;
+                delete item.signup;
+                item.time = moment(date).format('DD/MM/YY hh:mm a');
+                gamedata.forEach(function(gameitem){
+                    var qIndex = gameitem.p_id - 1;
+                    item['Q'+ gameitem.p_id + ' (' + question[qIndex].question + ')'] = (mocha.safe(question[qIndex].options)) ? question[qIndex].options[gameitem.raw_answer].answer : gameitem.raw_answer;
+                });
+                delete item.played_data;
+                //item.played_data = gamedata;
+            });
+            return obj;
+            
+        }
+
+        $scope.authorize = function(){
+            if(mocha.safe(mocha.appName) && $scope.mocha.passtext === mocha.appName){
+                $scope.getAnalytics();
+                $scope.validate = true;
+            }else{
+                navigator.vibrate(1000);
+                $scope.mocha.passtext = '';
+            }
+            //console.log('hey',$scope.mocha.passtext, mocha.appName);
+        };
+        
+
+        
 	});
