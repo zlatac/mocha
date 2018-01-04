@@ -1131,26 +1131,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 var location = '/'+ appname +'dash';
                 $state.go(location);
             },60000);
-        }
-        
-        function report(list){
-            //analytics avg report for each question that was predicted to get value perception of consumer/service product.
-            var basket = [];
-            function average(num){return num/list.length;};
-            list.forEach(function(item){
-                var obj = JSON.parse(item.played_data);
-                for(var x = 0; x < obj.length; x++){
-                    var index = obj[x].p_id;
-                    if(!mocha.safe(basket[index])){
-                        basket[index] = 0;
-                    }
-                    basket[index] += Number(obj[x].prediction);
-                }	
-            });
-            var output = basket.map(average);
-            console.log(basket,'report',output,'output');
-        }
-		
+        }		
 	});
 	
 	myapp.controller('winner.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,$sce){
@@ -1205,6 +1186,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 var lastitem = $scope.result.length - 1;
                 $scope.firstplayer = moment($scope.result[0].time).format('hh:mm a, DD/MM/YYYY');
                 $scope.lastplayer = moment($scope.result[lastitem].time).format('hh:mm a, DD/MM/YYYY');
+                //report($scope.result);
 
             })
             .then(function(){
@@ -1216,6 +1198,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $scope.csvloader = true;
             var csvData = Papa.unparse(csvPrep($scope.result));
             var fileData = 'data:text/csv;charset=utf-8,' + csvData;
+            fileData = encodeURI(fileData);
             var filename = mocha.appName + '.csv';
             var link = document.createElement('a');
             //link.setAttribute('href', 'data:text/txt;charset=utf-8,hello worlds');
@@ -1256,9 +1239,24 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             }
             //console.log('hey',$scope.mocha.passtext, mocha.appName);
         };
-        
 
-        
+        function report(list){
+            //analytics avg report for each question that was predicted to get value perception of consumer/service product.
+            var basket = [];
+            function average(num){return num/list.length;};
+            list.forEach(function(item){
+                var obj = JSON.parse(item.played_data);
+                for(var x = 0; x < obj.length; x++){
+                    var index = obj[x].p_id;
+                    if(!mocha.safe(basket[index])){
+                        basket[index] = 0;
+                    }
+                    basket[index] += Number(obj[x].raw_answer);
+                }	
+            });
+            var output = basket.map(average);
+            console.log(basket,'report',output,'output');
+        }        
 	});
 //BORO DIRECTIVES
 myapp.directive('boroMenuHeader', function() {
