@@ -287,6 +287,13 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         controller: "leaderboard.controller",
         params: {mode: 'inlighten'},
         cache: false
+      })
+      .state("/inlightenanalytics", {
+        url: "/inlightenanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'inlighten'},
+        cache: false
       });
     $urlRouterProvider.otherwise('/');
 })
@@ -1186,7 +1193,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 var lastitem = $scope.result.length - 1;
                 $scope.firstplayer = moment($scope.result[0].time).format('hh:mm a, DD/MM/YYYY');
                 $scope.lastplayer = moment($scope.result[lastitem].time).format('hh:mm a, DD/MM/YYYY');
-                //report($scope.result);
+                $scope.statistics = report($scope.result);
 
             })
             .then(function(){
@@ -1243,6 +1250,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         function report(list){
             //analytics avg report for each question that was predicted to get value perception of consumer/service product.
             var basket = [];
+            basket['time'] = 0;
             function average(num){return num/list.length;};
             list.forEach(function(item){
                 var obj = JSON.parse(item.played_data);
@@ -1252,10 +1260,14 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                         basket[index] = 0;
                     }
                     basket[index] += Number(obj[x].raw_answer);
-                }	
+                }
+                var minutesToSeconds = Number(item.playtime.substring(0,2)) * 60;
+                var seconds = Number(item.playtime.substring(3,5));
+                basket['time'] += (minutesToSeconds + seconds)/60;
             });
             var output = basket.map(average);
             console.log(basket,'report',output,'output');
+            return {output:output,time:basket['time']};
         }        
 	});
 //BORO DIRECTIVES

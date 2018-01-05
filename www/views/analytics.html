@@ -32,10 +32,13 @@
 							 <div>Total Players: {{result.length}}</div>
 						 </div>
 						 <div class="row">
-							 <div>First Played: {{firstplayer}}</div>
+							 <div>First Played Date: {{firstplayer}}</div>
 						 </div>
 						 <div class="row">
-                            <div>Last Played: {{lastplayer}}</div>
+                            <div>Last Played Date: {{lastplayer}}</div>
+						 </div>
+						 <div class="row">
+                            <div>Avg Time spent: {{statistics.time/result.length | number:0}} minutes</div>
 						 </div>
                     </li>
                     <li class="item list-me btn btn-large" ng-click="download()">
