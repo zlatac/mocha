@@ -1654,7 +1654,7 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
             $scope.collectBasket.push(d);
             if(d === $scope.basket[$scope.collectBasket.length - 1]){
                 $scope.news = 'Right';
-                $scope.color = 'green';
+                //$scope.color = 'green';
                 $scope.status[$scope.collectBasket.length - 1] = 'check_circle';
                 //console.log('right');
                 if($scope.basket.length == $scope.collectBasket.length){
@@ -1663,7 +1663,7 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
                 }
             }else{
                 $scope.news = 'Wrong - Play again';
-                $scope.color = 'red';
+                //$scope.color = 'red';
                 $scope.status[$scope.collectBasket.length - 1] = 'highlight_off';
                 navigator.vibrate(1000);
                 //console.log('wrong');

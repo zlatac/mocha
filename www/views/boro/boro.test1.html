@@ -6,44 +6,19 @@
         <style>
             i.material-icons.button{
                 font-size: 54px;
-                background-color: rgba(255, 255, 255, 0);
-                color: rgba(255, 255, 255, 0.96);
+                background-color: white;
             }
             div.row.low{
                 margin-bottom: -12px;
             }
-            img{
-                width: 90px;
-                height: 90px;
-                position: absolute;
-                top: 29%;
-                left: 38%;
-                background-color: rgba(165, 165, 165, 0.6);
-            }
-            .background{
-                position: absolute;
-                left: 0;
-                top: 0;
-                height: 100%;
-                width: 100%;
-                filter: blur(10px);
-                z-index: -5;
-                background-image: url(https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/26301408_1076055922536906_4113977945377210368_n.jpg);
-                background-position: center;
-            }
         </style>
-        <div class="background"></div>
-        <div class="center-align" style="font-size: 18px;color:white;">
+        <div class="center-align" style="font-size: 16px;">
             <div class="row">
                 <div class="col" style="margin-top:10px;">
                     Welcome to Mind tracker. Follow the pattern and select the circles in the exact same pattern
                 </div>
             </div>
-            
-            <div class="animated" ng-class="{'shake': color === 'red'}" style="background-color:#f0f8ff00;position:relative">
-                <img class="circle z-depth-2" 
-                ng-src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/16583985_1830776947187218_8117990636189122560_a.jpg"
-                >
+            <div class="animated" ng-class="{'shake': color === 'red'}">
                 <div class="row low">
                         <div class="col" on-touch="collect(0)">
                             <i class="material-icons button" ng-class="{'hide':button[0] == 'lens'}">panorama_fish_eye</i>
