@@ -43,7 +43,12 @@
             <div class="animated" ng-class="{'shake': color === 'red'}" style="background-color:#f0f8ff00;position:relative">
                 <img class="circle z-depth-2" 
                 ng-src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/16583985_1830776947187218_8117990636189122560_a.jpg"
-                >
+                ng-class="{'hide': !play}">
+                <div class="btn-play" style="background-color: #ffffff00;width: 90px;height: 90px;position: absolute;top: 29%;left: 38%;"
+                    ng-class="{'hide': play}" ng-click="mindTracker(2)">
+                    <i class="material-icons list-me" 
+                    style="font-size:88px;border-radius:100%;">play_circle_outline</i>
+                </div>
                 <div class="row low">
                         <div class="col" on-touch="collect(0)">
                             <i class="material-icons button" ng-class="{'hide':button[0] == 'lens'}">panorama_fish_eye</i>
@@ -83,7 +88,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col" ng-style="{'color': color}">
+                <div class="col">
                     {{news}}
                 </div>
             </div>
@@ -92,9 +97,9 @@
                     Level - {{level || 1}}
                 </div>
             </div>
-            <div class="row" ng-class="{'hide': play}">
+            <!-- <div class="row" ng-class="{'hide': play}">
                     <div class="card col btn btn-large list-me" ng-click="mindTracker(2)">Play</div>
-            </div>
+            </div> -->
 
         </div>
     </ion-content>
