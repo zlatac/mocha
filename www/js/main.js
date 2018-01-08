@@ -1610,6 +1610,7 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
         $scope.autoplay = true;
         $scope.play = true;
         $scope.status = [];
+        $scope.color = null;
         for(var x=0; x < num; x++){
             loop(x);
             $scope.status.push('panorama_fish_eye');
@@ -1664,6 +1665,7 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
                 $scope.news = 'Wrong - Play again';
                 $scope.color = 'red';
                 $scope.status[$scope.collectBasket.length - 1] = 'highlight_off';
+                navigator.vibrate(1000);
                 //console.log('wrong');
                 reset();
                 $scope.play = false;
