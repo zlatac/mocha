@@ -331,8 +331,10 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
         $scope.level = num - 1;
         $scope.autoplay = true;
         $scope.play = true;
+        $scope.status = [];
         for(var x=0; x < num; x++){
             loop(x);
+            $scope.status.push('panorama_fish_eye');
         }
         function loop(item){
             let randomIndex = Math.floor(Math.random()*(5));
@@ -374,6 +376,7 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
             if(d === $scope.basket[$scope.collectBasket.length - 1]){
                 $scope.news = 'Right';
                 $scope.color = 'green';
+                $scope.status[$scope.collectBasket.length - 1] = 'check_circle';
                 //console.log('right');
                 if($scope.basket.length == $scope.collectBasket.length){
                     $scope.num++;
@@ -382,6 +385,7 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
             }else{
                 $scope.news = 'Wrong - Play again';
                 $scope.color = 'red';
+                $scope.status[$scope.collectBasket.length - 1] = 'highlight_off';
                 //console.log('wrong');
                 reset();
                 $scope.play = false;
