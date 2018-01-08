@@ -242,6 +242,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         templateUrl : "views/boro/boro.answer.html",
         controller: "boro.answer.controller"
       })
+      .state("/borotest", {
+        url: "/borotest",
+        templateUrl : "views/boro/boro.test.html",
+        controller: "boro.test.controller"
+      })
       .state("/boroleaderboard", {
         url: "/boroleaderboard",
         templateUrl : "views/leaderboard.html",
@@ -583,6 +588,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 //console.log('screen  to big');
                 return true;
             }
+            return false;
 	 };
 	 
 	 this.playedAlready = function(start, end){

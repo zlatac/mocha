@@ -314,3 +314,85 @@ myapp.controller('boro.answer.controller', function($scope,$location,$state,$sta
     }, 1000, 6000);
     
 });
+
+myapp.controller('boro.test.controller', function($scope,$location,$state,$stateParams,$http,$timeout,$interval,mocha){
+    $scope.button = [];
+    $scope.basket = [];
+    $scope.num = 2;
+    $scope.autoplay = false;
+    $scope.play = false;
+    for(var x = 0; x<6; x++){
+        $scope.button[x] = "panorama_fish_eye";
+    }
+    $scope.mindTracker = function (num){
+        $scope.basket = [];
+        $scope.collectBasket = [];
+        $scope.news = null;
+        $scope.level = num - 1;
+        $scope.autoplay = true;
+        $scope.play = true;
+        for(var x=0; x < num; x++){
+            loop(x);
+        }
+        function loop(item){
+            let randomIndex = Math.floor(Math.random()*(5));
+        
+            if((x > 0 && randomIndex !== $scope.basket[item - 1]) || x === 0){
+                $scope.basket.push(randomIndex);
+            }else{
+                loop(item);
+            }
+        }
+        console.log($scope.basket);
+        var index = 0;
+        var previousIndex = 0;
+        var milseconds = 700;
+        var showNumber = $interval(function(){
+            //console.log($scope.basket[index]);
+            $scope.button[previousIndex] = 'panorama_fish_eye';
+            $scope.button[$scope.basket[index]] = "lens";
+            previousIndex = $scope.basket[index];
+            index++;
+            // if(num == index){
+            //     clearInterval(showNumber);
+            // }
+        },milseconds,num)
+        .then(function(){
+            $timeout(function(){
+                //console.log('heyyyyyyyyyyyyyy',previousIndex);
+                $scope.button[previousIndex] = 'panorama_fish_eye';
+                $scope.autoplay = false;
+
+            },milseconds);
+        });
+    };
+
+    $scope.collect = function(d){
+        //console.log(d);
+        if($scope.autoplay === false && $scope.play === true){
+            $scope.collectBasket.push(d);
+            if(d === $scope.basket[$scope.collectBasket.length - 1]){
+                $scope.news = 'Right';
+                $scope.color = 'green';
+                //console.log('right');
+                if($scope.basket.length == $scope.collectBasket.length){
+                    $scope.num++;
+                    $scope.mindTracker($scope.num);
+                }
+            }else{
+                $scope.news = 'Wrong - Play again';
+                $scope.color = 'red';
+                //console.log('wrong');
+                reset();
+                $scope.play = false;
+            }
+        }
+
+    }
+
+    function reset(){
+        $scope.num = 2;
+    }
+    
+
+});

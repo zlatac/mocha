@@ -1,0 +1,74 @@
+<ion-view title="/game">
+	<result-modal></result-modal>
+    <menu-header></menu-header>
+	<menu-button></menu-button>
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
+        <style>
+            i.material-icons.button{
+                font-size: 54px;
+                background-color: white;
+            }
+            div.row.low{
+                margin-bottom: -12px;
+            }
+        </style>
+        <div class="center-align" style="font-size: 16px;">
+            <div class="row">
+                <div class="col" style="margin-top:10px;">
+                    Welcome to Mind tracker. Follow the pattern and select the circles in the exact same pattern
+                </div>
+            </div>
+            <div class="row low">
+                    <div class="col" on-touch="collect(0)">
+                        <i class="material-icons button" ng-class="{'hide':button[0] == 'lens'}">panorama_fish_eye</i>
+                        <i class="material-icons button" ng-class="{'hide':button[0] == 'panorama_fish_eye'}">lens</i>
+                    </div>
+            </div>           
+            <div class="row">
+                <div class="col col-50" on-touch="collect(1)">
+                    <i class="material-icons button" ng-class="{'hide':button[1] ==  'lens'}">panorama_fish_eye</i>
+                    <i class="material-icons button" ng-class="{'hide':button[1] == 'panorama_fish_eye'}">lens</i>
+                </div>
+                <div class="col col-50" on-touch="collect(2)">
+                    <i class="material-icons button" ng-class="{'hide':button[2] ==  'lens'}">panorama_fish_eye</i>
+                    <i class="material-icons button" ng-class="{'hide':button[2] == 'panorama_fish_eye'}">lens</i>
+                </div>
+            </div>          
+            <div class="row low">
+                <div class="col col-50" on-touch="collect(3)">
+                    <i class="material-icons button" ng-class="{'hide':button[3] ==  'lens'}">panorama_fish_eye</i>
+                    <i class="material-icons button" ng-class="{'hide':button[3] == 'panorama_fish_eye'}">lens</i>
+                </div>
+                <div class="col col-50" on-touch="collect(4)">
+                    <i class="material-icons button" ng-class="{'hide':button[4] ==  'lens'}">panorama_fish_eye</i>
+                    <i class="material-icons button" ng-class="{'hide':button[4] == 'panorama_fish_eye'}">lens</i>
+                </div>
+            </div>          
+            <div class="row">
+                <div class="col" on-touch="collect(5)">
+                    <i class="material-icons button" ng-class="{'hide':button[5] ==  'lens'}">panorama_fish_eye</i>
+                    <i class="material-icons button" ng-class="{'hide':button[5] == 'panorama_fish_eye'}">lens</i>
+                </div>
+            </div>          
+            <div class="row">
+                <div class="col" ng-class="{'hide':autoplay}">
+                    <i ng-repeat="x in basket track by $index" class="material-icons">{{button[basket[$index]]}}</i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" ng-style="{'color': color}">
+                    {{news}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Level - {{level || 1}}
+                </div>
+            </div>
+            <div class="row" ng-class="{'hide': play}">
+                    <div class="card col btn btn-large list-me" ng-click="mindTracker(2)">Play</div>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>
