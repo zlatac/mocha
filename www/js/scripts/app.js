@@ -299,6 +299,45 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         controller: "analytics.controller",
         params: {mode: 'inlighten'},
         cache: false
+      })
+      .state("/ryersondash", {
+        url: "/ryersondash",
+        templateUrl : "views/ryerson/ryerson.dash.html",
+	  	controller: "ryerson.dash.controller"
+      })
+      .state("/ryersongame", {
+        url: "/ryersongame",
+        templateUrl : "views/ryerson/ryerson.game.html",
+        controller: "ryerson.dash.controller"
+      })
+      .state("/ryersonlogin", {
+        url: "/ryersonlogin",
+        templateUrl : "views/ryerson/ryerson.login.html",
+        controller: "ryerson.login.controller"
+      })
+      .state("/ryersoncontest", {
+        url: "/ryersoncontest",
+        templateUrl : "views/ryerson/ryerson.contest.html",
+        controller: "ryerson.contest.controller"
+      })
+      .state("/ryersonanswer", {
+        url: "/ryersonanswer",
+        templateUrl : "views/ryerson/ryerson.answer.html",
+        controller: "ryerson.answer.controller"
+      })
+      .state("/ryersonleaderboard", {
+        url: "/ryersonleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'inlighten'},
+        cache: false
+      })
+      .state("/ryersonanalytics", {
+        url: "/ryersonanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'ryerson'},
+        cache: false
       });
     $urlRouterProvider.otherwise('/');
 })
@@ -672,7 +711,8 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $scope.game = $scope.data[$scope.index];
             if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))
             && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))
-            && (!location.hash.includes('boro')) && (!location.hash.includes('inlighten'))){
+            && (!location.hash.includes('boro')) && (!location.hash.includes('inlighten')) 
+            && (!location.hash.includes('ryerson'))){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
                     $state.go('/dash');

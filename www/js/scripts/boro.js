@@ -316,6 +316,18 @@ myapp.controller('boro.answer.controller', function($scope,$location,$state,$sta
 });
 
 myapp.controller('boro.test.controller', function($scope,$location,$state,$stateParams,$http,$timeout,$interval,mocha){
+    if(mocha.inStore == true){
+        //in store color
+        angular.element(document.querySelector('body'))[0].style.borderTopColor='#101010e6';
+    }else{
+        //default color
+        angular.element(document.querySelector('body'))[0].style.borderTopColor='#008489';
+    }
+    //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu boro-color';
+    if(mocha.checkWindow() === true){
+        $state.go('/');
+    }
+    
     $scope.button = [];
     $scope.basket = [];
     $scope.num = 2;
