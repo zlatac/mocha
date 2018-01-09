@@ -9,6 +9,11 @@
                 background-color: rgba(255, 255, 255, 0);
                 color: rgba(255, 255, 255, 0.96);
             }
+            i.material-icons.dark{
+                /* font-size: 54px;
+                background-color: rgba(255, 255, 255, 0); */
+                color: rgba(3, 10, 25, 0.812) !important;
+            }
             div.row.low{
                 margin-bottom: -12px;
             }
@@ -46,39 +51,39 @@
                 ng-class="{'hide': !play}">
                 <div class="btn-play" style="background-color: #ffffff00;width: 90px;height: 90px;position: absolute;top: 29%;left: 38%;"
                     ng-class="{'hide': play}" ng-click="mindTracker(2)">
-                    <i class="material-icons list-me" 
-                    style="font-size:88px;border-radius:100%;">play_circle_outline</i>
+                    <i class="material-icons" 
+                    style="font-size:88px;border-radius:100%;background-color: #008489;">play_circle_outline</i>
                 </div>
                 <div class="row low">
                         <div class="col" on-touch="collect(0)">
                             <i class="material-icons button" ng-class="{'hide':button[0] == 'lens'}">panorama_fish_eye</i>
-                            <i class="material-icons button" ng-class="{'hide':button[0] == 'panorama_fish_eye'}">lens</i>
+                            <i class="material-icons button dark" ng-class="{'hide':button[0] == 'panorama_fish_eye'}">lens</i>
                         </div>
                 </div>           
                 <div class="row">
                     <div class="col col-50" on-touch="collect(1)">
                         <i class="material-icons button" ng-class="{'hide':button[1] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button" ng-class="{'hide':button[1] == 'panorama_fish_eye'}">lens</i>
+                        <i class="material-icons button dark" ng-class="{'hide':button[1] == 'panorama_fish_eye'}">lens</i>
                     </div>
                     <div class="col col-50" on-touch="collect(2)">
                         <i class="material-icons button" ng-class="{'hide':button[2] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button" ng-class="{'hide':button[2] == 'panorama_fish_eye'}">lens</i>
+                        <i class="material-icons button dark" ng-class="{'hide':button[2] == 'panorama_fish_eye'}">lens</i>
                     </div>
                 </div>          
                 <div class="row low">
                     <div class="col col-50" on-touch="collect(3)">
                         <i class="material-icons button" ng-class="{'hide':button[3] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button" ng-class="{'hide':button[3] == 'panorama_fish_eye'}">lens</i>
+                        <i class="material-icons button dark" ng-class="{'hide':button[3] == 'panorama_fish_eye'}">lens</i>
                     </div>
                     <div class="col col-50" on-touch="collect(4)">
                         <i class="material-icons button" ng-class="{'hide':button[4] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button" ng-class="{'hide':button[4] == 'panorama_fish_eye'}">lens</i>
+                        <i class="material-icons button dark" ng-class="{'hide':button[4] == 'panorama_fish_eye'}">lens</i>
                     </div>
                 </div>          
                 <div class="row">
                     <div class="col" on-touch="collect(5)">
                         <i class="material-icons button" ng-class="{'hide':button[5] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button" ng-class="{'hide':button[5] == 'panorama_fish_eye'}">lens</i>
+                        <i class="material-icons button dark" ng-class="{'hide':button[5] == 'panorama_fish_eye'}">lens</i>
                     </div>
                 </div>
             </div>
