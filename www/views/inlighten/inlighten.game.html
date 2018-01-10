@@ -29,7 +29,7 @@
                   <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}" style="font-size:33px;">
                       <span ng-class="{hide:isPredict() !== true}">{{game.context || '$'}}</span><span ng-class="{hide:mocha.safe(game.options)||show_radio}">{{test.price}}</span> 
                       <span ng-class="{hide:isPredict() == true}">{{game.context}}</span> 
-                      <span class="right"><i class="material-icons" ng-class="{hide:show_points == true||mocha.safe(game.options)||show_radio}">edit</i></span>
+                      <span class="right"><i class="material-icons animated bounceIn" ng-class="{hide:show_points == true||mocha.safe(game.options)||show_radio}">edit</i></span>
                   </p>
     
                   <div ng-class="{hide: manualprice !== true}">

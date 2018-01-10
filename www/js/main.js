@@ -1500,6 +1500,8 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
         }
 
         if($scope.game.min === '0' & $scope.game.max === '1'){
+            //this fixes the bug that pre selects a yes or no option with the illusion that the value will be passed into the ngModel
+            $scope.test.price_radio = null;
             $scope.show_radio = true;
         }else{
             $scope.show_radio = false;
@@ -1915,6 +1917,8 @@ myapp.controller('dmz.dash.controller', function($scope,$location,$rootScope,$st
         }
 
         if($scope.game.min === '0' & $scope.game.max === '1'){
+            //this fixes the bug that pre selects a yes or no option with the illusion that the value will be passed into the ngModel
+            $scope.test.price_radio = null;
             $scope.show_radio = true;
         }else{
             $scope.show_radio = false;
@@ -2454,6 +2458,8 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
         }
 
         if($scope.game.min === '0' & $scope.game.max === '1'){
+            //this fixes the bug that pre selects a yes or no option with the illusion that the value will be passed into the ngModel
+            $scope.test.price_radio = null;
             $scope.show_radio = true;
         }else{
             $scope.show_radio = false;
@@ -3205,8 +3211,8 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
     $scope.data = [];
     angular.copy($scope.nls_data,$scope.data);
     $scope.nls = true;
-    $scope.prizeStartDate = moment('2017/12/23','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2017/12/31 23:59','YYYY/MM/DD kk:mm');
+    $scope.prizeStartDate = moment('2018/4/23','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2018/5/31 23:59','YYYY/MM/DD kk:mm');
     $scope.gameEndTime = moment('2017/12/31 23:59','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
@@ -3242,6 +3248,8 @@ myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$st
 
         if($scope.game.min === '0' & $scope.game.max === '1'){
             $scope.show_radio = true;
+            //this fixes the bug that pre selects a yes or no option with the illusion that the value will be passed into the ngModel
+            $scope.test.price_radio = null;
         }else{
             $scope.show_radio = false;
         }
@@ -3463,6 +3471,8 @@ myapp.controller('ryerson.dash.controller', function($scope,$location,$rootScope
         }
 
         if($scope.game.min === '0' & $scope.game.max === '1'){
+            //this fixes the bug that pre selects a yes or no option with the illusion that the value will be passed into the ngModel
+            $scope.test.price_radio = null;
             $scope.show_radio = true;
         }else{
             $scope.show_radio = false;
@@ -3731,6 +3741,8 @@ myapp.controller('wully.dash.controller', function($scope,$location,$rootScope,$
         }
 
         if($scope.game.min === '0' & $scope.game.max === '1'){
+            //this fixes the bug that pre selects a yes or no option with the illusion that the value will be passed into the ngModel
+            $scope.test.price_radio = null;
             $scope.show_radio = true;
         }else{
             $scope.show_radio = false;
