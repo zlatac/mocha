@@ -288,7 +288,7 @@ myapp.controller('boro.contest.controller', function($scope,$location,$state,$st
             console.log($scope.contest);
         }else{
             console.log('fuck no form not valid');
-            navigator.vibrate(1000);
+            //navigator.vibrate(1000);
             //console.log(form);
         }
     };
@@ -327,7 +327,7 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
     if(mocha.checkWindow() === true){
         $state.go('/');
     }
-    
+
     $scope.button = [];
     $scope.basket = [];
     $scope.num = 2;
@@ -399,7 +399,8 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
                 $scope.news = 'Wrong - Play again';
                 $scope.color = 'red';
                 $scope.status[$scope.collectBasket.length - 1] = 'highlight_off';
-                navigator.vibrate(1000);
+                //safari will crash if you dont check for vibration capability which it does not have
+                (navigator.__proto__.hasOwnProperty('vibrate')) ? navigator.vibrate(1000) : null;
                 //console.log('wrong');
                 reset();
                 $scope.play = false;
@@ -410,7 +411,6 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
 
     function reset(){
         $scope.num = 2;
-    }
-    
+    }    
 
 });
