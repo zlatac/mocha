@@ -31,10 +31,13 @@
                 top: 0;
                 height: 100%;
                 width: 100%;
-                filter: blur(10px);
+                filter: blur(30px);
                 z-index: -5;
                 background-image: url(https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/26301408_1076055922536906_4113977945377210368_n.jpg);
                 background-position: center;
+            }
+            div.scroll{
+                height:100%;
             }
         </style>
         <div class="background"></div>
@@ -47,12 +50,15 @@
             
             <div class="animated" ng-class="{'shake': color === 'red'}" style="background-color:#f0f8ff00;position:relative">
                 <img class="circle z-depth-2" 
-                ng-src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/16583985_1830776947187218_8117990636189122560_a.jpg"
+                ng-src="https://pbs.twimg.com/profile_images/897208353763491840/zdGjeFVl_400x400.jpg"
                 ng-class="{'hide': !play}">
+                <!-- <img class="circle z-depth-2" 
+                ng-src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/16583985_1830776947187218_8117990636189122560_a.jpg"
+                ng-class="{'hide': !play}"> -->
                 <div class="btn-play" style="background-color: #ffffff00;width: 90px;height: 90px;position: absolute;top: 29%;left: 38%;"
                     ng-class="{'hide': play}" ng-click="mindTracker(2)">
                     <i class="material-icons" 
-                    style="font-size:88px;border-radius:100%;background-color: #008489;">play_circle_outline</i>
+                    style="font-size:88px;border-radius:100%;background-color: {{playcolor}};">play_circle_outline</i>
                 </div>
                 <div class="row low">
                         <div class="col" on-touch="collect(0)">
@@ -88,7 +94,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col" ng-class="{'hide':autoplay}">
+                <div class="col animated bounceIn" ng-class="{'hide':autoplay}">
                     <i ng-repeat="x in status track by $index" class="material-icons">{{status[$index]}}</i>
                 </div>
             </div>

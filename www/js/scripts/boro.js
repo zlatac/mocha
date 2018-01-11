@@ -323,7 +323,9 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
         angular.element(document.querySelector('body'))[0].style.borderTopColor='#101010e6';
     }else{
         //default color
-        angular.element(document.querySelector('body'))[0].style.borderTopColor='#008489';
+        //angular.element(document.querySelector('body'))[0].style.borderTopColor='#008489';
+        angular.element(document.querySelector('body'))[0].style.borderTopColor='#ff855b';
+        $scope.playcolor = '#ff855b';
     }
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu boro-color';
     if(mocha.checkWindow() === true){

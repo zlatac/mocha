@@ -673,6 +673,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         //slider._slideTo(0,500);
         slider._slideNext(500);
      };
+
+     this.vibrate = function(){
+        //safari will crash if you dont check for vibration capability which it does not have
+        (navigator.__proto__.hasOwnProperty('vibrate')) ? navigator.vibrate(1000) : null;
+     };
 	 
 	 return this;
  });
@@ -1287,7 +1292,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
                 $scope.getAnalytics();
                 $scope.validate = true;
             }else{
-                navigator.vibrate(1000);
+                mocha.vibrate();
                 $scope.mocha.passtext = '';
             }
             //console.log('hey',$scope.mocha.passtext, mocha.appName);
