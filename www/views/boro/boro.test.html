@@ -4,7 +4,7 @@
 	<!-- <menu-button></menu-button> -->
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
         <style>
-            i.material-icons.button{
+            i.material-icons.gbutton{
                 font-size: 54px;
                 background-color: rgba(255, 255, 255, 0);
                 color: rgba(255, 255, 255, 0.96);
@@ -21,7 +21,7 @@
                 width: 90px;
                 height: 90px;
                 position: absolute;
-                top: 29%;
+                top: 31%;
                 left: 38%;
                 background-color: rgba(165, 165, 165, 0.6);
             }
@@ -49,47 +49,47 @@
             </div>
             
             <div class="animated" ng-class="{'shake': color === 'red'}" style="background-color:#f0f8ff00;position:relative">
-                <img class="circle z-depth-2" 
+                <img class="circle z-depth-2 animated flipInY" 
                 ng-src="https://pbs.twimg.com/profile_images/897208353763491840/zdGjeFVl_400x400.jpg"
                 ng-class="{'hide': !play}">
                 <!-- <img class="circle z-depth-2" 
                 ng-src="https://scontent-yyz1-1.cdninstagram.com/t51.2885-19/16583985_1830776947187218_8117990636189122560_a.jpg"
                 ng-class="{'hide': !play}"> -->
-                <div class="btn-play" style="background-color: #ffffff00;width: 90px;height: 90px;position: absolute;top: 29%;left: 38%;"
+                <div class="btn-play" style="background-color: #ffffff00;width: 90px;height: 90px;position: absolute;top: 31%;left: 38%;"
                     ng-class="{'hide': play}" ng-click="mindTracker(2)">
                     <i class="material-icons" 
                     style="font-size:88px;border-radius:100%;background-color: {{playcolor}};">play_circle_outline</i>
                 </div>
                 <div class="row low">
-                        <div class="col" on-touch="collect(0)">
-                            <i class="material-icons button" ng-class="{'hide':button[0] == 'lens'}">panorama_fish_eye</i>
-                            <i class="material-icons button dark" ng-class="{'hide':button[0] == 'panorama_fish_eye'}">lens</i>
+                        <div class="col" on-touch="collect(0)" >
+                            <i tap-tap class="material-icons gbutton" ng-class="{'hide':button[0] == 'lens'}">panorama_fish_eye</i>
+                            <i class="material-icons gbutton dark" ng-class="{'hide':button[0] == 'panorama_fish_eye'}">lens</i>
                         </div>
                 </div>           
                 <div class="row">
                     <div class="col col-50" on-touch="collect(1)">
-                        <i class="material-icons button" ng-class="{'hide':button[1] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button dark" ng-class="{'hide':button[1] == 'panorama_fish_eye'}">lens</i>
+                        <i tap-tap class="material-icons gbutton" ng-class="{'hide':button[1] ==  'lens'}">panorama_fish_eye</i>
+                        <i class="material-icons gbutton dark" ng-class="{'hide':button[1] == 'panorama_fish_eye'}">lens</i>
                     </div>
                     <div class="col col-50" on-touch="collect(2)">
-                        <i class="material-icons button" ng-class="{'hide':button[2] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button dark" ng-class="{'hide':button[2] == 'panorama_fish_eye'}">lens</i>
+                        <i tap-tap class="material-icons gbutton" ng-class="{'hide':button[2] ==  'lens'}">panorama_fish_eye</i>
+                        <i class="material-icons gbutton dark" ng-class="{'hide':button[2] == 'panorama_fish_eye'}">lens</i>
                     </div>
                 </div>          
                 <div class="row low">
                     <div class="col col-50" on-touch="collect(3)">
-                        <i class="material-icons button" ng-class="{'hide':button[3] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button dark" ng-class="{'hide':button[3] == 'panorama_fish_eye'}">lens</i>
+                        <i tap-tap class="material-icons gbutton" ng-class="{'hide':button[3] ==  'lens'}">panorama_fish_eye</i>
+                        <i class="material-icons gbutton dark" ng-class="{'hide':button[3] == 'panorama_fish_eye'}">lens</i>
                     </div>
                     <div class="col col-50" on-touch="collect(4)">
-                        <i class="material-icons button" ng-class="{'hide':button[4] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button dark" ng-class="{'hide':button[4] == 'panorama_fish_eye'}">lens</i>
+                        <i tap-tap class="material-icons gbutton" ng-class="{'hide':button[4] ==  'lens'}">panorama_fish_eye</i>
+                        <i class="material-icons gbutton dark" ng-class="{'hide':button[4] == 'panorama_fish_eye'}">lens</i>
                     </div>
                 </div>          
                 <div class="row">
                     <div class="col" on-touch="collect(5)">
-                        <i class="material-icons button" ng-class="{'hide':button[5] ==  'lens'}">panorama_fish_eye</i>
-                        <i class="material-icons button dark" ng-class="{'hide':button[5] == 'panorama_fish_eye'}">lens</i>
+                        <i tap-tap class="material-icons gbutton" ng-class="{'hide':button[5] ==  'lens'}">panorama_fish_eye</i>
+                        <i class="material-icons gbutton dark" ng-class="{'hide':button[5] == 'panorama_fish_eye'}">lens</i>
                     </div>
                 </div>
             </div>

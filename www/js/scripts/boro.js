@@ -11,6 +11,24 @@ myapp.directive('boroResultModal', function() {
     };
 });
 
+myapp.directive('tapTap', function() {
+    return {
+      link: function($scope,element,attrs){
+        element.bind('touchstart',function(e){
+            //console.log(e,'wow',e.target);
+            e.target.innerHTML = 'lens';
+            //e.target.parentNode.children[1].className.replace('dark','');
+        });
+        
+        element.bind('touchend',function(e){
+            //console.log(e,'wow',e.target);
+            e.target.innerHTML = 'panorama_fish_eye';
+            //e.target.parentNode.children[1].className.replace('dark','');
+        });
+      }       
+    };
+});
+
 //BORO CONTROLLERS BELOW
 myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     if(mocha.inStore == true){
