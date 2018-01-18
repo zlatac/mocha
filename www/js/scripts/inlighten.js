@@ -21,139 +21,228 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
     
     $scope.inlighten_data = [
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/25009004_319815051868424_302039481987366912_n.jpg',
-            price:'291',
-            question:'3 shots of vodka has how many calories?',
-            min:'50',
-            max:'500',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/35ed57c530cc0b2086050c52016c2d22/5ADBAE99/t51.2885-15/e35/25010039_2438598009698592_2010448159460818944_n.jpg',
+            price:'1',
+            question:'Where is techno music born ?',
+            min:'0',
+            max:'3',
             context:'',
             subcategory:'',
             p_id:'1',
+            options: [
+                {answer: 'Chicago', url:''},
+                {answer: 'detroit', url:''},
+                {answer: 'berlin', url:''},
+                {answer: 'london', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24332371_200930087156405_7959451569248796672_n.jpg',
+            price:'7',
+            question:'how many products does inlighten carry?',
+            min:'3',
+            max:'20',
+            context:'',
+            subcategory:'',
+            p_id:'2',
             source: 'https://www.rethinkingdrinking.niaaa.nih.gov/Tools/Calculators/Calorie-Calculator.aspx'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/22158730_1657642604307057_8461293621335818240_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/89b5fcd93f9f7f7283724881eaffeb72/5ADF3AFF/t51.2885-15/e35/26342479_791493287703699_3490740248986517504_n.jpg',
             price:'1',
-            question:'Zedd produced the song "get low"?',
+            question:'What features do we have for the second gen products?',
             min:'0',
-            max:'1',
+            max:'3',
             context:'',
             subcategory:'',
-            p_id:'2'
+            p_id:'3',
+            options: [
+                {answer: 'Secret compartment', url:''},
+                {answer: 'Environmental sound reactivity', url:''},
+                {answer: 'brightness adjustment', url:''},
+                {answer: 'shake phone to change color', url:''}
+            ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24177252_193844907844607_486908502338437120_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24332371_200930087156405_7959451569248796672_n.jpg',
             price:'1',
-            question:'Recreational Marijuana is not legal in the following 3 US states: California, Nevada and british columbia? ',
-            min:'0',
-            max:'1',
-            context:'',
-            subcategory:'',
-            p_id:'3'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/22071462_1967032036843290_160704018220318720_n.jpg',
-            price:'2',
-            question:'Which Artist inspired a zombie apocalypse fashion collection',
+            question:' How much people are there in Above and beyond?',
             min:'0',
             max:'3',
             context:'',
             subcategory:'',
             p_id:'4',
             options: [
-                {answer: 'Lady Gaga', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/25008445_843937269142336_4158407243160616960_n.jpg'},
-                {answer: 'Calvin Harris', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/19227569_308548172919446_2308404154046873600_n.jpg'},
-                {answer: 'Kanye', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21294786_169404340283174_1954023967207456768_n.jpg'},
-                {answer: 'Avicii', url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/22071462_1967032036843290_160704018220318720_n.jpg'}
+                {answer: '2', url:''},
+                {answer: '3', url:''},
+                {answer: '5', url:''},
+                {answer: '10', url:''}
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21569167_302413943568029_6996929289178316800_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/656214a055dc9e5034643d5f039be621/5ADD6FA0/t51.2885-15/e35/26278049_494498060951058_5984622561416183808_n.jpg',
             price:'1',
-            question:'Are inlighten jackets machine washable?',
-            min:'0',
-            max:'1',
-            context:'',
-            subcategory:'',
-            p_id:'5'                
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21690263_1947825728790866_3082305188602576896_n.jpg',
-            price:'1',
-            question:'What\'s the EDM party capital of the world?',
+            question:'Is it washable?',
             min:'0',
             max:'3',
             context:'',
             subcategory:'',
-            p_id:'6',
+            p_id:'5',
             options: [
-                {answer: 'Berlin', url:''},
-                {answer: 'ibiza', url:''},
-                {answer: 'London', url:''},
-                {answer: 'Las Vegas', url:''}
+                {answer: 'machine wash', url:''},
+                {answer: 'hand wash', url:''},
+                {answer: 'no', url:''},
+                {answer: 'no need to wash ', url:''}
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21147364_1938596963092946_1884110888995127296_n.jpg',
-            price:'299',
-            question:'what is the retail price of this inlighten jacket?',
-            min:'200',
-            max:'350',
-            context:'',
-            subcategory:'jacket',
-            p_id:'7'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23507874_1437886699657716_8411012821453635584_n.jpg',
-            price:'1',
-            question:'Tomorrowland festival is located in Belgium?',
-            min:'0',
-            max:'1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/511d926c80d8f76fa2b4360b8f44a803/5AEB46BF/t51.2885-15/e35/23735349_129013541099942_1506552722164285440_n.jpg',
+            price:'21',
+            question:'How old is martin garrix now?',
+            min:'19',
+            max:'38',
             context:'',
             subcategory:'',
-            p_id:'8'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e15/11313615_585405418261427_1837218636_n.jpg',
-            price:'1',
-            question:'Swedish House Mafia isn\'t coming back together as a DJ group in 2018?',
-            min:'0',
-            max:'1',
-            context:'',
-            subcategory:'',
-            p_id:'9'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24845088_168199897260345_1550048315532378112_n.jpg',
-            price:'1',
-            question:'Jon Snow is Daenery\'s nephew?',
-            min:'0',
-            max:'1',
-            context:'',
-            subcategory:'',
-            p_id:'10',
-            source: 'http://www.telegraph.co.uk/tv/0/game-thrones-rhaegar-targaryen-father-jon-snow-daenerys-related/'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23417151_127037931302116_1731948396790415360_n.jpg',
-            price:'71',
-            question:'what is the total number of sex/nude scenes in game of thrones?',
-            min:'10',
-            max:'250',
-            context:'',
-            subcategory:'',
-            p_id:'11',
-            source:'http://www.mercurynews.com/2017/07/13/game-of-thrones-by-the-numbers-corpses-nude-scenes-etc/'
+            p_id:'6'
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24332371_200930087156405_7959451569248796672_n.jpg',
             price:'3',
-            question:'Where is the birth home of the clothing brand Inlighten?',
+            question:'what are the payment options we offer?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'7',
+            options: [
+                {answer: 'installment', url:''},
+                {answer: 'splitpay', url:''},
+                {answer: 'paypal', url:''},
+                {answer: 'all the options', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/9d9ab0fd5858406aaa3dffb74f9410ff/5AFC1863/t51.2885-15/e35/26186947_1642860362474738_5900632727891214336_n.jpg',
+            price:'1',
+            question:'where do we ship to?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'8',
+            options: [
+                {answer: 'brazil', url:''},
+                {answer: 'worldwide', url:''},
+                {answer: 'europe', url:''},
+                {answer: 'america', url:''}
+            ]                
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21690263_1947825728790866_3082305188602576896_n.jpg',
+            price:'2',
+            question:'What are the pills that we need to take to recover ?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'9',
+            options: [
+                {answer: 'milk thistle', url:''},
+                {answer: 'melatonin', url:''},
+                {answer: '5htp', url:''},
+                {answer: 'ketamine', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/492d9de5234c876da620664a04ccd02c/5AEB6993/t51.2885-15/e35/26072649_1799858386980496_2651107643363426304_n.jpg',
+            price:'1',
+            question:'what are some tech elements we embed in the product?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'10',
+            options: [
+                {answer: 'bluetooth', url:''},
+                {answer: 'fiber optic', url:''},
+                {answer: 'color sensor', url:''},
+                {answer: 'all the options', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21147364_1938596963092946_1884110888995127296_n.jpg',
+            price:'3',
+            question:'what magazines are we being featured on?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'11',
+            options: [
+                {answer: 'NOVO magazine', url:''},
+                {answer: 'Ravenation', url:''},
+                {answer: 'Vogue USA', url:''},
+                {answer: 'vogue UK', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/0bc49a7993d065b5557a6f3e54a14950/5AE77969/t51.2885-15/e35/25016347_345627765844259_1803382666519642112_n.jpg',
+            price:'3',
+            question:'what social media platforms are we on?',
             min:'0',
             max:'3',
             context:'',
             subcategory:'',
             p_id:'12',
+            options: [
+                {answer: 'facebook', url:''},
+                {answer: 'instagram', url:''},
+                {answer: 'twitter', url:''},
+                {answer: 'all of the above', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24332371_200930087156405_7959451569248796672_n.jpg',
+            price:'1',
+            question:'what platform do we sell on?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'13',
+            options: [
+                {answer: 'amazon', url:''},
+                {answer: 'all of the above', url:''},
+                {answer: 'shopify', url:''},
+                {answer: 'facebook', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23507874_1437886699657716_8411012821453635584_n.jpg',
+            price:'1',
+            question:' What music festivals would you consider going to in the next year?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'14',
+            options: [
+                {answer: 'burning man', url:''},
+                {answer: 'EDC', url:''},
+                {answer: 'ultra', url:''},
+                {answer: 'lostland', url:''}
+            ],
+            source: 'http://www.telegraph.co.uk/tv/0/game-thrones-rhaegar-targaryen-father-jon-snow-daenerys-related/'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d32a59098dd466b112dd654e8ccc8471/5AF2190E/t51.2885-15/e35/25035955_1776636419065647_3075176672467615744_n.jpg',
+            price:'3',
+            question:'What is the birth home of the clothing brand Inlighten?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'15',
             options: [
                 {answer: 'Newyork', url:''},
                 {answer: 'Boston', url:''},
@@ -162,15 +251,25 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/20836961_109511633106071_1868642044587540480_n.jpg',
-            price:'1243',
-            question:'What number of characters have been killed on game of thrones?',
-            min:'400',
-            max:'2500',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/9058ab36d0b00f3f2cf11e95484504ed/5ADBA757/t51.2885-15/e35/23347635_1932511443735924_6046413384025374720_n.jpg',
+            price:'3',
+            question:'the calories we burn from all night dancing( 6 hours) equals how much  the calories we burn from having sex ( average session ) ?',
+            min:'0',
+            max:'3',
             context:'',
             subcategory:'',
-            p_id:'13'
+            p_id:'15',
+            options: [
+                {answer: '4', url:''},
+                {answer: '6', url:''},
+                {answer: '12', url:''},
+                {answer: '18', url:''}
+            ]
         }
+        
+        
+        
+        
     ];    
     
     $scope.data = [];

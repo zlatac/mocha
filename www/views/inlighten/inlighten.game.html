@@ -26,7 +26,7 @@
                   <div class="qlayer" ng-class="{'hide':show_points == true || hide_question == true}" ng-bind-html="game.question" on-touch="hide_question = true" on-release="hide_question = false"></div>
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
-                  <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}" style="font-size:33px;">
+                  <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}" style="font-size:24px;">
                       <span ng-class="{hide:isPredict() !== true}">{{game.context || '$'}}</span><span ng-class="{hide:mocha.safe(game.options)||show_radio}">{{test.price}}</span> 
                       <span ng-class="{hide:isPredict() == true}">{{game.context}}</span> 
                       <span class="right"><i class="material-icons animated bounceIn" ng-class="{hide:show_points == true||mocha.safe(game.options)||show_radio}">edit</i></span>

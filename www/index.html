@@ -41,6 +41,17 @@
 
     <!-- your app's js -->
     <script src="js/main.js"></script>
+    <script src="lib/socket.io.js"></script>
+    <!-- <script>
+        var location = window.location;  
+        var socket = io.connect('http://localhost:3100');
+        socket.on('connect', function(data) {
+           socket.emit('join', 'Hello World from client');
+        });
+        socket.on('broad', function(data) {
+                console.log(data);
+          });
+    </script> -->
   </head>
   <body ng-app="starter" ng-cloack ng-controller="mCtrl">
     

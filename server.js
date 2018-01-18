@@ -6,3 +6,21 @@ app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function() {
  console.log('listening to Port', app.get('port'));
 });
+
+//websocket testing code
+var io = require('socket.io')();
+io.on('connection', function(client) {  
+    console.log('Client connected...');
+
+    client.on('join', function(data) {
+        console.log(data);
+        client.emit('messages', 'Hello from server');
+    });
+
+    client.on('messages', function(data) {
+        client.emit('broad', data);
+        client.broadcast.emit('broad',data);
+        console.log(data, client.id);
+    });
+});
+io.listen(3100);
