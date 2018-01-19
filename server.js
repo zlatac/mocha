@@ -2,19 +2,19 @@ var express = require('express');
 var path = require('path')
 var app = express();
 var server = require('http').Server(app);
+var io = require('socket.io')(server);
 server.listen(8000);
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/www/index.html');
    });
 app.use(express.static(path.resolve(__dirname, 'www')));
-app.set('port', process.env.PORT || 8000);
+//app.set('port', process.env.PORT || 8000);
 // app.listen(app.get('port'), function() {
 //  console.log('listening to Port', app.get('port'));
 // });
 
 //websocket testing code
-var io = require('socket.io')(server);
 io.on('connection', function(client) {  
     console.log('Client connected...');
 
