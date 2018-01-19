@@ -2337,7 +2337,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24332371_200930087156405_7959451569248796672_n.jpg',
             price:'1',
-            question:' How much people are there in Above and beyond?',
+            question:' How many people are there in Above and beyond?',
             min:'0',
             max:'3',
             context:'',

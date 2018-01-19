@@ -1,14 +1,20 @@
 var express = require('express');
 var path = require('path')
 var app = express();
+var server = require('http').Server(app);
+server.listen(8000);
+
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/www/index.html');
+   });
 app.use(express.static(path.resolve(__dirname, 'www')));
-app.set('port', process.env.PORT || 3000);
-app.listen(app.get('port'), function() {
- console.log('listening to Port', app.get('port'));
-});
+// app.set('port', process.env.PORT || 3000);
+// app.listen(app.get('port'), function() {
+//  console.log('listening to Port', app.get('port'));
+// });
 
 //websocket testing code
-var io = require('socket.io')();
+var io = require('socket.io')(server);
 io.on('connection', function(client) {  
     console.log('Client connected...');
 
@@ -18,9 +24,9 @@ io.on('connection', function(client) {
     });
 
     client.on('messages', function(data) {
-        client.emit('broad', data);
+        //client.emit('broad', data);
         client.broadcast.emit('broad',data);
         console.log(data, client.id);
     });
 });
-io.listen(3100);
+// io.listen(3100);
