@@ -25,18 +25,18 @@ app.listen(app.get('port'), function() {
 });
 
 //websocket testing code
-io.on('connection', function(client) {  
-    console.log('Client connected...');
+// io.on('connection', function(client) {  
+//     console.log('Client connected...');
 
-    client.on('join', function(data) {
-        console.log(data);
-        client.emit('messages', 'Hello from server');
-    });
+//     client.on('join', function(data) {
+//         console.log(data);
+//         client.emit('messages', 'Hello from server');
+//     });
 
-    client.on('messages', function(data) {
-        //client.emit('broad', data);
-        client.broadcast.emit('broad',data);
-        console.log(data, client.id);
-    });
-});
+//     client.on('messages', function(data) {
+//         //client.emit('broad', data);
+//         client.broadcast.emit('broad',data);
+//         console.log(data, client.id);
+//     });
+// });
 // io.listen(3100);
