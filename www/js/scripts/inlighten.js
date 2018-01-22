@@ -21,7 +21,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
     
     $scope.inlighten_data = [
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/35ed57c530cc0b2086050c52016c2d22/5ADBAE99/t51.2885-15/e35/25010039_2438598009698592_2010448159460818944_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d7a761bd563d58cf346ec8ecad2b2ced/5ADF6097/t51.2885-15/e35/26333738_157137628252127_3034955948713050112_n.jpg',
             price:'1',
             question:'Where is techno music born ?',
             min:'0',
@@ -37,7 +37,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24332371_200930087156405_7959451569248796672_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/852228c96f888dd66a474d1ebbd16c4a/5AF71AB7/t51.2885-15/e35/26267627_200044620572350_841489895510769664_n.jpg',
             price:'7',
             question:'how many products does inlighten carry?',
             min:'3',
@@ -48,7 +48,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             source: 'https://www.rethinkingdrinking.niaaa.nih.gov/Tools/Calculators/Calorie-Calculator.aspx'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/89b5fcd93f9f7f7283724881eaffeb72/5ADF3AFF/t51.2885-15/e35/26342479_791493287703699_3490740248986517504_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/8de78e3c94d7d4b6c6d3dec5d5cd59ae/5ADAAE01/t51.2885-15/e35/25019161_2021905281387262_2531557653881028608_n.jpg',
             price:'1',
             question:'What features do we have for the second gen products?',
             min:'0',
@@ -64,7 +64,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24332371_200930087156405_7959451569248796672_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/e82ffc1a0a942d26358be102511a5d56/5ADE36C5/t51.2885-15/e35/25024714_1583528291728535_7295001359550513152_n.jpg',
             price:'1',
             question:' How many people are there in Above and beyond?',
             min:'0',
@@ -80,7 +80,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/656214a055dc9e5034643d5f039be621/5ADD6FA0/t51.2885-15/e35/26278049_494498060951058_5984622561416183808_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/07fcba6c5d7c53c41ffa6953a2eb77d8/5AE87E3F/t51.2885-15/e35/23098716_126619421369388_7340628824360484864_n.jpg',
             price:'1',
             question:'Is it washable?',
             min:'0',
@@ -106,7 +106,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             p_id:'6'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24332371_200930087156405_7959451569248796672_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/ca4ec8441ef3863558d083a7698914f2/5AE55398/t51.2885-15/e35/22344177_127022191338397_6753242233601785856_n.jpg',
             price:'3',
             question:'what are the payment options we offer?',
             min:'0',
@@ -122,7 +122,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/9d9ab0fd5858406aaa3dffb74f9410ff/5AFC1863/t51.2885-15/e35/26186947_1642860362474738_5900632727891214336_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/44fe4a37f07c9d5a2ce4b0e66f902e47/5AE8F132/t51.2885-15/e35/18094899_1153108111467956_8164066899311722496_n.jpg',
             price:'1',
             question:'where do we ship to?',
             min:'0',
@@ -138,7 +138,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]                
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21690263_1947825728790866_3082305188602576896_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d263bb0d5021423a58ae233ebce38539/5ADF4F7B/t51.2885-15/e35/18094862_1377814435628951_4125549854287986688_n.jpg',
             price:'2',
             question:'What are the pills that we need to take to recover ?',
             min:'0',
@@ -154,7 +154,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/492d9de5234c876da620664a04ccd02c/5AEB6993/t51.2885-15/e35/26072649_1799858386980496_2651107643363426304_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/f3528351196312e9a6b054d7c98091aa/5AE276B2/t51.2885-15/e35/17881140_208217066346776_2630688045988315136_n.jpg',
             price:'1',
             question:'what are some tech elements we embed in the product?',
             min:'0',
@@ -170,7 +170,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/21147364_1938596963092946_1884110888995127296_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/3ee0d96a8c51f10e7879f883d2e3a2c5/5AE8FF4A/t51.2885-15/s1080x1080/e35/18094703_833119983531158_7881689601511784448_n.jpg',
             price:'3',
             question:'what magazines are we being featured on?',
             min:'0',
@@ -186,7 +186,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/0bc49a7993d065b5557a6f3e54a14950/5AE77969/t51.2885-15/e35/25016347_345627765844259_1803382666519642112_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/9677b1bb9290e78403303a53c6c5b7bf/5AF3D532/t51.2885-15/e35/18094646_1934428426791672_7189601088285179904_n.jpg',
             price:'3',
             question:'what social media platforms are we on?',
             min:'0',
@@ -202,7 +202,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/24332371_200930087156405_7959451569248796672_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/f5fb602f4670bde5e44d75a2b6de05ed/5AF53F8C/t51.2885-15/e35/18013973_1928285407404446_6087253240200560640_n.jpg',
             price:'1',
             question:'what platform do we sell on?',
             min:'0',
@@ -218,7 +218,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/23507874_1437886699657716_8411012821453635584_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/99110a8c0b8e32e943a7fc4bf80be84c/5AE25B62/t51.2885-15/e35/18094529_1319501248127200_4504383020815351808_n.jpg',
             price:'1',
             question:' What music festivals would you consider going to in the next year?',
             min:'0',
@@ -235,7 +235,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             source: 'http://www.telegraph.co.uk/tv/0/game-thrones-rhaegar-targaryen-father-jon-snow-daenerys-related/'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d32a59098dd466b112dd654e8ccc8471/5AF2190E/t51.2885-15/e35/25035955_1776636419065647_3075176672467615744_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/982dff6b8e99caa7c648e832dc28bb50/5ADC2DE0/t51.2885-15/e35/18013913_803013549874616_8718980771353722880_n.jpg',
             price:'3',
             question:'What is the birth home of the clothing brand Inlighten?',
             min:'0',
@@ -251,7 +251,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/9058ab36d0b00f3f2cf11e95484504ed/5ADBA757/t51.2885-15/e35/23347635_1932511443735924_6046413384025374720_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/865b51b3aa6167ba084203333488737e/5AF6C6EC/t51.2885-15/e35/17934541_799299920222797_134993012546600960_n.jpg',
             price:'3',
             question:'the calories we burn from all night dancing( 6 hours) equals how much  the calories we burn from having sex ( average session ) ?',
             min:'0',
@@ -281,7 +281,7 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
-    $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
+    $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true,select:''};
     $scope.test.price = $scope.test.second_price = Number($scope.game.max);
     mocha.startTime($scope);
     $scope.mocha = mocha; // expose service to the view
@@ -297,15 +297,17 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
     $scope.switchUp = function(){
         //console.log(game);
         if($scope.safe($scope.game.options)){
-            if(mocha.safe($scope.game.options[$scope.test.price].url)){
-                $scope.game.url = $scope.game.options[$scope.test.price].url;
-            }
-            $scope.game.context =  $scope.game.options[$scope.test.price].answer;
-            if($scope.test.price !==  $scope.game.price){
+            // if(mocha.safe($scope.game.options[$scope.test.price].url)){
+            //     $scope.game.url = $scope.game.options[$scope.test.price].url;
+            // }
+            $scope.game.context =  ($scope.test.select !== '') ? $scope.game.options[$scope.test.select].answer : null;
+            //this is so that the raw answer is the exact answer
+            $scope.test.price = $scope.test.select;
+            if($scope.test.select !==  $scope.game.price){
                 //this will make sure that the player gets zero points if they choose the wrong option
                 $scope.data[$scope.index].prediction = '100';
             }else{
-                $scope.data[$scope.index].prediction = $scope.test.price;
+                $scope.data[$scope.index].prediction = $scope.test.select;
             }
             
         }
@@ -323,6 +325,8 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
     $scope.inlightenNextProduct = function(){
         mocha.nextProduct($scope);
         $scope.switchUp();
+        $scope.test.select = '';
+        $scope.test.price = '';
     };
     $scope.resetGame = function(){mocha.resetGame($scope)};
     $scope.inputShow = function(){mocha.inputShow($scope)};

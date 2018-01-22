@@ -339,7 +339,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         params: {mode: 'ryerson'},
         cache: false
       });
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/inlightendash');
 })
 
 .run(function($ionicPlatform) {
@@ -677,6 +677,18 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
      this.vibrate = function(){
         //safari will crash if you dont check for vibration capability which it does not have
         (navigator.__proto__.hasOwnProperty('vibrate')) ? navigator.vibrate(1000) : null;
+     };
+
+     this.socket = function(){
+        // var socket = io();
+        // socket.on('connect', function(data) {
+        //    socket.emit('join', 'Hello World from client');
+        // });
+        // socket.on('broad', function(data) {
+        //         console.log(data);
+        //   }); 
+        // console.log(io);
+        return io();
      };
 	 
 	 return this;

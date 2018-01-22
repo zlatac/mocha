@@ -8,14 +8,10 @@ server.listen(app.get('port'));
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/www/index.html');
-   });
+});
 app.use(express.static(path.resolve(__dirname, 'www')));
-//app.set('port', process.env.PORT || 8000);
-// app.listen(app.get('port'), function() {
-//  console.log('listening to Port', app.get('port'));
-// });
 
-//stock server
+//stock Mocha server
 // var express = require('express');
 // var path = require('path')
 // var app = express();
