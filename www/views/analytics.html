@@ -42,7 +42,7 @@
                             <div>Avg Time spent: {{statistics.time/result.length | number:0}} minutes</div>
 						 </div>
                     </li>
-                    <li class="item list-me btn btn-large" ng-click="download()">
+                    <li class="item list-me btn btn-large" ng-click="download()" ng-disabled="result.length === 0">
                         <i class="material-icons left">file_download</i> Download players data
                     </li>
                     <div class="progress" ng-class="{'hide':!csvloader}">

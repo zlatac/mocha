@@ -1258,10 +1258,12 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
             $http.get(url + database_table)
             .then(function(res){
                 $scope.result = res.data;
-                var lastitem = $scope.result.length - 1;
-                $scope.firstplayer = moment($scope.result[0].time).format('hh:mm a, DD/MM/YYYY');
-                $scope.lastplayer = moment($scope.result[lastitem].time).format('hh:mm a, DD/MM/YYYY');
-                $scope.statistics = report($scope.result);
+                if($scope.result.length !== 0){
+                    var lastitem = $scope.result.length - 1;
+                    $scope.firstplayer = moment($scope.result[0].time).format('hh:mm a, DD/MM/YYYY');
+                    $scope.lastplayer = moment($scope.result[lastitem].time).format('hh:mm a, DD/MM/YYYY');
+                    $scope.statistics = report($scope.result);
+                }
 
             })
             .then(function(){
