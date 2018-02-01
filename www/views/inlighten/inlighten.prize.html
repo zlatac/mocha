@@ -1,0 +1,31 @@
+<ion-view title="/prize">
+    <inlighten-menu-header></inlighten-menu-header>
+	<menu-button ng-init="inlighten=true"></menu-button>
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
+        <div class="center-align">
+          
+          <div class="row" ng-repeat="x in prize">
+            <div class="col">
+              <div class="card">
+                <div class="card-image">
+                  <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                      <div class="determinate btn-inlighten" style="width: 100%"></div>
+                  </div>
+                  <div class="chip" 
+                       style="left:30%;bottom:0;z-index:5;margin-left:5px;background-color:#061a21;color:white">
+                       {{x.name}}
+                  </div>
+                  <img ng-src="{{x.img}}">
+                  
+                  
+                  
+				  
+                </div>
+				
+               
+              </div>
+            </div>            
+        </div>
+     </div>
+    </ion-content>
+</ion-view>

@@ -5,6 +5,7 @@
     "dependencies": {
         "@ionic/cloud": "^0.16.0",
         "@ionic/storage": "^2.0.1",
+        "axios": "^0.17.1",
         "cordova-android": "^6.2.3",
         "cordova-browser": "~4.1.0",
         "cordova-plugin-console": "^1.0.5",

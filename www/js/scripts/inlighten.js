@@ -219,8 +219,8 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/vp/99110a8c0b8e32e943a7fc4bf80be84c/5AE25B62/t51.2885-15/e35/18094529_1319501248127200_4504383020815351808_n.jpg',
-            price:'1',
-            question:' What music festivals would you consider going to in the next year?',
+            price:'survey',
+            question:' What music festival would you consider going to in the next year?',
             min:'0',
             max:'3',
             context:'',
@@ -275,8 +275,8 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
     $scope.data = [];
     angular.copy($scope.inlighten_data,$scope.data);
     $scope.inlighten = true;
-    $scope.prizeStartDate = moment('2017/12/11','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2017/12/27 18:00','YYYY/MM/DD kk:mm');
+    $scope.prizeStartDate = moment('2018/02/01','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2018/02/14 18:00','YYYY/MM/DD kk:mm');
     $scope.gameEndTime = moment('2017/12/27 18:00','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
@@ -423,5 +423,47 @@ myapp.controller('inlighten.answer.controller', function($scope,$location,$state
             $scope.showanswer = false;
         }
     }, 1000, 6000);
+    
+});
+myapp.controller('inlighten.prize.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
+    $scope.mocha = mocha;
+    $scope.prize = [
+        {
+        img:'https://cdn.shopify.com/s/files/1/1773/4523/products/Improvision_Light_Up_3_600x600.jpg?v=1515006458',
+        name: 'Revival Hoodie'
+        },
+        {
+        img:'https://cdn.shopify.com/s/files/1/1773/4523/products/Mens-Feature-1_35a47cf3-c172-497b-968f-cbb4e150c528_600x600.jpg?v=1515002931',
+        name: 'Divinity Mask'
+        },
+        {
+        img:'https://cdn.shopify.com/s/files/1/1773/4523/products/front-yellow_600x600.jpg?v=1515006221',
+        name: 'Prophecy Bomber'
+        },
+        {
+        img:'https://cdn.shopify.com/s/files/1/1773/4523/products/Womens-Bra-Feature-1_600x600.jpg?v=1515003037',
+        name: 'Firefly Bra'
+        },
+        {
+        img:'https://cdn.shopify.com/s/files/1/1773/4523/products/Womens-Feature-1_600x600.jpg?v=1515005976',
+        name: 'Promises Hoodie'
+        },
+        {
+        img:'https://cdn.shopify.com/s/files/1/1773/4523/products/Jacket_5_600x600.jpg?v=1515006115',
+        name: 'Prophecy Bomber'
+        },
+        {
+        img:'https://cdn.shopify.com/s/files/1/1773/4523/products/Mens-Feature-1_35a47cf3-c172-497b-968f-cbb4e150c528_600x600.jpg?v=1515002931',
+        name: 'Divinity Mask'
+        },
+        {
+        img:'https://cdn.shopify.com/s/files/1/1773/4523/products/Tie-Feature_600x600.JPG?v=1515002851',
+        name: 'Momentum Tie'
+        },
+        {
+        img:'https://cdn.shopify.com/s/files/1/1773/4523/products/Accessories-Feature_600x600.JPG?v=1515006349',
+        name: 'Purity Clutch'
+        }
+    ]
     
 });

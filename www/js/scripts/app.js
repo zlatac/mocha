@@ -286,6 +286,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         templateUrl : "views/inlighten/inlighten.answer.html",
         controller: "inlighten.answer.controller"
       })
+      .state("/inlightenprize", {
+        url: "/inlightenprize",
+        templateUrl : "views/inlighten/inlighten.prize.html",
+        controller: "inlighten.prize.controller"
+      })
       .state("/inlightenleaderboard", {
         url: "/inlightenleaderboard",
         templateUrl : "views/leaderboard.html",
@@ -339,7 +344,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         params: {mode: 'ryerson'},
         cache: false
       });
-    $urlRouterProvider.otherwise('/inlightendash');
+    $urlRouterProvider.otherwise('/');
 })
 
 .run(function($ionicPlatform) {

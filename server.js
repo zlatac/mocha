@@ -3,6 +3,7 @@ var path = require('path')
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+//var axios = require('axios');
 app.set('port', process.env.PORT || 8000);
 server.listen(app.get('port'));
 
@@ -37,3 +38,31 @@ io.on('connection', function(client) {
     });
 });
 // io.listen(3100);
+/*
+axios({
+    method: 'post',
+    url: 'https://us11.api.mailchimp.com/3.0/lists/bb67cef29f/members',
+    // data: {
+    //   name: 'MOCHAx_TEST',
+    //   contact: {'company':'mochax','address1':'lagos nigeria','city':'toronto','state':'ontario','country':'naija','zip':'345678'},
+    //   permission_reminder: 'you are now subscribed to mochaX',
+    //   campaign_defaults: {'from_name':'mochaX','from_email':'mochax@gmail.com','subject':'mochaX is here bitch','language':'english'},
+    //   email_type_option: false,
+    // },
+    data: {
+        email_address: 'mochax@gmail.com',
+        status: 'subscribed',
+
+    },
+    auth: {
+        username: 'mocha',
+        password: '664ccf2c51a9522fc66b747f7e70b010-us11'
+    }
+  })
+  .then((res)=>{
+    console.log(res);
+  })
+  .catch((err)=>{
+    console.log('error', err);
+  });
+*/
