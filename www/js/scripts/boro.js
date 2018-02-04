@@ -453,6 +453,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             canvas = angular.element(document.getElementById('canvas'))[0];
             
             ctx = canvas.getContext('2d');
+            console.log(ctx)
             
             im = new Image()
             im.crossOrigin = 'Anonymous';
@@ -460,28 +461,31 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/192110115a0379f7200f2aabeac9a7e5/5B094E85/t51.2885-15/e35/11849357_536498379834099_188237789_n.jpg';
             //sw and sh are the wi$scope.dh and height of the image piece to be cut from the raw image
             im.onload = ()=>{
-                var sw = Math.round(im.width/5);
-                var sh = Math.round(im.height/6);
                 var space = 2;
+                var sw = Math.round((im.width - space*5)/5);
+                var sh = Math.round((im.height - space*6)/6);
+                
                 //$scope.dw and $scope.dh are the height and width to be drawn on the canvas based on the aspect ratio of the raw image
                 $scope.dw = Math.round((fWidth - space*5)/5);
                 $scope.dh = Math.round((fHeight - space*6)/6);
 
-                canvas.setAttribute('width',$scope.dw);
-                canvas.setAttribute('height',Number($scope.dh));
+                canvas.setAttribute('width',sw);
+                canvas.setAttribute('height',sh);
+                ctx.imageSmoothingQuality = "high";
+
 
                 //ctx.$scope.drawImage(im,0,0,sw,sh,0,0,$scope.dw,$scope.dh)
                 //by default i want 30 pieces of any image i.e 5 columns and 6 rows for mobile devices.
                 for(let i = 0; i < 5; i++){
                     for(let j = 0; j < 6; j++){
                         //ctx.$scope.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,i*($scope.dw + 5),j*($scope.dh + 5),$scope.dw,$scope.dh);
-                        ctx.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,0,0,$scope.dw,$scope.dh);
-                        drawdata = {};
-                        drawdata.img = canvas.toDataURL();
+                        ctx.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,0,0,sw,sh);
+                        drawdata = {};  
+                        drawdata.img = canvas.toDataURL('image/png', 1);
                         drawdata.x = i*($scope.dw + space);
                         drawdata.y = j*($scope.dh + space);
                         $scope.basket.push(drawdata);
-                        ctx.clearRect(0,0,$scope.dw,$scope.dh);
+                        ctx.clearRect(0,0,sw,sh);
                     }
                 }
                 
