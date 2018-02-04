@@ -3,14 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var myapp = angular.module('starter', ['ionic','ionic.cloud'])
+var myapp = angular.module('starter', ['ionic'])
 
-.config(function($ionicCloudProvider,$stateProvider, $urlRouterProvider) {
-  $ionicCloudProvider.init({
-    "core": {
-      "app_id": "c2f7c8b5"
-    }
-  });
+.config(function($stateProvider, $urlRouterProvider) {
     
   $stateProvider
       .state("/", {
@@ -247,6 +242,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         templateUrl : "views/boro/boro.test.html",
         controller: "boro.test.controller"
       })
+      .state("/boropuzzle", {
+        url: "/boropuzzle",
+        templateUrl : "views/boro/boro.puzzle.html",
+        controller: "boro.puzzle.controller"
+      })
       .state("/boroleaderboard", {
         url: "/boroleaderboard",
         templateUrl : "views/leaderboard.html",
@@ -344,7 +344,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         params: {mode: 'ryerson'},
         cache: false
       });
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/boropuzzle');
 })
 
 .run(function($ionicPlatform) {
@@ -1371,6 +1371,8 @@ myapp.directive('tapTap', function() {
     };
 });
 
+
+
 //BORO CONTROLLERS BELOW
 myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     if(mocha.inStore == true){
@@ -1693,7 +1695,7 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
     }
 
     $scope.button = [];
-    $scope.basket = [];
+    $scope.$scope.basket = [];
     $scope.num = 2;
     $scope.autoplay = false;
     $scope.play = false;
@@ -1701,8 +1703,8 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
         $scope.button[x] = "panorama_fish_eye";
     }
     $scope.mindTracker = function (num){
-        $scope.basket = [];
-        $scope.collectBasket = [];
+        $scope.$scope.basket = [];
+        $scope.collect$scope.Basket = [];
         $scope.news = null;
         $scope.level = num - 1;
         $scope.autoplay = true;
@@ -1716,21 +1718,21 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
         function loop(item){
             let randomIndex = Math.floor(Math.random()*(5));
         
-            if((x > 0 && randomIndex !== $scope.basket[item - 1]) || x === 0){
-                $scope.basket.push(randomIndex);
+            if((x > 0 && randomIndex !== $scope.$scope.basket[item - 1]) || x === 0){
+                $scope.$scope.basket.push(randomIndex);
             }else{
                 loop(item);
             }
         }
-        console.log($scope.basket);
+        console.log($scope.$scope.basket);
         var index = 0;
         var previousIndex = 0;
         var milseconds = 700;
         var showNumber = $interval(function(){
-            //console.log($scope.basket[index]);
+            //console.log($scope.$scope.basket[index]);
             $scope.button[previousIndex] = 'panorama_fish_eye';
-            $scope.button[$scope.basket[index]] = "lens";
-            previousIndex = $scope.basket[index];
+            $scope.button[$scope.$scope.basket[index]] = "lens";
+            previousIndex = $scope.$scope.basket[index];
             index++;
             // if(num == index){
             //     clearInterval(showNumber);
@@ -1749,20 +1751,20 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
     $scope.collect = function(d){
         //console.log(d);
         if($scope.autoplay === false && $scope.play === true){
-            $scope.collectBasket.push(d);
-            if(d === $scope.basket[$scope.collectBasket.length - 1]){
+            $scope.collect$scope.Basket.push(d);
+            if(d === $scope.$scope.basket[$scope.collect$scope.Basket.length - 1]){
                 $scope.news = 'Right';
                 $scope.color = 'green';
-                $scope.status[$scope.collectBasket.length - 1] = 'check_circle';
+                $scope.status[$scope.collect$scope.Basket.length - 1] = 'check_circle';
                 //console.log('right');
-                if($scope.basket.length == $scope.collectBasket.length){
+                if($scope.$scope.basket.length == $scope.collect$scope.Basket.length){
                     $scope.num++;
                     $scope.mindTracker($scope.num);
                 }
             }else{
                 $scope.news = 'Wrong - Play again';
                 $scope.color = 'red';
-                $scope.status[$scope.collectBasket.length - 1] = 'highlight_off';
+                $scope.status[$scope.collect$scope.Basket.length - 1] = 'highlight_off';
                 //safari will crash if you dont check for vibration capability which it does not have
                 (navigator.__proto__.hasOwnProperty('vibrate')) ? navigator.vibrate(1000) : null;
                 //console.log('wrong');
@@ -1777,6 +1779,198 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
         $scope.num = 2;
     }    
 
+});
+
+myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$stateParams,$http,$timeout,$compile,mocha){
+
+    $scope.waste = [];
+    $scope.correct = [];
+    $scope.dw,$scope.dh,$scope.draw;
+    $scope.shuffle = [];
+    $scope.basket =[];
+    $scope.output = '';
+    $scope.prog = 0;
+    $scope.drawCanvas =function(fWidth, fHeight){
+        return new Promise(function(resolve,reject){
+            canvas = angular.element(document.getElementById('canvas'))[0];
+            
+            ctx = canvas.getContext('2d');
+            
+            im = new Image()
+            im.crossOrigin = 'Anonymous';
+            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/910f8924c3e593562c588e94a5aa94ab/5B1A5EC2/t51.2885-15/e35/26068716_209598079600867_1660830996863385600_n.jpg';
+            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/192110115a0379f7200f2aabeac9a7e5/5B094E85/t51.2885-15/e35/11849357_536498379834099_188237789_n.jpg';
+            //sw and sh are the wi$scope.dh and height of the image piece to be cut from the raw image
+            im.onload = ()=>{
+                var sw = Math.round(im.width/5);
+                var sh = Math.round(im.height/6);
+                var space = 2;
+                //$scope.dw and $scope.dh are the height and width to be drawn on the canvas based on the aspect ratio of the raw image
+                $scope.dw = Math.round((fWidth - space*5)/5);
+                $scope.dh = Math.round((fHeight - space*6)/6);
+
+                canvas.setAttribute('width',$scope.dw);
+                canvas.setAttribute('height',Number($scope.dh));
+
+                //ctx.$scope.drawImage(im,0,0,sw,sh,0,0,$scope.dw,$scope.dh)
+                //by default i want 30 pieces of any image i.e 5 columns and 6 rows for mobile devices.
+                for(let i = 0; i < 5; i++){
+                    for(let j = 0; j < 6; j++){
+                        //ctx.$scope.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,i*($scope.dw + 5),j*($scope.dh + 5),$scope.dw,$scope.dh);
+                        ctx.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,0,0,$scope.dw,$scope.dh);
+                        drawdata = {};
+                        drawdata.img = canvas.toDataURL();
+                        drawdata.x = i*($scope.dw + space);
+                        drawdata.y = j*($scope.dh + space);
+                        $scope.basket.push(drawdata);
+                        ctx.clearRect(0,0,$scope.dw,$scope.dh);
+                    }
+                }
+                
+                //console.log($scope.basket);
+                $scope.shuffle = $scope.basket.map((item)=>{return {x:item.x,y:item.y}})
+                $scope.shuffle = mocha.randomize($scope.shuffle)
+                resolve($scope.shuffle);
+            }
+        });    
+        
+        
+    }
+    $scope.setUp = function(w,h){
+        
+        $scope.drawCanvas(w,h)
+        .then((data)=>{
+            console.log('yeaaaaaaaaaah', $scope.basket);
+            $scope.svg = angular.element(document.getElementById('svg'))[0];
+            $scope.draw = SVG($scope.svg).size(w, h);
+            //console.log($scope.basket);
+            let z = 0;
+            $scope.basket.forEach((item)=>{
+                let elem = $scope.draw.image(item.img,$scope.dw,$scope.dh)
+                elem.x($scope.shuffle[z].x);
+                elem.y($scope.shuffle[z].y);
+                elem.truth = {x:item.x,y:item.y};
+                elem.attr('ng-buzz','yes');
+                // elem.click(()=>{
+                //     elem.animate(100).width($scope.dw - $scope.dw*0.3);
+                //     if($scope.waste.length < 2){
+                //         $scope.waste.push(elem);
+                //     }
+                //     if($scope.waste.length === 2 && $scope.waste[0].node.id !== $scope.waste[1].node.id ){
+                //         let a = {x:$scope.waste[0].node.x.baseVal.value,
+                //                     y:$scope.waste[0].node.y.baseVal.value,
+                //                     truth: $scope.waste[0].truth
+                //                 }
+                //         let b = {x:$scope.waste[1].node.x.baseVal.value,
+                //                     y:$scope.waste[1].node.y.baseVal.value,
+                //                     truth: $scope.waste[1].truth
+                //                 }
+                //         SVG.get($scope.waste[0].node.id).animate(500).move(b.x,b.y).animate(100).width($scope.dw);
+                //         SVG.get($scope.waste[1].node.id).animate(500).move(a.x,a.y).animate(100).width($scope.dw);
+                //         $scope.checker(a,b);
+                //         $scope.checker(b,a);
+                //         $scope.waste = [];
+                        
+                //         //console.log(a,b)
+                //     }else if($scope.waste.length === 2 && $scope.waste[0].node.id == $scope.waste[1].node.id){
+                //         //this is the situation where the same box is touched
+                //         elem.animate(100).width($scope.dw);
+                //         $scope.waste = [];
+                //     }
+                //     //console.log(elem);
+                // });
+                
+                elem.loaded (()=>{
+                    //on initialization check if element is in the right position
+                    let pos = {x:elem.node.x.baseVal.value,
+                                    y:elem.node.y.baseVal.value
+                                }
+                    if(pos.x === elem.truth.x && pos.y === elem.truth.y){
+                        $scope.correct.push(elem.truth.x+':'+elem.truth.y);
+                    }
+                    $scope.progressFunc();
+                });
+                
+                z++;
+                //elem.mouseout(()=>{elem.animate(100).width(50);});
+            });
+            $compile($scope.draw.node)($scope);
+        });
+        
+    };
+    
+    var f = angular.element(document.getElementById('svg'))[0]
+    $scope.setUp(f.clientWidth,f.clientHeight);
+
+    $scope.checker = function(d,e){
+			
+        if(e.x === d.truth.x && e.y === d.truth.y){
+            //Player is right
+            if(!$scope.correct.includes(d.truth.x+':'+d.truth.y)){
+                $scope.correct.push(d.truth.x+':'+d.truth.y);
+                console.log('right boy')
+            }
+        }else{
+            //player is wrong
+            if($scope.correct.includes(d.truth.x+':'+d.truth.y)){
+                let pos = $scope.correct.indexOf(d.truth.x+':'+d.truth.y)
+                $scope.correct.splice(pos,1);
+            }
+            console.log('wrong boy')
+        }
+        
+        if($scope.correct.length === 30){
+            //$scope.draw.text('you win').move(50,50);
+            $scope.output = 'Completed'
+            console.log('THE END FAM')
+        }
+    }
+
+    $scope.progressFunc = function(){
+        $scope.prog = (($scope.correct.length)/30)*100;
+    };
+
+});
+
+myapp.directive('ngBuzz', function() {
+    return{
+        link: function($scope,elem,attrs){       
+            
+            elem.bind('touchstart', function() {
+                elem[0].instance.animate(100).width($scope.dw - $scope.dw*0.3);
+                    if($scope.waste.length < 2){
+                        $scope.waste.push(elem[0].instance);
+                    }
+                    //$scope.waste[0].animate(500).move(0,0).animate(100).width($scope.dw);
+                    if($scope.waste.length === 2 && $scope.waste[0].node.id !== $scope.waste[1].node.id ){
+                        var a = {x:$scope.waste[0].node.x.baseVal.value,
+                                    y:$scope.waste[0].node.y.baseVal.value,
+                                    truth: $scope.waste[0].truth
+                                }
+                        var b = {x:$scope.waste[1].node.x.baseVal.value,
+                                    y:$scope.waste[1].node.y.baseVal.value,
+                                    truth: $scope.waste[1].truth
+                                }
+                        $scope.waste[0].animate(500).move(b.x,b.y).animate(100).width($scope.dw);
+                       
+                        $scope.waste[1].animate(500).move(a.x,a.y).animate(100).width($scope.dw);
+                        
+                        $scope.checker(a,b);
+                        $scope.checker(b,a);
+                        $scope.progressFunc();
+                        $scope.waste = [];
+                        
+                    }else if($scope.waste.length === 2 && $scope.waste[0].node.id == $scope.waste[1].node.id){
+                        //this is the situation where the same box is touched
+                        elem[0].instance.animate(100).width($scope.dw);
+                        $scope.waste = [];
+                        console.log('i failed in life');
+                    }
+               console.log('am alive bitch',elem[0].instance);
+               $scope.$apply();
+            });
+        }
+    }
 });
 myapp.directive('dmzMenuHeader', function() {
     return {

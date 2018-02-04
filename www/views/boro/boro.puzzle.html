@@ -1,0 +1,58 @@
+<ion-view title="/boropuzzle">
+	<!-- <result-modal></result-modal> -->
+    <!-- <menu-header></menu-header> -->
+	<!-- <menu-button></menu-button> -->
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" ng-cloak>
+        <style>
+            i.material-icons.gbutton{
+                font-size: 54px;
+                background-color: rgba(255, 255, 255, 0);
+                color: rgba(255, 255, 255, 0.96);
+            }
+            i.material-icons.dark{
+                /* font-size: 54px;
+                background-color: rgba(255, 255, 255, 0); */
+                color: rgba(3, 10, 25, 0.812) !important;
+            }
+            div.row.low{
+                margin-bottom: -12px;
+            }
+            img{
+                width: 90px;
+                height: 90px;
+                position: absolute;
+                top: 31%;
+                left: 38%;
+                background-color: rgba(165, 165, 165, 0.6);
+            }
+            .background{
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                background-image: url(https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/26301408_1076055922536906_4113977945377210368_n.jpg);
+                background-position: center;
+            }
+            div.scroll{
+                height:100%;
+            }
+            canvas{border: solid black; display: none;}
+        </style>
+        
+        <div class="background center-align">
+            <div id="svg" style="background-color:white; width:100%; height:80%;" ></div>
+            <div style="background-color:white; width:100%; height:20%;" >
+                <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                    <div class="determinate btn-green" style="width:{{prog}}%;"></div>
+                </div>
+                <div class="btn list-me animated bounceIn" ng-class="{'hide': prog !== 100}">
+                    Completed!!
+                </div>
+                <!-- <div class="btn list-me" ng-click="setUp(375,501)">Run</div> -->
+            </div>
+            <canvas id="canvas"></canvas>
+        
+        </div>
+    </ion-content>
+</ion-view>

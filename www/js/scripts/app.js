@@ -3,14 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var myapp = angular.module('starter', ['ionic','ionic.cloud'])
+var myapp = angular.module('starter', ['ionic'])
 
-.config(function($ionicCloudProvider,$stateProvider, $urlRouterProvider) {
-  $ionicCloudProvider.init({
-    "core": {
-      "app_id": "c2f7c8b5"
-    }
-  });
+.config(function($stateProvider, $urlRouterProvider) {
     
   $stateProvider
       .state("/", {
@@ -247,6 +242,11 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         templateUrl : "views/boro/boro.test.html",
         controller: "boro.test.controller"
       })
+      .state("/boropuzzle", {
+        url: "/boropuzzle",
+        templateUrl : "views/boro/boro.puzzle.html",
+        controller: "boro.puzzle.controller"
+      })
       .state("/boroleaderboard", {
         url: "/boroleaderboard",
         templateUrl : "views/leaderboard.html",
@@ -344,7 +344,7 @@ var myapp = angular.module('starter', ['ionic','ionic.cloud'])
         params: {mode: 'ryerson'},
         cache: false
       });
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/boropuzzle');
 })
 
 .run(function($ionicPlatform) {
