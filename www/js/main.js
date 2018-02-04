@@ -344,7 +344,7 @@ var myapp = angular.module('starter', ['ionic'])
         params: {mode: 'ryerson'},
         cache: false
       });
-    $urlRouterProvider.otherwise('/boropuzzle');
+    $urlRouterProvider.otherwise('/');
 })
 
 .run(function($ionicPlatform) {
