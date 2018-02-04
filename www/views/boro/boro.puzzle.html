@@ -31,18 +31,18 @@
                 top: 0;
                 height: 100%;
                 width: 100%;
-                background-image: url(https://scontent-yyz1-1.cdninstagram.com/t51.2885-15/e35/26301408_1076055922536906_4113977945377210368_n.jpg);
-                background-position: center;
+                background-color: white;
             }
             div.scroll{
                 height:100%;
             }
             canvas{border: solid black; display: none;}
+            svg:not(:root) {overflow: visible !important;}
         </style>
         
         <div class="background center-align">
             <div id="svg" style="background-color:white; width:100%; height:80%;" ></div>
-            <div style="background-color:white; width:100%; height:20%;" >
+            <div style="background-color:white; width:100%;" >
                 <div class="progress" style="margin-top:0px;background-color:#dadcda;">
                     <div class="determinate btn-green" style="width:{{prog}}%;"></div>
                 </div>

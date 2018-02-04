@@ -1786,6 +1786,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
     $scope.waste = [];
     $scope.correct = [];
     $scope.dw,$scope.dh,$scope.draw;
+    $scope.sw,$scope.sh;
     $scope.shuffle = [];
     $scope.basket =[];
     $scope.output = '';
