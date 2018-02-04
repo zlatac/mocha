@@ -471,6 +471,8 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
 
                 canvas.setAttribute('width',sw);
                 canvas.setAttribute('height',sh);
+                $scope.sw = sw;
+                $scope.sh = sh;
                 ctx.imageSmoothingQuality = "high";
 
 
@@ -483,7 +485,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
                         drawdata = {};  
                         drawdata.img = canvas.toDataURL('image/png', 1);
                         drawdata.x = i*($scope.dw + space);
-                        drawdata.y = j*($scope.dh + space);
+                        drawdata.y = j*(Math.round(($scope.sh*$scope.dw)/$scope.sw) + space);
                         $scope.basket.push(drawdata);
                         ctx.clearRect(0,0,sw,sh);
                     }
@@ -508,7 +510,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             //console.log($scope.basket);
             let z = 0;
             $scope.basket.forEach((item)=>{
-                let elem = $scope.draw.image(item.img,$scope.dw,$scope.dh)
+                let elem = $scope.draw.image(item.img,$scope.dw,Math.round(($scope.sh*$scope.dw)/$scope.sw));
                 elem.x($scope.shuffle[z].x);
                 elem.y($scope.shuffle[z].y);
                 elem.truth = {x:item.x,y:item.y};
