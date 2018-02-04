@@ -1791,6 +1791,8 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
     $scope.basket =[];
     $scope.output = '';
     $scope.prog = 0;
+    $scope.test= {end_time:null, start_time:null,time_result:null};
+    $scope.mocha = mocha;
     $scope.drawCanvas =function(fWidth, fHeight){
         return new Promise(function(resolve,reject){
             canvas = angular.element(document.getElementById('canvas'))[0];
@@ -1929,12 +1931,19 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
         if($scope.correct.length === 30){
             //$scope.draw.text('you win').move(50,50);
             $scope.output = 'Completed'
+            $scope.test.time_result = mocha.gameTimePlayed($scope).split(':');
             console.log('THE END FAM')
         }
     }
 
     $scope.progressFunc = function(){
         $scope.prog = (($scope.correct.length)/30)*100;
+    };
+
+    $scope.isStarted = function(){
+        if($scope.test.start_time === null){
+            $scope.test.start_time = moment();
+        }
     };
 
 });
@@ -1944,35 +1953,36 @@ myapp.directive('ngBuzz', function() {
         link: function($scope,elem,attrs){       
             
             elem.bind('touchstart', function() {
+                $scope.isStarted();
                 elem[0].instance.animate(100).width($scope.dw - $scope.dw*0.3);
-                    if($scope.waste.length < 2){
-                        $scope.waste.push(elem[0].instance);
-                    }
-                    //$scope.waste[0].animate(500).move(0,0).animate(100).width($scope.dw);
-                    if($scope.waste.length === 2 && $scope.waste[0].node.id !== $scope.waste[1].node.id ){
-                        var a = {x:$scope.waste[0].node.x.baseVal.value,
-                                    y:$scope.waste[0].node.y.baseVal.value,
-                                    truth: $scope.waste[0].truth
-                                }
-                        var b = {x:$scope.waste[1].node.x.baseVal.value,
-                                    y:$scope.waste[1].node.y.baseVal.value,
-                                    truth: $scope.waste[1].truth
-                                }
-                        $scope.waste[0].animate(500).move(b.x,b.y).animate(100).width($scope.dw);
-                       
-                        $scope.waste[1].animate(500).move(a.x,a.y).animate(100).width($scope.dw);
-                        
-                        $scope.checker(a,b);
-                        $scope.checker(b,a);
-                        $scope.progressFunc();
-                        $scope.waste = [];
-                        
-                    }else if($scope.waste.length === 2 && $scope.waste[0].node.id == $scope.waste[1].node.id){
-                        //this is the situation where the same box is touched
-                        elem[0].instance.animate(100).width($scope.dw);
-                        $scope.waste = [];
-                        console.log('i failed in life');
-                    }
+                if($scope.waste.length < 2){
+                    $scope.waste.push(elem[0].instance);
+                }
+                //$scope.waste[0].animate(500).move(0,0).animate(100).width($scope.dw);
+                if($scope.waste.length === 2 && $scope.waste[0].node.id !== $scope.waste[1].node.id ){
+                    var a = {x:$scope.waste[0].node.x.baseVal.value,
+                                y:$scope.waste[0].node.y.baseVal.value,
+                                truth: $scope.waste[0].truth
+                            }
+                    var b = {x:$scope.waste[1].node.x.baseVal.value,
+                                y:$scope.waste[1].node.y.baseVal.value,
+                                truth: $scope.waste[1].truth
+                            }
+                    $scope.waste[0].animate(500).move(b.x,b.y).animate(100).width($scope.dw);
+                    
+                    $scope.waste[1].animate(500).move(a.x,a.y).animate(100).width($scope.dw);
+                    
+                    $scope.checker(a,b);
+                    $scope.checker(b,a);
+                    $scope.progressFunc();
+                    $scope.waste = [];
+                    
+                }else if($scope.waste.length === 2 && $scope.waste[0].node.id == $scope.waste[1].node.id){
+                    //this is the situation where the same box is touched
+                    elem[0].instance.animate(100).width($scope.dw);
+                    $scope.waste = [];
+                    console.log('i failed in life');
+                }
                console.log('am alive bitch',elem[0].instance);
                $scope.$apply();
             });

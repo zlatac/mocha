@@ -2,7 +2,7 @@
 	<!-- <result-modal></result-modal> -->
     <!-- <menu-header></menu-header> -->
 	<!-- <menu-button></menu-button> -->
-    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" ng-cloak>
+    <ion-content ng-cloak>
         <style>
             i.material-icons.gbutton{
                 font-size: 54px;
@@ -38,6 +38,7 @@
             }
             canvas{border: solid black; display: none;}
             svg:not(:root) {overflow: visible !important;}
+            span{text-transform: lowercase;}
         </style>
         
         <div class="background center-align">
@@ -49,8 +50,12 @@
             </div>
             <div id="svg" style="background-color:white; width:100%; height:80%;" >
                 <div class="btn list-me animated bounceIn" ng-class="{'hide': prog !== 100}">
-                        Completed!!
-                    </div>
+                        Completed!!  <i class="fa fa-clock-o"></i> 
+                        {{test.time_result[0]}}<span>m</span>:{{test.time_result[1]}}<span>s</span> 
+                </div>
+                <!-- <div class="btn list-me animated bounceIn" ng-class="{'hide': prog == 100}">
+                        Puzzlegram
+                </div> -->
             </div>
             
             <canvas id="canvas"></canvas>
