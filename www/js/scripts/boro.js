@@ -451,6 +451,9 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
     $scope.prog = 0;
     $scope.test= {end_time:null, start_time:null,time_result:null};
     $scope.mocha = mocha;
+    $scope.picColumn = 6;
+    $scope.picRow = 7;
+    $scope.picBoxes = $scope.picColumn * $scope.picRow;
     $scope.drawCanvas =function(fWidth, fHeight){
         return new Promise(function(resolve,reject){
             canvas = angular.element(document.getElementById('canvas'))[0];
@@ -460,17 +463,17 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             
             im = new Image()
             im.crossOrigin = 'Anonymous';
-            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/910f8924c3e593562c588e94a5aa94ab/5B1A5EC2/t51.2885-15/e35/26068716_209598079600867_1660830996863385600_n.jpg';
+            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
             //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/192110115a0379f7200f2aabeac9a7e5/5B094E85/t51.2885-15/e35/11849357_536498379834099_188237789_n.jpg';
             //sw and sh are the wi$scope.dh and height of the image piece to be cut from the raw image
             im.onload = ()=>{
                 var space = 2;
-                var sw = Math.round((im.width - space*5)/5);
-                var sh = Math.round((im.height - space*6)/6);
+                var sw = Math.round((im.width - space * $scope.picColumn)/$scope.picColumn);
+                var sh = Math.round((im.height - space* $scope.picRow)/$scope.picRow);
                 
                 //$scope.dw and $scope.dh are the height and width to be drawn on the canvas based on the aspect ratio of the raw image
-                $scope.dw = Math.round((fWidth - space*5)/5);
-                $scope.dh = Math.round((fHeight - space*6)/6);
+                $scope.dw = Math.round((fWidth - space * $scope.picColumn)/ $scope.picColumn);
+                $scope.dh = Math.round((fHeight - space * $scope.picRow)/$scope.picRow);
 
                 canvas.setAttribute('width',sw);
                 canvas.setAttribute('height',sh);
@@ -481,8 +484,8 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
 
                 //ctx.$scope.drawImage(im,0,0,sw,sh,0,0,$scope.dw,$scope.dh)
                 //by default i want 30 pieces of any image i.e 5 columns and 6 rows for mobile devices.
-                for(let i = 0; i < 5; i++){
-                    for(let j = 0; j < 6; j++){
+                for(let i = 0; i < $scope.picColumn; i++){
+                    for(let j = 0; j < $scope.picRow; j++){
                         //ctx.$scope.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,i*($scope.dw + 5),j*($scope.dh + 5),$scope.dw,$scope.dh);
                         ctx.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,0,0,sw,sh);
                         drawdata = {};  
@@ -586,7 +589,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             console.log('wrong boy')
         }
         
-        if($scope.correct.length === 30){
+        if($scope.correct.length === $scope.picBoxes){
             //$scope.draw.text('you win').move(50,50);
             $scope.output = 'Completed'
             $scope.test.time_result = mocha.gameTimePlayed($scope).split(':');
@@ -595,7 +598,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
     }
 
     $scope.progressFunc = function(){
-        $scope.prog = (($scope.correct.length)/30)*100;
+        $scope.prog = (($scope.correct.length)/$scope.picBoxes)*100;
     };
 
     $scope.isStarted = function(){
