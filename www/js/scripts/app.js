@@ -679,9 +679,12 @@ var myapp = angular.module('starter', ['ionic'])
         slider._slideNext(500);
      };
 
-     this.vibrate = function(){
+     this.vibrate = function(miliseconds){
+        if(!this.safe(miliseconds)){
+            miliseconds = 1000; //default
+        }
         //safari will crash if you dont check for vibration capability which it does not have
-        (navigator.__proto__.hasOwnProperty('vibrate')) ? navigator.vibrate(1000) : null;
+        (navigator.__proto__.hasOwnProperty('vibrate')) ? navigator.vibrate(miliseconds) : null;
      };
 
      this.socket = function(){

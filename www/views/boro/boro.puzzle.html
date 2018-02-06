@@ -39,12 +39,15 @@
             canvas{border: solid black; display: none;}
             svg:not(:root) {overflow: visible !important;}
             span{text-transform: lowercase;}
+            div.progress{height: 20px !important;}
         </style>
         
         <div class="background center-align">
             <div style="background-color:white; width:100%;" >
-                <div class="progress" style="margin-top:0px;background-color:#dadcda;margin-bottom: 0px;">
+                <div class="progress animated fadeInDown" style="margin-top:0px;background-color:#dadcda;margin-bottom: 0px;" 
+                ng-class="{'hide': prog == 0 || prog == 100}">
                     <div class="determinate btn-green" style="width:{{prog}}%;"></div>
+                    <div style="position: absolute;left: 50%;top: 5%;color:  white;">{{prog | number:0}}%</div>
                 </div>
                 <!-- <div class="btn list-me" ng-click="setUp(375,501)">Run</div> -->
             </div>
@@ -61,5 +64,6 @@
             <canvas id="canvas"></canvas>
         
         </div>
+        <foot-note></foot-note>
     </ion-content>
 </ion-view>

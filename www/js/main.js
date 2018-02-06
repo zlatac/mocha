@@ -679,9 +679,12 @@ var myapp = angular.module('starter', ['ionic'])
         slider._slideNext(500);
      };
 
-     this.vibrate = function(){
+     this.vibrate = function(miliseconds){
+        if(!this.safe(miliseconds)){
+            miliseconds = 1000; //default
+        }
         //safari will crash if you dont check for vibration capability which it does not have
-        (navigator.__proto__.hasOwnProperty('vibrate')) ? navigator.vibrate(1000) : null;
+        (navigator.__proto__.hasOwnProperty('vibrate')) ? navigator.vibrate(miliseconds) : null;
      };
 
      this.socket = function(){
@@ -1793,9 +1796,9 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
     $scope.prog = 0;
     $scope.test= {end_time:null, start_time:null,time_result:null};
     $scope.mocha = mocha;
-    $scope.picColumn = 6;
-    $scope.picRow = 7;
-    $scope.picBoxes = $scope.picColumn * $scope.picRow;
+    $scope.picColumn = 2;
+    $scope.picRow = 2;
+    $scope.puzzLevel = 1;
     $scope.drawCanvas =function(fWidth, fHeight){
         return new Promise(function(resolve,reject){
             canvas = angular.element(document.getElementById('canvas'))[0];
@@ -1805,7 +1808,8 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             
             im = new Image()
             im.crossOrigin = 'Anonymous';
-            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
+            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
+            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/910f8924c3e593562c588e94a5aa94ab/5B1A5EC2/t51.2885-15/e35/26068716_209598079600867_1660830996863385600_n.jpg';
             //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/192110115a0379f7200f2aabeac9a7e5/5B094E85/t51.2885-15/e35/11849357_536498379834099_188237789_n.jpg';
             //sw and sh are the wi$scope.dh and height of the image piece to be cut from the raw image
             im.onload = ()=>{
@@ -1849,12 +1853,18 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
         
     }
     $scope.setUp = function(w,h){
-        
+        $scope.picBoxes = $scope.picColumn * $scope.picRow;
+        $scope.footnote_hide = false;
+        $scope.footnote = true;
+        $scope.footnote_msg = 'Level ' + $scope.puzzLevel;
         $scope.drawCanvas(w,h)
         .then((data)=>{
             console.log('yeaaaaaaaaaah', $scope.basket);
-            $scope.svg = angular.element(document.getElementById('svg'))[0];
-            $scope.draw = SVG($scope.svg).size(w, h);
+            if(!mocha.safe($scope.draw)){
+                $scope.svg = angular.element(document.getElementById('svg'))[0];
+                $scope.draw = SVG($scope.svg).size(w, h);
+            }
+            
             //console.log($scope.basket);
             let z = 0;
             $scope.basket.forEach((item)=>{
@@ -1911,8 +1921,8 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
         
     };
     
-    var f = angular.element(document.getElementById('svg'))[0]
-    $scope.setUp(f.clientWidth,f.clientHeight);
+    $scope.svgSpace = angular.element(document.getElementById('svg'))[0]
+    $scope.setUp($scope.svgSpace.clientWidth,$scope.svgSpace.clientHeight);
 
     $scope.checker = function(d,e){
 			
@@ -1935,6 +1945,10 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             //$scope.draw.text('you win').move(50,50);
             $scope.output = 'Completed'
             $scope.test.time_result = mocha.gameTimePlayed($scope).split(':');
+            $scope.mocha.vibrate(2000);
+            $timeout(()=>{
+                $scope.levelUp();
+            },2000)
             console.log('THE END FAM')
         }
     }
@@ -1949,6 +1963,21 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
         }
     };
 
+    $scope.levelUp = function(){
+        $scope.draw.clear();
+        $scope.waste = [];
+        $scope.correct = [];
+        $scope.dw,$scope.dh,$scope.draw;
+        $scope.sw,$scope.sh;
+        $scope.shuffle = [];
+        $scope.basket =[];
+        $scope.prog = 0;
+        $scope.picColumn += 1;
+        $scope.picRow += ($scope.picColum == $scope.picRow) ? 2 : 1;
+        $scope.puzzLevel += 1;
+        $scope.setUp($scope.svgSpace.clientWidth,$scope.svgSpace.clientHeight);
+    }
+
 });
 
 myapp.directive('ngBuzz', function() {
@@ -1957,6 +1986,7 @@ myapp.directive('ngBuzz', function() {
             
             elem.bind('touchstart', function() {
                 $scope.isStarted();
+                $scope.mocha.vibrate(60);
                 elem[0].instance.animate(100).width($scope.dw - $scope.dw*0.3);
                 if($scope.waste.length < 2){
                     $scope.waste.push(elem[0].instance);
