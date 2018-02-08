@@ -2,7 +2,7 @@
 	<!-- <result-modal></result-modal> -->
     <!-- <menu-header></menu-header> -->
 	<!-- <menu-button></menu-button> -->
-    <ion-content ng-cloak>
+    <ion-content ng-cloak class="squeeze">
         <style>
             i.material-icons.gbutton{
                 font-size: 54px;
@@ -37,11 +37,18 @@
                 height:100%;
             }
             canvas{border: solid black; display: none;}
-            svg:not(:root) {overflow: visible !important;}
+            /* svg:not(:root) {overflow: visible !important;} */
             span{text-transform: lowercase;}
             div.progress{height: 20px !important;}
+            @media only screen and (min-width: 768px){
+                /* playable on computer/laptop screen */
+                ion-content.squeeze{
+                    margin: 0 30%;
+                }
+                /* svg:not(:root) {overflow: visible !important;} */
+            }
         </style>
-        
+
         <div class="background center-align">
             <div style="background-color:white; width:100%;" >
                 <div class="progress animated fadeInDown" style="margin-top:0px;background-color:#dadcda;margin-bottom: 0px;" 

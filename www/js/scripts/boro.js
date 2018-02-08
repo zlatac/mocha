@@ -463,8 +463,10 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             
             im = new Image()
             im.crossOrigin = 'Anonymous';
-            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
-            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/910f8924c3e593562c588e94a5aa94ab/5B1A5EC2/t51.2885-15/e35/26068716_209598079600867_1660830996863385600_n.jpg';
+            //perfect on mobile for any image dimensions (square, 3:4 ratio and 4:3 ratio)
+            //good on desktop for only square and 4:3 ratio image dimensions
+            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
+            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/910f8924c3e593562c588e94a5aa94ab/5B1A5EC2/t51.2885-15/e35/26068716_209598079600867_1660830996863385600_n.jpg';
             //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/192110115a0379f7200f2aabeac9a7e5/5B094E85/t51.2885-15/e35/11849357_536498379834099_188237789_n.jpg';
             //sw and sh are the wi$scope.dh and height of the image piece to be cut from the raw image
             im.onload = ()=>{
@@ -494,7 +496,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
                         drawdata.x = i*($scope.dw + space);
                         drawdata.y = j*(Math.round(($scope.sh*$scope.dw)/$scope.sw) + space);
                         $scope.basket.push(drawdata);
-                        ctx.clearRect(0,0,sw,sh);
+                        //ctx.clearRect(0,0,sw,sh);
                     }
                 }
                 
@@ -523,6 +525,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             //console.log($scope.basket);
             let z = 0;
             $scope.basket.forEach((item)=>{
+                //let elem = $scope.draw.image(item.img,$scope.dw,$scope.dh);
                 let elem = $scope.draw.image(item.img,$scope.dw,Math.round(($scope.sh*$scope.dw)/$scope.sw));
                 elem.x($scope.shuffle[z].x);
                 elem.y($scope.shuffle[z].y);
@@ -600,7 +603,8 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             //$scope.draw.text('you win').move(50,50);
             $scope.output = 'Completed'
             $scope.test.time_result = mocha.gameTimePlayed($scope).split(':');
-            $scope.mocha.vibrate(2000);
+            $scope.mocha.tones('f',5,500);
+            //$scope.mocha.vibrate(2000);
             $timeout(()=>{
                 $scope.levelUp();
             },2000)
@@ -639,9 +643,10 @@ myapp.directive('ngBuzz', function() {
     return{
         link: function($scope,elem,attrs){       
             
-            elem.bind('touchstart', function() {
+            elem.bind('click', function() {
                 $scope.isStarted();
-                $scope.mocha.vibrate(60);
+                //$scope.mocha.vibrate(60);
+                $scope.mocha.tones('e',5,10,null,'sine')
                 elem[0].instance.animate(100).width($scope.dw - $scope.dw*0.3);
                 if($scope.waste.length < 2){
                     $scope.waste.push(elem[0].instance);

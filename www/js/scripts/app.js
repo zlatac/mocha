@@ -698,6 +698,13 @@ var myapp = angular.module('starter', ['ionic'])
         // console.log(io);
         return io();
      };
+
+     this.tones = function(key, octave, release, attack,type){
+        tones.release = release || tones.release;
+        tones.attack = attack || tones.attack;
+        tones.type = type || tones.type;
+        tones.play(key,octave);
+     };
 	 
 	 return this;
  });
