@@ -459,51 +459,68 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             canvas = angular.element(document.getElementById('canvas'))[0];
             
             ctx = canvas.getContext('2d');
-            console.log(ctx)
+            //console.log(ctx)
             
             im = new Image()
             im.crossOrigin = 'Anonymous';
             //perfect on mobile for any image dimensions (square, 3:4 ratio and 4:3 ratio)
             //good on desktop for only square and 4:3 ratio image dimensions
-            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
-            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/910f8924c3e593562c588e94a5aa94ab/5B1A5EC2/t51.2885-15/e35/26068716_209598079600867_1660830996863385600_n.jpg';
+            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
+            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/910f8924c3e593562c588e94a5aa94ab/5B1A5EC2/t51.2885-15/e35/26068716_209598079600867_1660830996863385600_n.jpg';
             //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/192110115a0379f7200f2aabeac9a7e5/5B094E85/t51.2885-15/e35/11849357_536498379834099_188237789_n.jpg';
             //sw and sh are the wi$scope.dh and height of the image piece to be cut from the raw image
             im.onload = ()=>{
-                var space = 2;
-                var sw = Math.round((im.width - space * $scope.picColumn)/$scope.picColumn);
-                var sh = Math.round((im.height - space* $scope.picRow)/$scope.picRow);
                 
-                //$scope.dw and $scope.dh are the height and width to be drawn on the canvas based on the aspect ratio of the raw image
-                $scope.dw = Math.round((fWidth - space * $scope.picColumn)/ $scope.picColumn);
-                $scope.dh = Math.round((fHeight - space * $scope.picRow)/$scope.picRow);
+                if(im.height > im.width && window.innerWidth > 768){
+                    //this turns the image into a square (1:1) dimension only on desktop
+                    //to then be used as an image for the puzzle
+                    let width = im.width;
+                    let height = im.height;
+                    canvas.setAttribute('width',width);
+                    canvas.setAttribute('height',width);
+                    ctx.imageSmoothingQuality = "high";
+                    ctx.drawImage(im,0,0,width,width,0,0,width,width);
+                    im.src = canvas.toDataURL('image/png', 1); //this triggers the image onload() method
 
-                canvas.setAttribute('width',sw);
-                canvas.setAttribute('height',sh);
-                $scope.sw = sw;
-                $scope.sh = sh;
-                ctx.imageSmoothingQuality = "high";
+                }else{
+                    //this continues the task normally either after square transformation or when the if block requirement isn't met
+                    var space = 2;
+                    var sw = Math.round((im.width - space * $scope.picColumn)/$scope.picColumn);
+                    var sh = Math.round((im.height - space* $scope.picRow)/$scope.picRow);
+                    
+                    //$scope.dw and $scope.dh are the height and width to be drawn on the canvas based on the aspect ratio of the raw image
+                    $scope.dw = Math.round((fWidth - space * $scope.picColumn)/ $scope.picColumn);
+                    $scope.dh = Math.round((fHeight - space * $scope.picRow)/$scope.picRow);
+
+                    canvas.setAttribute('width',sw);
+                    canvas.setAttribute('height',sh);
+                    $scope.sw = sw;
+                    $scope.sh = sh;
+                    ctx.imageSmoothingQuality = "high";
 
 
-                //ctx.$scope.drawImage(im,0,0,sw,sh,0,0,$scope.dw,$scope.dh)
-                //by default i want 30 pieces of any image i.e 5 columns and 6 rows for mobile devices.
-                for(let i = 0; i < $scope.picColumn; i++){
-                    for(let j = 0; j < $scope.picRow; j++){
-                        //ctx.$scope.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,i*($scope.dw + 5),j*($scope.dh + 5),$scope.dw,$scope.dh);
-                        ctx.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,0,0,sw,sh);
-                        drawdata = {};  
-                        drawdata.img = canvas.toDataURL('image/png', 1);
-                        drawdata.x = i*($scope.dw + space);
-                        drawdata.y = j*(Math.round(($scope.sh*$scope.dw)/$scope.sw) + space);
-                        $scope.basket.push(drawdata);
-                        //ctx.clearRect(0,0,sw,sh);
+                    //ctx.$scope.drawImage(im,0,0,sw,sh,0,0,$scope.dw,$scope.dh)
+                    //by default i want 30 pieces of any image i.e 5 columns and 6 rows for mobile devices.
+                    for(let i = 0; i < $scope.picColumn; i++){
+                        for(let j = 0; j < $scope.picRow; j++){
+                            //ctx.$scope.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,i*($scope.dw + 5),j*($scope.dh + 5),$scope.dw,$scope.dh);
+                            ctx.drawImage(im,i*(sw + 1),j*(sh + 1),sw,sh,0,0,sw,sh);
+                            drawdata = {};  
+                            drawdata.img = canvas.toDataURL('image/png', 1);
+                            drawdata.x = i*($scope.dw + space);
+                            drawdata.y = j*(Math.round(($scope.sh*$scope.dw)/$scope.sw) + space);
+                            $scope.basket.push(drawdata);
+                            //ctx.clearRect(0,0,sw,sh);
+                        }
                     }
-                }
+                    
+                    //console.log($scope.basket);
+                    $scope.shuffle = $scope.basket.map((item)=>{return {x:item.x,y:item.y}})
+                    $scope.shuffle = mocha.randomize($scope.shuffle)
+                    resolve($scope.shuffle);
+
+                }               
                 
-                //console.log($scope.basket);
-                $scope.shuffle = $scope.basket.map((item)=>{return {x:item.x,y:item.y}})
-                $scope.shuffle = mocha.randomize($scope.shuffle)
-                resolve($scope.shuffle);
             }
         });    
         
@@ -516,7 +533,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
         $scope.footnote_msg = 'Level ' + $scope.puzzLevel;
         $scope.drawCanvas(w,h)
         .then((data)=>{
-            console.log('yeaaaaaaaaaah', $scope.basket);
+            //console.log('yeaaaaaaaaaah', $scope.basket);
             if(!mocha.safe($scope.draw)){
                 $scope.svg = angular.element(document.getElementById('svg'))[0];
                 $scope.draw = SVG($scope.svg).size(w, h);
@@ -588,7 +605,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             //Player is right
             if(!$scope.correct.includes(d.truth.x+':'+d.truth.y)){
                 $scope.correct.push(d.truth.x+':'+d.truth.y);
-                console.log('right boy')
+                //console.log('right boy')
             }
         }else{
             //player is wrong
@@ -596,7 +613,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
                 let pos = $scope.correct.indexOf(d.truth.x+':'+d.truth.y)
                 $scope.correct.splice(pos,1);
             }
-            console.log('wrong boy')
+            //console.log('wrong boy')
         }
         
         if($scope.correct.length === $scope.picBoxes){
@@ -608,7 +625,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             $timeout(()=>{
                 $scope.levelUp();
             },2000)
-            console.log('THE END FAM')
+            //console.log('THE END FAM')
         }
     }
 
@@ -674,9 +691,9 @@ myapp.directive('ngBuzz', function() {
                     //this is the situation where the same box is touched
                     elem[0].instance.animate(100).width($scope.dw);
                     $scope.waste = [];
-                    console.log('i failed in life');
+                   // console.log('i failed in life');
                 }
-               console.log('am alive bitch',elem[0].instance);
+               //console.log('am alive bitch',elem[0].instance);
                $scope.$apply();
             });
         }
