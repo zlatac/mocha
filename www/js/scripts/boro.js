@@ -353,7 +353,7 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
     }
 
     $scope.button = [];
-    $scope.$scope.basket = [];
+    $scope.basket = [];
     $scope.num = 2;
     $scope.autoplay = false;
     $scope.play = false;
@@ -466,7 +466,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             //perfect on mobile for any image dimensions (square, 3:4 ratio and 4:3 ratio)
             //good on desktop for only square and 4:3 ratio image dimensions
             //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
-            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/910f8924c3e593562c588e94a5aa94ab/5B1A5EC2/t51.2885-15/e35/26068716_209598079600867_1660830996863385600_n.jpg';
+            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/a0f1f9b8a2924eb3869b5d71b3bb4fb9/5B184CB1/t51.2885-15/e35/26863250_2004244896455821_3703496126918295552_n.jpg';
             //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/192110115a0379f7200f2aabeac9a7e5/5B094E85/t51.2885-15/e35/11849357_536498379834099_188237789_n.jpg';
             //sw and sh are the wi$scope.dh and height of the image piece to be cut from the raw image
             im.onload = ()=>{
@@ -591,7 +591,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
                 z++;
                 //elem.mouseout(()=>{elem.animate(100).width(50);});
             });
-            $compile($scope.draw.node)($scope);
+            $compile($scope.draw.node)($scope); //this is important for the new elements added to the DOM to be compiled by angular
         });
         
     };
@@ -694,7 +694,7 @@ myapp.directive('ngBuzz', function() {
                    // console.log('i failed in life');
                 }
                //console.log('am alive bitch',elem[0].instance);
-               $scope.$apply();
+               $scope.$apply(); //this is important for the model data to update in the DOM
             });
         }
     }
