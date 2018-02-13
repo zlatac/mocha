@@ -361,8 +361,8 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
         $scope.button[x] = "panorama_fish_eye";
     }
     $scope.mindTracker = function (num){
-        $scope.$scope.basket = [];
-        $scope.collect$scope.Basket = [];
+        $scope.basket = [];
+        $scope.collectBasket = [];
         $scope.news = null;
         $scope.level = num - 1;
         $scope.autoplay = true;
@@ -376,21 +376,21 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
         function loop(item){
             let randomIndex = Math.floor(Math.random()*(5));
         
-            if((x > 0 && randomIndex !== $scope.$scope.basket[item - 1]) || x === 0){
-                $scope.$scope.basket.push(randomIndex);
+            if((x > 0 && randomIndex !== $scope.basket[item - 1]) || x === 0){
+                $scope.basket.push(randomIndex);
             }else{
                 loop(item);
             }
         }
-        console.log($scope.$scope.basket);
+        console.log($scope.basket);
         var index = 0;
         var previousIndex = 0;
         var milseconds = 700;
         var showNumber = $interval(function(){
-            //console.log($scope.$scope.basket[index]);
+            //console.log($scope.basket[index]);
             $scope.button[previousIndex] = 'panorama_fish_eye';
-            $scope.button[$scope.$scope.basket[index]] = "lens";
-            previousIndex = $scope.$scope.basket[index];
+            $scope.button[$scope.basket[index]] = "lens";
+            previousIndex = $scope.basket[index];
             index++;
             // if(num == index){
             //     clearInterval(showNumber);
@@ -409,20 +409,20 @@ myapp.controller('boro.test.controller', function($scope,$location,$state,$state
     $scope.collect = function(d){
         //console.log(d);
         if($scope.autoplay === false && $scope.play === true){
-            $scope.collect$scope.Basket.push(d);
-            if(d === $scope.$scope.basket[$scope.collect$scope.Basket.length - 1]){
+            $scope.collectBasket.push(d);
+            if(d === $scope.basket[$scope.collectBasket.length - 1]){
                 $scope.news = 'Right';
                 $scope.color = 'green';
-                $scope.status[$scope.collect$scope.Basket.length - 1] = 'check_circle';
+                $scope.status[$scope.collectBasket.length - 1] = 'check_circle';
                 //console.log('right');
-                if($scope.$scope.basket.length == $scope.collect$scope.Basket.length){
+                if($scope.basket.length == $scope.collectBasket.length){
                     $scope.num++;
                     $scope.mindTracker($scope.num);
                 }
             }else{
                 $scope.news = 'Wrong - Play again';
                 $scope.color = 'red';
-                $scope.status[$scope.collect$scope.Basket.length - 1] = 'highlight_off';
+                $scope.status[$scope.collectBasket.length - 1] = 'highlight_off';
                 //safari will crash if you dont check for vibration capability which it does not have
                 (navigator.__proto__.hasOwnProperty('vibrate')) ? navigator.vibrate(1000) : null;
                 //console.log('wrong');
