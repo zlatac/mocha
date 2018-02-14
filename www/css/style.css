@@ -333,3 +333,12 @@ input[type=range].ryerson-range::-ms-thumb {
 .btn-nudnik{
   background-color: #f0595d !important;
 }
+@media only screen and (min-width: 768px){
+  /* playable on computer/laptop screen */
+  ion-content{
+      margin: 0 20%;
+  }
+  .btn-menu{
+    padding-right: 30px;
+  }
+}

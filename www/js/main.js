@@ -4130,7 +4130,7 @@ myapp.controller('nudnik.game.controller', function($scope,$location,$compile,$s
 });
 
 myapp.controller('nudnik.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
-    $scope.screen_big = mocha.checkWindow();
+    $scope.screen_big = false;
     //if($scope.screen_big !== true){
         //This mimics a real life game loading thing. this can definitely be optimized later.
         $timeout(function(){
