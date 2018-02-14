@@ -334,7 +334,7 @@ var myapp = angular.module('starter', ['ionic'])
         url: "/ryersonleaderboard",
         templateUrl : "views/leaderboard.html",
         controller: "leaderboard.controller",
-        params: {mode: 'inlighten'},
+        params: {mode: 'ryerson'},
         cache: false
       })
       .state("/ryersonanalytics", {
@@ -342,6 +342,45 @@ var myapp = angular.module('starter', ['ionic'])
         templateUrl : "views/analytics.html",
         controller: "analytics.controller",
         params: {mode: 'ryerson'},
+        cache: false
+      })
+      .state("/nudnikdash", {
+        url: "/nudnikdash",
+        templateUrl : "views/nudnik/nudnik.dash.html",
+	  	controller: "nudnik.dash.controller"
+      })
+      .state("/nudnikgame", {
+        url: "/nudnikgame",
+        templateUrl : "views/nudnik/nudnik.game.html",
+        controller: "nudnik.game.controller"
+      })
+      .state("/nudniklogin", {
+        url: "/nudniklogin",
+        templateUrl : "views/nudnik/nudnik.login.html",
+        controller: "nudnik.login.controller"
+      })
+      .state("/nudnikcontest", {
+        url: "/nudnikcontest",
+        templateUrl : "views/nudnik/nudnik.contest.html",
+        controller: "nudnik.contest.controller"
+      })
+      .state("/nudnikanswer", {
+        url: "/nudnikanswer",
+        templateUrl : "views/nudnik/nudnik.answer.html",
+        controller: "nudnik.answer.controller"
+      })
+      .state("/nudnikleaderboard", {
+        url: "/nudnikleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'nudnik'},
+        cache: false
+      })
+      .state("/nudnikanalytics", {
+        url: "/nudnikanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'nudnik'},
         cache: false
       });
     $urlRouterProvider.otherwise('/boropuzzle');
@@ -744,7 +783,7 @@ var myapp = angular.module('starter', ['ionic'])
             if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))
             && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))
             && (!location.hash.includes('boro')) && (!location.hash.includes('inlighten')) 
-            && (!location.hash.includes('ryerson'))){
+            && (!location.hash.includes('ryerson')) && (!location.hash.includes('nudnik'))){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
                     $state.go('/dash');

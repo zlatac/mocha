@@ -1,5 +1,5 @@
 <ion-view title="/analytics">
-	<menu-header ng-if="!fz && !dmz && !wully && !lz && !nls && !boro && !inlighten"></menu-header>
+	<menu-header ng-if="!fz && !dmz && !wully && !lz && !nls && !boro && !inlighten && !nudnik"></menu-header>
 	<fz-menu-header ng-if="fz"></fz-menu-header>
 	<dmz-menu-header ng-if="dmz"></dmz-menu-header>
 	<wully-menu-header ng-if="wully"></wully-menu-header>
@@ -8,6 +8,7 @@
 	<boro-menu-header ng-if="boro"></boro-menu-header>
 	<inlighten-menu-header ng-if="inlighten"></inlighten-menu-header>
 	<ryerson-menu-header ng-if="ryerson"></ryerson-menu-header>
+	<nudnik-menu-header ng-if="nudnik"></nudnik-menu-header>
 	<menu-button></menu-button>
 	<loader ng-class="{'hide': !loader}"></loader>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
