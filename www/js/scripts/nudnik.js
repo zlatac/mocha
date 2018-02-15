@@ -85,9 +85,10 @@ myapp.controller('nudnik.game.controller', function($scope,$location,$compile,$s
             im.crossOrigin = 'Anonymous';
             //perfect on mobile for any image dimensions (square, 3:4 ratio and 4:3 ratio)
             //good on desktop for only square and 4:3 ratio image dimensions
-            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
-            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/a0f1f9b8a2924eb3869b5d71b3bb4fb9/5B184CB1/t51.2885-15/e35/26863250_2004244896455821_3703496126918295552_n.jpg';
-            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/192110115a0379f7200f2aabeac9a7e5/5B094E85/t51.2885-15/e35/11849357_536498379834099_188237789_n.jpg';
+            im.srcdefault = 'https://scontent-yyz1-1.cdninstagram.com/vp/a0f1f9b8a2924eb3869b5d71b3bb4fb9/5B184CB1/t51.2885-15/e35/26863250_2004244896455821_3703496126918295552_n.jpg';
+            //only use instagram image links in url query
+            im.src = location.hash.includes('q=') ? location.hash.split('=')[1].replace(/%2F/gi,'/') : im.srcdefault;
+            
             //sw and sh are the wi$scope.dh and height of the image piece to be cut from the raw image
             im.onload = ()=>{
                 
@@ -141,6 +142,10 @@ myapp.controller('nudnik.game.controller', function($scope,$location,$compile,$s
 
                 }               
                 
+            }
+            
+            im.onerror = ()=>{
+                im.src = im.srcdefault;
             }
         });    
         

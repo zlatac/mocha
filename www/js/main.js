@@ -447,7 +447,7 @@ var myapp = angular.module('starter', ['ionic'])
 	 this.nextProduct = function($scope){
             //action for what happens after final answer is given
             if($scope.index !== $scope.data.length - 1){
-                console.log($scope.data);
+                this.log($scope.data);
                 $scope.index++;
                 $scope.show_points = false;
                 //$scope.manualprice = false;
@@ -489,7 +489,7 @@ var myapp = angular.module('starter', ['ionic'])
 	 this.pointsMath = function (index, val, $scope){
             realPrice = $scope.data[index].price;
             pChange = val/realPrice;
-            console.log(val, realPrice, pChange);
+            this.log(val, realPrice, pChange);
             
             //when prediction is more than 200% of the value
             if(pChange >= 2 || pChange <= 0){
@@ -532,7 +532,7 @@ var myapp = angular.module('starter', ['ionic'])
                 //This initiates the downloading of the image into the DOM
                 x.src = $scope.data[$scope.index + 1].url;
             }else{
-                console.log('fuck no');
+                this.log('fuck no');
             }
             //x.src = $scope.data[$scope.index + 1].url;
         };
@@ -586,7 +586,7 @@ var myapp = angular.module('starter', ['ionic'])
                         //pullNextImage();
                     };
                     y.src = $scope.data[x].url;
-                    //console.log(y.src);
+                    //this.log(y.src);
                 }
                 $scope.game = $scope.data[0];
                 $scope.apiCounter++
@@ -625,7 +625,7 @@ var myapp = angular.module('starter', ['ionic'])
             //use true parameter to force a new time stamp
             if(!$scope.data[0].hasOwnProperty('point') || c === true){
                 $scope.test.start_time = moment();
-                console.log('clock is ticking');
+                this.log('clock is ticking');
             }
         };
 	 
@@ -668,7 +668,7 @@ var myapp = angular.module('starter', ['ionic'])
 	 this.checkWindow = function(){
             if($window.innerWidth > 600 && $window.innerWidth > 768){
                 //768px is for tablet (ipad)
-                //console.log('screen  to big');
+                //this.log('screen  to big');
                 return true;
             }
             return false;
@@ -732,9 +732,9 @@ var myapp = angular.module('starter', ['ionic'])
         //    socket.emit('join', 'Hello World from client');
         // });
         // socket.on('broad', function(data) {
-        //         console.log(data);
+        //         this.log(data);
         //   }); 
-        // console.log(io);
+        // this.log(io);
         return io();
      };
 
@@ -744,6 +744,15 @@ var myapp = angular.module('starter', ['ionic'])
         tones.type = type || tones.type;
         tones.play(key,octave);
      };
+
+     this.log = (function(){
+         if(location.host.includes('localhost')){
+             //only log data in local environment to protect client data
+             return console.log;
+         }else{
+             return function(){};
+         }
+     })();
 	 
 	 return this;
  });
@@ -771,7 +780,7 @@ var myapp = angular.module('starter', ['ionic'])
         //$http.get('http://127.0.0.1:8000/mocha')
         $http.get('https://styleminions.co/api/mocha?q=' + 250)
         .then(function(res){
-            //console.log(res);
+            //mocha.log(res);
             $scope.apiData = res.data;
             $scope.prizeData = $scope.apiData.slice(120,135);
 			$scope.apiData = mocha.randomize($scope.apiData); //Shuffle the data for practice mode.
@@ -822,7 +831,7 @@ var myapp = angular.module('starter', ['ionic'])
             }
             
 //            if($scope.index == $scope.data.length){
-//                console.log($scope.data);
+//                mocha.log($scope.data);
 //                $location.path('/final');
 //                
 //            }
@@ -832,7 +841,7 @@ var myapp = angular.module('starter', ['ionic'])
         $scope.nextProduct = function(){
             //action for what happens after final answer is given
             if($scope.index !== $scope.data.length - 1){
-                console.log($scope.data);
+                mocha.log($scope.data);
                 $scope.index++;
                 $scope.show_points = false;
                 //$scope.manualprice = false;
@@ -885,7 +894,7 @@ var myapp = angular.module('starter', ['ionic'])
             //use true parameter to force a new time stamp
             if(!$scope.data[0].hasOwnProperty('point') || c === true){
                 $scope.test.start_time = moment();
-                console.log('clock is ticking');
+                mocha.log('clock is ticking');
             }
         };
         
@@ -948,8 +957,8 @@ var myapp = angular.module('starter', ['ionic'])
 					$state.go('/leaderboard');
 				});
 			}else{
-				console.log('fuck no form not valid');
-				console.log(form);
+				mocha.log('fuck no form not valid');
+				mocha.log(form);
 			}
         };
         
@@ -965,7 +974,7 @@ var myapp = angular.module('starter', ['ionic'])
             $scope.wully = true;
             $state.go('/wully');
             
-            console.log($stateParams);
+            mocha.log($stateParams);
         };
      
         $scope.startPrize = function(){
@@ -1009,7 +1018,7 @@ var myapp = angular.module('starter', ['ionic'])
         function pointsMath(index, val){
             realPrice = $scope.data[index].price;
             pChange = val/realPrice;
-            console.log(val, realPrice, pChange);
+            mocha.log(val, realPrice, pChange);
             
             //when prediction is more than 200% of the value
             if(pChange >= 2 || pChange <= 0){
@@ -1067,7 +1076,7 @@ var myapp = angular.module('starter', ['ionic'])
                 //This initiates the downloading of the image into the DOM
                 x.src = $scope.data[$scope.index + 1].url;
             }else{
-                console.log('fuck no');
+                mocha.log('fuck no');
             }
             //x.src = $scope.data[$scope.index + 1].url;
         }
@@ -1094,7 +1103,7 @@ var myapp = angular.module('starter', ['ionic'])
                         //pullNextImage();
                     };
                     y.src = $scope.data[x].url;
-                    //console.log(y.src);
+                    //mocha.log(y.src);
                 }
                 $scope.game = $scope.data[0];
                 $scope.apiCounter++
@@ -1123,7 +1132,7 @@ var myapp = angular.module('starter', ['ionic'])
         
         function checkWindow(){
             if($window.innerWidth > 600 && $window.innerWidth > 768){
-                //console.log('screen  to big');
+                //mocha.log('screen  to big');
                 $scope.screen_big = true;
             }
         }
@@ -1220,7 +1229,7 @@ var myapp = angular.module('starter', ['ionic'])
             $scope.loader = true;
             $http.get(url + gametime + database_table)
             .then(function(res){
-                console.log(res);
+                mocha.log(res);
                 $scope.leaderList = [];
                 $scope.thisPlayer = false;
                 var number = (mocha.safe(localStorage.phone)) ? localStorage.phone : null;
@@ -1268,7 +1277,7 @@ var myapp = angular.module('starter', ['ionic'])
 		
 		$http.jsonp(url + '&callback=JSON_CALLBACK')
 		.then(function(res){
-			//console.log(res);
+			//mocha.log(res);
 			$scope.winnerList = [];
 			var list = res.data.data;
 			list.forEach(function(item){
@@ -1282,7 +1291,7 @@ var myapp = angular.module('starter', ['ionic'])
 				}
 				
 			});
-			//console.log($scope.winnerList);
+			//mocha.log($scope.winnerList);
 			
 			$scope.loader = false;
 			
@@ -1332,12 +1341,12 @@ var myapp = angular.module('starter', ['ionic'])
             link.setAttribute('download', filename);
             link.click();
             $scope.csvloader = false;
-            //console.log(csvData);
+            //mocha.log(csvData);
         };
 
         function csvPrep(obj){
             var question = mocha[mocha.appName.slice(6,mocha.appName.length) + '_data'];
-            //console.log(question,'variable');
+            //mocha.log(question,'variable');
             obj.forEach(function(item){
                 var date = item.time;
                 var gamedata = JSON.parse(item.played_data);
@@ -1363,7 +1372,7 @@ var myapp = angular.module('starter', ['ionic'])
                 mocha.vibrate();
                 $scope.mocha.passtext = '';
             }
-            //console.log('hey',$scope.mocha.passtext, mocha.appName);
+            //mocha.log('hey',$scope.mocha.passtext, mocha.appName);
         };
 
         function report(list){
@@ -1385,7 +1394,7 @@ var myapp = angular.module('starter', ['ionic'])
                 basket['time'] += (minutesToSeconds + seconds)/60;
             });
             var output = basket.map(average);
-            console.log(basket,'report',output,'output');
+            mocha.log(basket,'report',output,'output');
             return {output:output,time:basket['time']};
         }        
 	});
@@ -3945,9 +3954,10 @@ myapp.controller('nudnik.game.controller', function($scope,$location,$compile,$s
             im.crossOrigin = 'Anonymous';
             //perfect on mobile for any image dimensions (square, 3:4 ratio and 4:3 ratio)
             //good on desktop for only square and 4:3 ratio image dimensions
-            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/2c9e475a6c684b4eb20fb9c06a9c8c36/5B01A374/t51.2885-15/e35/24274488_1204373613026222_6359081673119760384_n.jpg';
-            im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/a0f1f9b8a2924eb3869b5d71b3bb4fb9/5B184CB1/t51.2885-15/e35/26863250_2004244896455821_3703496126918295552_n.jpg';
-            //im.src = 'https://scontent-yyz1-1.cdninstagram.com/vp/192110115a0379f7200f2aabeac9a7e5/5B094E85/t51.2885-15/e35/11849357_536498379834099_188237789_n.jpg';
+            im.srcdefault = 'https://scontent-yyz1-1.cdninstagram.com/vp/a0f1f9b8a2924eb3869b5d71b3bb4fb9/5B184CB1/t51.2885-15/e35/26863250_2004244896455821_3703496126918295552_n.jpg';
+            //only use instagram image links in url query
+            im.src = location.hash.includes('q=') ? location.hash.split('=')[1].replace(/%2F/gi,'/') : im.srcdefault;
+            
             //sw and sh are the wi$scope.dh and height of the image piece to be cut from the raw image
             im.onload = ()=>{
                 
@@ -4001,6 +4011,10 @@ myapp.controller('nudnik.game.controller', function($scope,$location,$compile,$s
 
                 }               
                 
+            }
+            
+            im.onerror = ()=>{
+                im.src = im.srcdefault;
             }
         });    
         
