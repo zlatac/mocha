@@ -1986,6 +1986,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
                         $scope.correct.push(elem.truth.x+':'+elem.truth.y);
                     }
                     $scope.progressFunc();
+                    $scope.isLevelCompleted(); //sometimes the randomized data can be exactly solved on the first round
                 });
                 
                 z++;
@@ -2016,6 +2017,10 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             //console.log('wrong boy')
         }
         
+        $scope.isLevelCompleted();
+    }
+
+    $scope.isLevelCompleted = function(){
         if($scope.correct.length === $scope.picBoxes){
             //$scope.draw.text('you win').move(50,50);
             $scope.output = 'Completed'
@@ -2027,7 +2032,7 @@ myapp.controller('boro.puzzle.controller', function($scope,$location,$state,$sta
             },2000)
             //console.log('THE END FAM')
         }
-    }
+    };
 
     $scope.progressFunc = function(){
         $scope.prog = (($scope.correct.length)/$scope.picBoxes)*100;
@@ -4053,6 +4058,7 @@ myapp.controller('nudnik.game.controller', function($scope,$location,$compile,$s
                         $scope.correct.push(elem.truth.x+':'+elem.truth.y);
                     }
                     $scope.progressFunc();
+                    $scope.isLevelCompleted();//sometimes the randomized data can be exactly solved on the first round
                 });
                 
                 z++;
@@ -4086,7 +4092,13 @@ myapp.controller('nudnik.game.controller', function($scope,$location,$compile,$s
             }
             //console.log('wrong boy')
         }
+
+        $scope.isLevelCompleted();
         
+        
+    }
+
+    $scope.isLevelCompleted = function(){
         if($scope.correct.length === $scope.picBoxes){
             //$scope.draw.text('you win').move(50,50);
             $scope.output = 'Completed'
@@ -4098,7 +4110,7 @@ myapp.controller('nudnik.game.controller', function($scope,$location,$compile,$s
             },2000)
             //console.log('THE END FAM')
         }
-    }
+    };
 
     $scope.progressFunc = function(){
         $scope.prog = (($scope.correct.length)/$scope.picBoxes)*100;
