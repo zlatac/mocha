@@ -3,6 +3,9 @@
     <boro-menu-header></boro-menu-header>
 	<menu-button></menu-button>
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
+        <style>
+            select{color: white;background: linear-gradient(135deg,#008489,#023638);}
+        </style>
         <div class="center-align" ng-class="{'container': mocha.inStore == true}">
           <div class="row">
             <div class="col">
@@ -50,9 +53,15 @@
                     <div class="determinate btn-black" style="width: {{progress}}%"></div>
                 </div>
                 <form ng-class="{hide: show_points == true}" name="form">
-                    <p class="range-field" ng-if="manualprice == false && !show_radio">
-                      <input type="range" class="boro-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-change="switchUp(game)"/>
-                    </p>
+                    <p class="range-field" ng-if="manualprice == false && !show_radio && !mocha.safe(game.options)">
+                        <input type="range" class="boro-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price"/>
+                      </p>
+                      <div ng-if="mocha.safe(game.options)">
+                          <select name="size" class="browser-default" ng-model="test.select" ng-change="switchUp(game)">
+                              <option value="" disabled>Options</option>
+                              <option  ng-repeat="x in game.options" ng-value="$index">{{x.answer}}</option>
+                          </select>
+                      </div>
                     <div class="row" ng-if="show_radio">
                         <div class="col">
                             <input class="with-gap" name="group1" type="radio" id="test3" ng-model="test.price_radio" value="1"

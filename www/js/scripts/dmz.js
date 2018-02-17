@@ -155,7 +155,7 @@ myapp.controller('dmz.dash.controller', function($scope,$location,$rootScope,$st
     //$scope.game = $scope.data[0];
     $scope.index = 0;
     $scope.game = $scope.data[$scope.index];
-    $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true};
+    $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true,select:''};
     $scope.test.price = $scope.test.second_price = Number($scope.game.max);
     mocha.startTime($scope);
     $scope.mocha = mocha; // expose service to the view
@@ -167,17 +167,20 @@ myapp.controller('dmz.dash.controller', function($scope,$location,$rootScope,$st
     
     $scope.switchUp = function(){
         //console.log(game);
-        if($scope.safe($scope.game.options)){
-            if(mocha.safe($scope.game.options[$scope.test.price].url)){
-                $scope.game.url = $scope.game.options[$scope.test.price].url;
-            }
-            $scope.game.context =  $scope.game.options[$scope.test.price].answer;
-            if($scope.test.price !==  $scope.game.price){
-                //this will make sure that the player gets zero if they choose the wrong option
+        if(mocha.safe($scope.game.options)){
+            // if(mocha.safe($scope.game.options[$scope.test.price].url)){
+            //     $scope.game.url = $scope.game.options[$scope.test.price].url;
+            // }
+            $scope.game.context =  ($scope.test.select !== '') ? $scope.game.options[$scope.test.select].answer : null;
+            //this is so that the raw answer is the exact answer
+            $scope.test.price = $scope.test.select;
+            if($scope.test.select !==  $scope.game.price){
+                //this will make sure that the player gets zero points if they choose the wrong option
                 $scope.data[$scope.index].prediction = '100';
             }else{
-                $scope.data[$scope.index].prediction = $scope.test.price;
+                $scope.data[$scope.index].prediction = $scope.test.select;
             }
+            
         }
 
         if($scope.game.min === '0' & $scope.game.max === '1'){
@@ -193,6 +196,10 @@ myapp.controller('dmz.dash.controller', function($scope,$location,$rootScope,$st
     $scope.dmzNextProduct = function(){
         mocha.nextProduct($scope);
         $scope.switchUp();
+        $scope.test.select = '';
+        if(mocha.safe($scope.game.options)){
+            $scope.test.price = '';
+        }
     };
     $scope.resetGame = function(){mocha.resetGame($scope)};
     $scope.inputShow = function(){mocha.inputShow($scope)};

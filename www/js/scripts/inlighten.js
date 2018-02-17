@@ -326,7 +326,9 @@ myapp.controller('inlighten.dash.controller', function($scope,$location,$rootSco
         mocha.nextProduct($scope);
         $scope.switchUp();
         $scope.test.select = '';
-        $scope.test.price = '';
+        if(mocha.safe($scope.game.options)){
+            $scope.test.price = '';
+        }
     };
     $scope.resetGame = function(){mocha.resetGame($scope)};
     $scope.inputShow = function(){mocha.inputShow($scope)};
