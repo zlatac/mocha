@@ -382,8 +382,47 @@ var myapp = angular.module('starter', ['ionic'])
         controller: "analytics.controller",
         params: {mode: 'nudnik'},
         cache: false
+      })
+      .state("/andeladash", {
+        url: "/andeladash",
+        templateUrl : "views/andela/andela.dash.html",
+	  	controller: "andela.dash.controller"
+      })
+      .state("/andelagame", {
+        url: "/andelagame",
+        templateUrl : "views/andela/andela.game.html",
+        controller: "andela.game.controller"
+      })
+      .state("/andelalogin", {
+        url: "/andelalogin",
+        templateUrl : "views/andela/andela.login.html",
+        controller: "andela.login.controller"
+      })
+      .state("/andelacontest", {
+        url: "/andelacontest",
+        templateUrl : "views/andela/andela.contest.html",
+        controller: "andela.contest.controller"
+      })
+      .state("/andelaanswer", {
+        url: "/andelaanswer",
+        templateUrl : "views/andela/andela.answer.html",
+        controller: "andela.answer.controller"
+      })
+      .state("/andelaleaderboard", {
+        url: "/andelaleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'andela'},
+        cache: false
+      })
+      .state("/andelaanalytics", {
+        url: "/andelaanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'andela'},
+        cache: false
       });
-    $urlRouterProvider.otherwise('/boropuzzle');
+    $urlRouterProvider.otherwise('/andelalogin');
 })
 
 .run(function($ionicPlatform) {
@@ -792,7 +831,8 @@ var myapp = angular.module('starter', ['ionic'])
             if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))
             && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))
             && (!location.hash.includes('boro')) && (!location.hash.includes('inlighten')) 
-            && (!location.hash.includes('ryerson')) && (!location.hash.includes('nudnik'))){
+            && (!location.hash.includes('ryerson')) && (!location.hash.includes('nudnik'))
+            && (!location.hash.includes('andela'))){
                 //This mimics a real life game loading thing. this can definitely be optimized later.
                 $timeout(function(){
                     $state.go('/dash');
@@ -1347,19 +1387,22 @@ var myapp = angular.module('starter', ['ionic'])
         function csvPrep(obj){
             var question = mocha[mocha.appName.slice(6,mocha.appName.length) + '_data'];
             //mocha.log(question,'variable');
-            obj.forEach(function(item){
-                var date = item.time;
-                var gamedata = JSON.parse(item.played_data);
-                delete item.id;
-                delete item.signup;
-                item.time = moment(date).format('DD/MM/YY hh:mm a');
-                gamedata.forEach(function(gameitem){
-                    var qIndex = gameitem.p_id - 1;
-                    item['Q'+ gameitem.p_id + ' (' + question[qIndex].question + ')'] = (mocha.safe(question[qIndex].options)) ? question[qIndex].options[gameitem.raw_answer].answer : gameitem.raw_answer;
+            if(mocha.safe(question)){//in case the game played isn't a trivia game
+                obj.forEach(function(item){
+                    var date = item.time;
+                    var gamedata = JSON.parse(item.played_data);
+                    delete item.id;
+                    delete item.signup;
+                    item.time = moment(date).format('DD/MM/YY hh:mm a');
+                    gamedata.forEach(function(gameitem){
+                        var qIndex = gameitem.p_id - 1;
+                        item['Q'+ gameitem.p_id + ' (' + question[qIndex].question + ')'] = (mocha.safe(question[qIndex].options)) ? question[qIndex].options[gameitem.raw_answer].answer : gameitem.raw_answer;
+                    });
+                    delete item.played_data;
+                    //item.played_data = gamedata;
                 });
-                delete item.played_data;
-                //item.played_data = gamedata;
-            });
+            }
+            
             return obj;
             
         }

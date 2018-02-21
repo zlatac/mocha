@@ -1,0 +1,78 @@
+<ion-view title="/andelagame">
+	
+    <!-- <menu-header></menu-header> -->
+    <!-- <menu-button></menu-button> -->
+    <loader ng-class="{'hide':loader == false}"></loader>
+    <ion-content class="squeeze">
+        <andela-result-modal></andela-result-modal>
+        <style>
+            i.material-icons.gbutton{
+                font-size: 54px;
+                background-color: rgba(255, 255, 255, 0);
+                color: rgba(255, 255, 255, 0.96);
+            }
+            i.material-icons.dark{
+                /* font-size: 54px;
+                background-color: rgba(255, 255, 255, 0); */
+                color: rgba(3, 10, 25, 0.812) !important;
+            }
+            div.row.low{
+                margin-bottom: -12px;
+            }
+            img{
+                width: 90px;
+                height: 90px;
+                position: absolute;
+                top: 31%;
+                left: 38%;
+                background-color: rgba(165, 165, 165, 0.6);
+            }
+            .background{
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                background-color: white;
+            }
+            div.scroll{
+                height:100%;
+            }
+            canvas{border: solid black; display: none;}
+            svg:not(:root) {overflow: visible !important;}
+            span{text-transform: lowercase;}
+            div.progress{height: 20px !important;}
+            @media only screen and (min-width: 768px){
+                /* playable on computer/laptop screen */
+                ion-content.squeeze{
+                    margin: 0 30%;
+                }
+                /* svg:not(:root) {overflow: visible !important;} */
+            }
+        </style>
+
+        <div class="background center-align">
+            <div style="background-color:white; width:100%;" >
+                <div class="progress animated fadeInDown" style="margin-top:0px;background-color:#dadcda;margin-bottom: 0px;" 
+                ng-class="{'hide': prog == 0 || prog == 100}">
+                    <div class="determinate btn-green" style="width:{{prog}}%;"></div>
+                    <div style="position: absolute;left: 50%;top: 5%;color:  white;">{{prog | number:0}}%</div>
+                </div>
+                <!-- <div class="btn list-me" ng-click="setUp(375,501)">Run</div> -->
+            </div>
+            <div id="svg" style="background-color:white; width:100%; height:80%;" >
+                <div class="btn list-me animated bounceIn" ng-class="{'hide': prog !== 100}">
+                        Completed!!  <i class="fa fa-clock-o"></i> 
+                        {{test.time_result[0]}}<span>m</span>:{{test.time_result[1]}}<span>s</span> 
+                </div>
+                <!-- <div class="btn list-me animated bounceIn" ng-class="{'hide': prog == 100}">
+                        Puzzlegram
+                </div> -->
+            </div>
+            
+            <canvas id="canvas"></canvas>
+        
+        </div>
+        <foot-note></foot-note>
+    </ion-content>
+</ion-view>

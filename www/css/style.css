@@ -333,6 +333,9 @@ input[type=range].ryerson-range::-ms-thumb {
 .btn-nudnik{
   background-color: #f0595d !important;
 }
+.btn-andela{
+  background-color: #3359df !important;
+}
 @media only screen and (min-width: 768px){
   /* playable on computer/laptop screen */
   ion-content{
