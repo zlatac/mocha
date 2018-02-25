@@ -1218,7 +1218,8 @@ var myapp = angular.module('starter', ['ionic'])
             });
         }
       };
-    });   
+    });
+       
 
 	myapp.directive('resultModal', function() {
       return {

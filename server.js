@@ -10,6 +10,10 @@ server.listen(app.get('port'));
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/www/index.html');
 });
+
+app.get('/info', function (req, res) {
+    res.sendFile(__dirname + '/www/info/index.html');
+});
 app.use(express.static(path.resolve(__dirname, 'www')));
 
 //stock Mocha server
