@@ -520,9 +520,9 @@ header {
 .img-gallery .owl-item.center {
     transform: scale(1);
 }
-img[alt="phone"],img[alt="dual phone"],img[alt="iphone"],img[alt="perspective phone"] {
-    filter: blur(7px);
-}
+/* img[alt="phone"],img[alt="dual phone"],img[alt="iphone"],img[alt="perspective phone"] {
+    filter: blur(3px);
+} */
 .img-tweak{
     position: absolute;
     top: 50%;
