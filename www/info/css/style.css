@@ -202,6 +202,9 @@ p.lead {
 .navbar-nav .nav-link {
     position: relative;
 }
+.logo-header{
+    width: 60px;
+}
 
 @media (min-width: 992px) {
     .navbar-expand-lg .navbar-nav .nav-link {
@@ -226,6 +229,9 @@ p.lead {
     }
     .navbar-nav .nav-item {
         text-align: center;
+    }
+    .logo-header{
+        width: 30px;
     }
 }
 
@@ -513,6 +519,30 @@ header {
 
 .img-gallery .owl-item.center {
     transform: scale(1);
+}
+img[alt="phone"],img[alt="dual phone"],img[alt="iphone"],img[alt="perspective phone"] {
+    filter: blur(7px);
+}
+.img-tweak{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    color: white;
+    z-index: 1;
+    font-family: 'Pacifico', cursive;
+    letter-spacing: 3px;
+}
+.tweak-background{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: #020000f5;
+}
+.tweak-background:hover{
+    background-color: #8b178ff0;
 }
 
 
