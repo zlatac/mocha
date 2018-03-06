@@ -154,6 +154,8 @@ myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$sta
     $scope.mocha = mocha; // expose service to the view
     $scope.hide_question = false;
     mocha.fz = true;
+    mocha.appName = 'mocha_'+'fz';
+    mocha.fz_data = $scope.fz_data;
     console.log($scope.data);
     
     

@@ -73,6 +73,13 @@ var myapp = angular.module('starter', ['ionic'])
         templateUrl : "views/fz/fz.contest.html",
         controller: "fz.contest.controller"
       })
+      .state("/fzanalytics", {
+        url: "/fzanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'fz'},
+        cache: false
+      })
       .state("/tutorial", {
         url: "/tutorial",
         templateUrl : "views/tutorial.html"
