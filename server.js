@@ -7,11 +7,11 @@ var io = require('socket.io')(server);
 app.set('port', process.env.PORT || 8000);
 server.listen(app.get('port'));
 
-app.get('/', function (req, res) {
+app.get('/live', function (req, res) {
     res.sendFile(__dirname + '/www/index.html');
 });
 
-app.get('/info', function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile(__dirname + '/www/info/index.html');
 });
 app.use(express.static(path.resolve(__dirname, 'www')));

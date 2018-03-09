@@ -822,31 +822,31 @@ var myapp = angular.module('starter', ['ionic'])
 	 	//setting the prize dates manually is crucial for now but must be from the server when converted to native app
 	 	$scope.prizeStartDate = moment('2017/10/25','YYYY/MM/DD');
 	 	$scope.prizeEndDate = moment('2017/11/02','YYYY/MM/DD');
-        checkWindow();
+        //checkWindow();
         //$http.get('http://127.0.0.1:8000/mocha')
-        $http.get('https://styleminions.co/api/mocha?q=' + 250)
-        .then(function(res){
-            //mocha.log(res);
-            $scope.apiData = res.data;
-            $scope.prizeData = $scope.apiData.slice(120,135);
-			$scope.apiData = mocha.randomize($scope.apiData); //Shuffle the data for practice mode.
-            takeChunk();
-        })
-        .then(function(){
-            //$scope.menuhide = 0;
-            $scope.game = $scope.data[$scope.index];
-            if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))
-            && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))
-            && (!location.hash.includes('boro')) && (!location.hash.includes('inlighten')) 
-            && (!location.hash.includes('ryerson')) && (!location.hash.includes('nudnik'))
-            && (!location.hash.includes('andela'))){
-                //This mimics a real life game loading thing. this can definitely be optimized later.
-                $timeout(function(){
-                    $state.go('/dash');
-                },3000);
-            }
+        // $http.get('https://styleminions.co/api/mocha?q=' + 250)
+        // .then(function(res){
+        //     //mocha.log(res);
+        //     $scope.apiData = res.data;
+        //     $scope.prizeData = $scope.apiData.slice(120,135);
+		// 	$scope.apiData = mocha.randomize($scope.apiData); //Shuffle the data for practice mode.
+        //     takeChunk();
+        // })
+        // .then(function(){
+        //     //$scope.menuhide = 0;
+        //     $scope.game = $scope.data[$scope.index];
+        //     if($scope.screen_big !== true && (!location.hash.includes('fz'))  && (!location.hash.includes('dmz'))
+        //     && (!location.hash.includes('wully')) && (!location.hash.includes('lz')) && (!location.hash.includes('nls'))
+        //     && (!location.hash.includes('boro')) && (!location.hash.includes('inlighten')) 
+        //     && (!location.hash.includes('ryerson')) && (!location.hash.includes('nudnik'))
+        //     && (!location.hash.includes('andela'))){
+        //         //This mimics a real life game loading thing. this can definitely be optimized later.
+        //         $timeout(function(){
+        //             $state.go('/dash');
+        //         },3000);
+        //     }
             
-        });
+        // });
      
         $scope.submitPrediction = function(){
             if($scope.index < $scope.data.length){
