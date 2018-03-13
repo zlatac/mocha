@@ -429,7 +429,7 @@ var myapp = angular.module('starter', ['ionic'])
         params: {mode: 'andela'},
         cache: false
       });
-    $urlRouterProvider.otherwise('/andelalogin');
+    $urlRouterProvider.otherwise('/odessulogin');
 })
 
 .run(function($ionicPlatform) {

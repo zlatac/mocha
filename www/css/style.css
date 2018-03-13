@@ -13,6 +13,9 @@
 @-webkit-keyframes animatebottom{from{bottom:-300px;opacity:0} to{bottom:0px;opacity:1}}
 @keyframes animatebottom{from{bottom:-300px;opacity:0} to{bottom:0;opacity:1}}
 
+:root{
+  --odessu: #0071bc;
+}
 body {
   text-transform: capitalize;
   border-top: 5px;
@@ -344,4 +347,19 @@ input[type=range].ryerson-range::-ms-thumb {
   .btn-menu{
     padding-right: 30px;
   }
+}
+.btn-odessu{
+  background-color: var(--odessu) !important;
+}
+input[type=range].odessu-range::-webkit-slider-thumb {
+  background-color: var(--odessu);
+  height: 30px;
+  width: 30px;
+  margin-top: -12px;
+}
+input[type=range].odessu-range::-moz-range-thumb {
+  background-color: var(--odessu);
+}
+input[type=range].odessu-range::-ms-thumb {
+  background-color: var(--odessu);
 }

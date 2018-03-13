@@ -429,7 +429,7 @@ var myapp = angular.module('starter', ['ionic'])
         params: {mode: 'andela'},
         cache: false
       });
-    $urlRouterProvider.otherwise('/andelalogin');
+    $urlRouterProvider.otherwise('/odessulogin');
 })
 
 .run(function($ionicPlatform) {
@@ -1498,7 +1498,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
     
     $scope.boro_data = [
         {
-            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/Nude-Lace-Gown-Front.jpg?fit=862%2C1024&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/51e23d6c66b5c93dff7c13aa5f948d27/5B2B2598/t51.2885-15/e35/28753248_424973444621937_3039622860176883712_n.jpg',
             price:'3',
             question:'What\'s the brand name of this dress?',
             min:'0',
@@ -1514,7 +1514,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             ]
         },
         {
-            url:'https://i0.wp.com/boroit.ca/wp-content/uploads/terani-silver-gown-1.jpg?fit=862%2C1024&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/1531de3e59bdafe4ef046b7732ab1403/5B488E0F/t51.2885-15/e35/28430643_177700883014268_7152022482382225408_n.jpg',
             price:'94',
             question:'Predict the rental price of this dress?',
             min:'50',
@@ -1540,7 +1540,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             ]
         },
         {
-            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/self-portrait-lace-yellow.jpg?fit=862%2C1024&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/86a25a319b06e218309e08f77527f209/5B3B2700/t51.2885-15/e35/27881509_552094548502608_8370194216776630272_n.jpg',
             price:'1',
             question:'Was this dress the most rented item of the Summer in 2017?',
             min:'0',
@@ -1550,7 +1550,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             p_id:'4'
         },
         {
-            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/black-sheep-green-front.jpg?fit=862%2C1024&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg',
             price:'1',
             question:'What was the most rented dress of the Fall?',
             min:'0',
@@ -1559,10 +1559,10 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             subcategory:'',
             p_id:'5',
             options: [
-                {answer: 'A', url:'https://i0.wp.com/boroit.ca/wp-content/uploads/bluesparkle-front.jpg?fit=862%2C1024&ssl=1'},
-                {answer: 'B', url:'https://i0.wp.com/boroit.ca/wp-content/uploads/keepsake-navy-lace-e1508767115758.jpg?fit=600%2C713&ssl=1'},
-                {answer: 'C', url:'https://i1.wp.com/boroit.ca/wp-content/uploads/keepsake-2-piece.f.jpg?fit=862%2C1024&ssl=1'},
-                {answer: 'D', url:'https://i2.wp.com/boroit.ca/wp-content/uploads/black-sheep-green-front.jpg?fit=862%2C1024&ssl=1'}
+                {answer: 'A', url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg'},
+                {answer: 'B', url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg'},
+                {answer: 'C', url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg'},
+                {answer: 'D', url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg'}
             ]                
         },
         {
@@ -1602,7 +1602,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             ]
         },
         {
-            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/ted-baker-front.jpg?fit=600%2C713&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/27029db2e727598c7db596367315bbce/5B32945C/t51.2885-15/e35/27879119_1266469950121909_200059211575459840_n.jpg',
             price:'550',
             question:'Predict the retail price of this dress?',
             min:'400',
@@ -4279,6 +4279,380 @@ myapp.controller('nudnik.contest.controller', function($scope,$location,$state,$
     
 });
 
+
+//odessu DIRECTIVES
+myapp.directive('odessuMenuHeader', function() {
+    return {
+      templateUrl: 'views/odessu/odessu.menu-header.html'
+    };
+});
+
+myapp.directive('odessuResultModal', function() {
+    return {
+      templateUrl: 'views/odessu/odessu.result.html'          
+    };
+});
+
+//ROUTES
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state("/odessudash", {
+        url: "/odessudash",
+        templateUrl : "views/odessu/odessu.dash.html",
+	  	controller: "odessu.dash.controller"
+      })
+      .state("/odessugame", {
+        url: "/odessugame",
+        templateUrl : "views/odessu/odessu.game.html",
+        controller: "odessu.dash.controller"
+      })
+      .state("/odessulogin", {
+        url: "/odessulogin",
+        templateUrl : "views/odessu/odessu.login.html",
+        controller: "odessu.login.controller"
+      })
+      .state("/odessucontest", {
+        url: "/odessucontest",
+        templateUrl : "views/odessu/odessu.contest.html",
+        controller: "odessu.contest.controller"
+      })
+      .state("/odessuanswer", {
+        url: "/odessuanswer",
+        templateUrl : "views/odessu/odessu.answer.html",
+        controller: "odessu.answer.controller"
+      })
+      .state("/odessuleaderboard", {
+        url: "/odessuleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'odessu'},
+        cache: false
+      })
+      .state("/odessuanalytics", {
+        url: "/odessuanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'odessu'},
+        cache: false
+      });
+})
+
+//odessu CONTROLLERS BELOW
+myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
+    angular.element(document.querySelector('body'))[0].style.borderTopColor='#0071bc';
+    //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu odessu-color';
+    if(mocha.checkWindow() === true){
+        $state.go('/');
+    }
+
+    // If you get above 81% receive 100$ in credit from odessu.com 
+    // if you get 71 - 80% receive 80$ in credit from odessu
+    // if you get 60-70% receive 65$ in credit from odessu
+    // if you get between 40 - 60 receive 50$ in credit from odessu 
+    
+    $scope.odessu_data = [
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/e22164a021640ede1b74ec76a601b241/5B304C6D/t51.2885-15/e35/28430827_353292461837496_1363788619130601472_n.jpg',
+            price:'1',
+            question:'How many different stores do women shop from the most?',
+            min:'0',
+            max:'2',
+            context:'',
+            subcategory:'',
+            p_id:'1',
+            options: [
+                {answer: '1-2', url:''},
+                {answer: '3-5', url:''},
+                {answer: '6-10', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/e2b2d2b86842ef1265706bc03d9b3a2b/5B299DEB/t51.2885-15/e35/28429816_232595620641367_4349753220222943232_n.jpg',
+            price:'1',
+            question:'What is the number one reason women don\'t try new stores?',
+            min:'0',
+            max:'2',
+            context:'',
+            subcategory:'',
+            p_id:'2',
+            options: [
+                {answer: 'prizes', url:''},
+                {answer: 'size and fit', url:''},
+                {answer: 'style', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/dc7c728cd284a9bf32c0c8cd686d2d9f/5B2E161F/t51.2885-15/e35/28156303_392769877854516_4025069244721922048_n.jpg',
+            price:'2',
+            question:'How many women in MILLIONS had a hard time finding clothes off the rack in Canada?',
+            min:'0',
+            max:'2',
+            context:'million',
+            subcategory:'',
+            p_id:'3',
+            options: [
+                {answer: '6', url:''},
+                {answer: '7.5', url:''},
+                {answer: '10', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/f97da158c3db4faea0f0449fb8081bfa/5B3477C6/t51.2885-15/e35/28427663_552642121801422_8370153199838953472_n.jpg',
+            price:'75',
+            question:'How many women in Canada feel like they are a special size?',
+            min:'40',
+            max:'90',
+            context:'%',
+            subcategory:'',
+            p_id:'4'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/75b5bdadbc6c5edfd623beaa5ffd250e/5B3C8B81/t51.2885-15/e35/28153636_893206687527398_4785596176319643648_n.jpg',
+            price:'63',
+            question:'How many women from that group have difficulty finding styles for their body shapes?',
+            min:'35',
+            max:'87',
+            context:'%',
+            subcategory:'',
+            p_id:'5',
+           
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/a09a775291325189a960414c33ee4341/5B2CDE43/t51.2885-15/e35/27579612_156593745138061_6807768844879265792_n.jpg',
+            price:'2',
+            question:'which of the following is an inverted triangle?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'6',
+            picOption: [
+                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/183afd52d6797db28ee46f000e002fcf/5B28DB5C/t51.2885-15/e35/26863412_1915341968779277_8695320518074564608_n.jpg'},
+                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/18340eee4aab7ec99c26f6b90834a5b6/5B3137D4/t51.2885-15/e35/27580000_148188809200450_6273159181621002240_n.jpg'},
+                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/c510214694ba9b558d3b6e093db0dd14/5B35CC6C/t51.2885-15/e35/26864896_2049045895364938_4843974492793339904_n.jpg'},
+                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/df3e58da26893521808a547c3b7cc2e9/5B42674C/t51.2885-15/e35/28152320_536301183403282_8827340726057566208_n.jpg'},
+                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/27029db2e727598c7db596367315bbce/5B32945C/t51.2885-15/e35/27879119_1266469950121909_200059211575459840_n.jpg'}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/df3e58da26893521808a547c3b7cc2e9/5B42674C/t51.2885-15/e35/28152320_536301183403282_8827340726057566208_n.jpg',
+            price:'3',
+            question:'How many fees do international buyers have to pay for?',
+            min:'0',
+            max:'3',
+            context:'',
+            subcategory:'',
+            p_id:'7',
+            options: [
+                {answer: 'shipping', url:''},
+                {answer: 'duties', url:''},
+                {answer: 'taxes on imports', url:''},
+                {answer: 'all the above', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/8d05bac861bb91063d3e95914f11c3ae/5B341866/t51.2885-15/e35/27891166_1706371616108252_5970632521493250048_n.jpg',
+            price:'28',
+            question:'What is the purchasing power of plus size women? ',
+            min:'12',
+            max:'40',
+            context:'%',
+            subcategory:'',
+            p_id:'8',               
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/183afd52d6797db28ee46f000e002fcf/5B28DB5C/t51.2885-15/e35/26863412_1915341968779277_8695320518074564608_n.jpg',
+            price:'27',
+            question:'What is the percentage of women that are a size 14+ in Canada?',
+            min:'10',
+            max:'60',
+            context:'%',
+            subcategory:'',
+            p_id:'9'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/18340eee4aab7ec99c26f6b90834a5b6/5B3137D4/t51.2885-15/e35/27580000_148188809200450_6273159181621002240_n.jpg',
+            price:'34',
+            question:'What percentage of purchase increase was there for 13-17yr olds in plus size market?',
+            min:'8',
+            max:'40',
+            context:'%',
+            subcategory:'',
+            p_id:'10'
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/c510214694ba9b558d3b6e093db0dd14/5B35CC6C/t51.2885-15/e35/26864896_2049045895364938_4843974492793339904_n.jpg',
+            price:'2',
+            question:'What\'s the increase of online shopping for plus size women in Canada?',
+            min:'0',
+            max:'2',
+            context:'',
+            subcategory:'',
+            p_id:'11',
+            options: [
+                {answer: '10%', url:''},
+                {answer: '2%', url:''},
+                {answer: '31%', url:''}
+            ]
+        }        
+    ];    
+    
+    $scope.data = [];
+    angular.copy($scope.odessu_data,$scope.data);
+    $scope.odessu = true;
+    $scope.prizeStartDate = moment('2018/02/01','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2018/12/14 18:00','YYYY/MM/DD kk:mm');
+    $scope.gameEndTime = moment('2017/12/27 18:00','YYYY/MM/DD kk:mm');
+    //$scope.game = $scope.data[0];
+    $scope.index = 0;
+    $scope.game = $scope.data[$scope.index];
+    $scope.test = {start_time:null,end_time:null,menuhide:0,hideModal:true,select:''};
+    $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+    mocha.startTime($scope);
+    $scope.mocha = mocha; // expose service to the view
+    $scope.hide_question = false;
+    $scope.show_radio = false;
+    mocha.odessu = true;
+    mocha.appName = 'mocha_'+'odessu';
+    mocha.odessu_data = $scope.odessu_data;
+    mocha.prizeEndDate = $scope.prizeEndDate;
+    //console.log($scope.data);
+    
+    
+    $scope.switchUp = function(){
+        //console.log(game);
+        if($scope.safe($scope.game.options)){
+            // if(mocha.safe($scope.game.options[$scope.test.price].url)){
+            //     $scope.game.url = $scope.game.options[$scope.test.price].url;
+            // }
+            $scope.game.context =  ($scope.test.select !== '') ? $scope.game.options[$scope.test.select].answer : null;
+            //this is so that the raw answer is the exact answer
+            $scope.test.price = $scope.test.select;
+            if($scope.test.select !==  $scope.game.price){
+                //this will make sure that the player gets zero points if they choose the wrong option
+                $scope.data[$scope.index].prediction = '100';
+            }else{
+                $scope.data[$scope.index].prediction = $scope.test.select;
+            }
+            
+        }
+
+        if($scope.game.min === '0' & $scope.game.max === '1'){
+            //this fixes the bug that pre selects a yes or no option with the illusion that the value will be passed into the ngModel
+            $scope.test.price_radio = null;
+            $scope.show_radio = true;
+        }else{
+            $scope.show_radio = false;
+        }
+    };
+    
+    $scope.odessuSubmit = function(){mocha.submitPrediction($scope)};
+    $scope.odessuNextProduct = function(){
+        mocha.nextProduct($scope);
+        $scope.switchUp();
+        $scope.test.select = '';
+        if(mocha.safe($scope.game.options)){
+            $scope.test.price = '';
+        }
+    };
+    $scope.resetGame = function(){mocha.resetGame($scope)};
+    $scope.inputShow = function(){mocha.inputShow($scope)};
+    $scope.menuHide = function(){mocha.menuHide($scope)};
+    $scope.isPredict = function(){
+        if(mocha.safe($scope.game.question) && ($scope.game.question.includes('price') 
+           || $scope.game.question.includes('investment'))){
+            return true;
+        }
+        if(mocha.safe($scope.game.context) && $scope.game.context.includes('$')){
+            return true;
+        }
+    };
+    $scope.startOdessu = function(){
+        $state.go('/odessugame');
+    };
+    $scope.goContest = function(){
+        $scope.test.hideModal = true;
+        mocha.test = $scope.test;
+        if(mocha.safe(localStorage.name)){
+            //Pull saved user data if it exists
+            mocha.contest.name = localStorage.name;
+            mocha.contest.phone = Number(localStorage.phone);
+        }
+        $state.go('/odessucontest');
+    };
+    $scope.radioFunc = function(){
+        $scope.test.price = $scope.test.price_radio;
+        $scope.game.url = $scope.game.picOption[$scope.test.price].url;
+        //$scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no';
+    };
+    
+});
+
+myapp.controller('odessu.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.screen_big = mocha.checkWindow();
+    if($scope.screen_big !== true){
+        //This mimics a real life game loading thing. this can definitely be optimized later.
+        $timeout(function(){
+            $state.go('/odessudash');
+        },3000);
+    }
+    
+});
+
+myapp.controller('odessu.contest.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+    $scope.loader = false;
+    $scope.mocha = mocha;
+    $scope.mocha.contest.signup =true;
+    $scope.contestSubmit = function(form){
+        if(form.$valid){
+            $scope.loader = true;
+            $scope.contest = {};
+            $scope.contest.timestamp = moment().toISOString();
+            $scope.contest.points = $scope.mocha.test.point_earned;
+            $scope.contest.playtime = $scope.mocha.test.timePlayed;
+            $scope.contest.played_data = JSON.stringify(mocha.played_data);
+            //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
+            $scope.contest.signup = 0;
+            $http.get('https://styleminions.co/api/odessucontest?name='+$scope.mocha.contest.name+"&email="+
+            $scope.mocha.contest.email+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
+            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
+            .then(function(res){
+                localStorage.name = $scope.mocha.contest.name;
+                localStorage.email = $scope.mocha.contest.email;
+                localStorage[mocha.appName+'_points'] = $scope.contest.points;
+                //This allows a player to play games from different clients on MochaX without any clash
+                localStorage[mocha.appName] = JSON.stringify({'prizeplaydate':moment().toISOString()});
+                //$scope.thankyou = true;
+                //$scope.resetGame('dash');
+                $state.go('/odessuleaderboard');
+                $scope.loader = false;
+            });
+        }else{
+            console.log('fuck no form not valid');
+            //console.log(form);
+        }
+    };
+
+    
+});
+
+myapp.controller('odessu.answer.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
+    $scope.mocha = mocha;
+    $scope.showanswer = null;
+    $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
+    var check = $interval(function(){
+        let now = moment();
+        if(mocha.prizeEndDate.isBefore(now)){
+            console.log('see the answers');
+            $interval.cancel(check);
+            $scope.showanswer = true;
+        }else{
+            console.log('wait for a while');
+            $scope.showanswer = false;
+        }
+    }, 1000, 6000);
+    
+});
 
 //NEXT LEVEL STARTUPS DIRECTIVES
 myapp.directive('ryersonMenuHeader', function() {

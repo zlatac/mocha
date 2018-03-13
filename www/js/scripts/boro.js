@@ -47,7 +47,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
     
     $scope.boro_data = [
         {
-            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/Nude-Lace-Gown-Front.jpg?fit=862%2C1024&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/51e23d6c66b5c93dff7c13aa5f948d27/5B2B2598/t51.2885-15/e35/28753248_424973444621937_3039622860176883712_n.jpg',
             price:'3',
             question:'What\'s the brand name of this dress?',
             min:'0',
@@ -63,7 +63,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             ]
         },
         {
-            url:'https://i0.wp.com/boroit.ca/wp-content/uploads/terani-silver-gown-1.jpg?fit=862%2C1024&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/1531de3e59bdafe4ef046b7732ab1403/5B488E0F/t51.2885-15/e35/28430643_177700883014268_7152022482382225408_n.jpg',
             price:'94',
             question:'Predict the rental price of this dress?',
             min:'50',
@@ -89,7 +89,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             ]
         },
         {
-            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/self-portrait-lace-yellow.jpg?fit=862%2C1024&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/86a25a319b06e218309e08f77527f209/5B3B2700/t51.2885-15/e35/27881509_552094548502608_8370194216776630272_n.jpg',
             price:'1',
             question:'Was this dress the most rented item of the Summer in 2017?',
             min:'0',
@@ -99,7 +99,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             p_id:'4'
         },
         {
-            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/black-sheep-green-front.jpg?fit=862%2C1024&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg',
             price:'1',
             question:'What was the most rented dress of the Fall?',
             min:'0',
@@ -108,10 +108,10 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             subcategory:'',
             p_id:'5',
             options: [
-                {answer: 'A', url:'https://i0.wp.com/boroit.ca/wp-content/uploads/bluesparkle-front.jpg?fit=862%2C1024&ssl=1'},
-                {answer: 'B', url:'https://i0.wp.com/boroit.ca/wp-content/uploads/keepsake-navy-lace-e1508767115758.jpg?fit=600%2C713&ssl=1'},
-                {answer: 'C', url:'https://i1.wp.com/boroit.ca/wp-content/uploads/keepsake-2-piece.f.jpg?fit=862%2C1024&ssl=1'},
-                {answer: 'D', url:'https://i2.wp.com/boroit.ca/wp-content/uploads/black-sheep-green-front.jpg?fit=862%2C1024&ssl=1'}
+                {answer: 'A', url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg'},
+                {answer: 'B', url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg'},
+                {answer: 'C', url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg'},
+                {answer: 'D', url:'https://scontent-yyz1-1.cdninstagram.com/vp/83980b22f43ae687ebea72926f67b5b3/5B49CC8E/t51.2885-15/e35/28157746_1826000744100730_6776555569487544320_n.jpg'}
             ]                
         },
         {
@@ -151,7 +151,7 @@ myapp.controller('boro.dash.controller', function($scope,$location,$rootScope,$s
             ]
         },
         {
-            url:'https://i2.wp.com/boroit.ca/wp-content/uploads/ted-baker-front.jpg?fit=600%2C713&ssl=1',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/27029db2e727598c7db596367315bbce/5B32945C/t51.2885-15/e35/27879119_1266469950121909_200059211575459840_n.jpg',
             price:'550',
             question:'Predict the retail price of this dress?',
             min:'400',
