@@ -670,3 +670,9 @@ header {
         margin-top: 2rem;
     }
 }
+.marg-top{
+    margin-top: 15px;
+}
+.inputError{
+    background-color: #ffe3e3;
+}

@@ -109,4 +109,72 @@ $(function() {
         });
     }
 
+    function safe(a){
+        if(a === undefined || a === null || a === ''){
+            return false;
+        }
+        return true;
+    }
+
+    var submitButton = $('#call');
+    var nameForm = $('#nf');
+    var emailForm = $('#ef');
+    var msgForm = $('#mf');
+    var formArray = [];
+    formArray.push(nameForm,emailForm,msgForm);
+    submitButton.on('click', (e)=>{
+        e.preventDefault();
+        switchButton('sending');
+        var nf = nameForm[0].value;
+        var ef = emailForm[0].value
+        var mf = msgForm[0].value
+        if(safe(nf) && safe(ef) && safe(mf)){
+            console.log('yess safe as fuck');
+            $.ajax({
+                url: "https://styleminions.co/api/mail",
+                type: 'POST',
+                data: {
+                  name: nf,
+                  email: ef,
+                  message: mf
+                },
+                success: function( result ) {
+                  console.log(result);
+                  switchButton('sent');
+                  setTimeout(()=>{
+                    formArray.forEach((e)=>{
+                        e.val('');
+                    });
+                    switchButton('call');
+                  }, 5000);
+                },
+                error: function(result){
+                    console.log(result)
+                }
+            });
+        }else{
+            verify();
+            switchButton('call');
+            console.error('ruuun bitch0');
+        }
+    });
+
+    function switchButton(x){
+        var buttons = $('form button');
+        //remjove all buttons first       
+        buttons[0].style.display = 'none';
+        buttons[1].style.display = 'none';
+        buttons[2].style.display = 'none';
+        //display the actual button necessary
+        $('#'+ x)[0].style.display = 'block';
+    }
+
+    function verify(){
+        formArray.forEach((e)=>{
+            if(!safe(e.val())){
+                e.addClass('inputError');
+            }
+        });
+    }
+
 }); /* End Fn */
