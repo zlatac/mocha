@@ -11,6 +11,37 @@ myapp.directive('wullyResultModal', function() {
     };
 });
 
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state("/wullydash", {
+        url: "/wullydash",
+        templateUrl : "views/wully/wully.dash.html",
+	  	controller: "wully.dash.controller"
+      })
+      .state("/wullygame", {
+        url: "/wullygame",
+        templateUrl : "views/wully/wully.game.html",
+        controller: "wully.dash.controller"
+      })
+      .state("/wullylogin", {
+        url: "/wullylogin",
+        templateUrl : "views/wully/wully.login.html",
+        controller: "wully.login.controller"
+      })
+      .state("/wullycontest", {
+        url: "/wullycontest",
+        templateUrl : "views/wully/wully.contest.html",
+        controller: "wully.contest.controller"
+      })
+      .state("/wullyleaderboard", {
+        url: "/wullyleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'wully'},
+        cache: false
+      });
+});
+
 //WULLY CONTROLLERS BELOW
 myapp.controller('wully.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='rgba(224, 24, 43, 0.91)';

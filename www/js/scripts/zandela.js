@@ -11,6 +11,49 @@ myapp.directive('andelaResultModal', function() {
     };
 });
 
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state("/andeladash", {
+        url: "/andeladash",
+        templateUrl : "views/andela/andela.dash.html",
+	  	controller: "andela.dash.controller"
+      })
+      .state("/andelagame", {
+        url: "/andelagame",
+        templateUrl : "views/andela/andela.game.html",
+        controller: "andela.game.controller"
+      })
+      .state("/andelalogin", {
+        url: "/andelalogin",
+        templateUrl : "views/andela/andela.login.html",
+        controller: "andela.login.controller"
+      })
+      .state("/andelacontest", {
+        url: "/andelacontest",
+        templateUrl : "views/andela/andela.contest.html",
+        controller: "andela.contest.controller"
+      })
+      .state("/andelaanswer", {
+        url: "/andelaanswer",
+        templateUrl : "views/andela/andela.answer.html",
+        controller: "andela.answer.controller"
+      })
+      .state("/andelaleaderboard", {
+        url: "/andelaleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'andela'},
+        cache: false
+      })
+      .state("/andelaanalytics", {
+        url: "/andelaanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'andela'},
+        cache: false
+      });
+});
+
 //andela CONTROLLERS BELOW
 myapp.controller('andela.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#3359df';

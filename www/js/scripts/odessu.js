@@ -53,7 +53,7 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
         params: {mode: 'odessu'},
         cache: false
       });
-})
+});
 
 //odessu CONTROLLERS BELOW
 myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){

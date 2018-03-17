@@ -11,6 +11,54 @@ myapp.directive('inlightenResultModal', function() {
     };
 });
 
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state("/inlightendash", {
+        url: "/inlightendash",
+        templateUrl : "views/inlighten/inlighten.dash.html",
+	  	controller: "inlighten.dash.controller"
+      })
+      .state("/inlightengame", {
+        url: "/inlightengame",
+        templateUrl : "views/inlighten/inlighten.game.html",
+        controller: "inlighten.dash.controller"
+      })
+      .state("/inlightenlogin", {
+        url: "/inlightenlogin",
+        templateUrl : "views/inlighten/inlighten.login.html",
+        controller: "inlighten.login.controller"
+      })
+      .state("/inlightencontest", {
+        url: "/inlightencontest",
+        templateUrl : "views/inlighten/inlighten.contest.html",
+        controller: "inlighten.contest.controller"
+      })
+      .state("/inlightenanswer", {
+        url: "/inlightenanswer",
+        templateUrl : "views/inlighten/inlighten.answer.html",
+        controller: "inlighten.answer.controller"
+      })
+      .state("/inlightenprize", {
+        url: "/inlightenprize",
+        templateUrl : "views/inlighten/inlighten.prize.html",
+        controller: "inlighten.prize.controller"
+      })
+      .state("/inlightenleaderboard", {
+        url: "/inlightenleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'inlighten'},
+        cache: false
+      })
+      .state("/inlightenanalytics", {
+        url: "/inlightenanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'inlighten'},
+        cache: false
+      });
+});
+
 //inlighten CONTROLLERS BELOW
 myapp.controller('inlighten.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#fe4d00';

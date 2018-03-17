@@ -10,6 +10,37 @@ myapp.directive('dmzResultModal', function() {
     };
 });
 
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state("/dmzdash", {
+        url: "/dmzdash",
+        templateUrl : "views/dmz/dmz.dash.html",
+	  	controller: "dmz.dash.controller"
+      })
+      .state("/dmzgame", {
+        url: "/dmzgame",
+        templateUrl : "views/dmz/dmz.game.html",
+        controller: "dmz.dash.controller"
+      })
+      .state("/dmzlogin", {
+        url: "/dmzlogin",
+        templateUrl : "views/dmz/dmz.login.html",
+        controller: "dmz.login.controller"
+      })
+      .state("/dmzcontest", {
+        url: "/dmzcontest",
+        templateUrl : "views/dmz/dmz.contest.html",
+        controller: "dmz.contest.controller"
+      })
+      .state("/dmzleaderboard", {
+        url: "/dmzleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'dmz'},
+        cache: false
+      });
+});
+
 //DMZ CONTROLLERS BELOW
 myapp.controller('dmz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#00b3f0';

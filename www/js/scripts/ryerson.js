@@ -11,6 +11,49 @@ myapp.directive('ryersonResultModal', function() {
     };
 });
 
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state("/ryersondash", {
+        url: "/ryersondash",
+        templateUrl : "views/ryerson/ryerson.dash.html",
+	  	controller: "ryerson.dash.controller"
+      })
+      .state("/ryersongame", {
+        url: "/ryersongame",
+        templateUrl : "views/ryerson/ryerson.game.html",
+        controller: "ryerson.dash.controller"
+      })
+      .state("/ryersonlogin", {
+        url: "/ryersonlogin",
+        templateUrl : "views/ryerson/ryerson.login.html",
+        controller: "ryerson.login.controller"
+      })
+      .state("/ryersoncontest", {
+        url: "/ryersoncontest",
+        templateUrl : "views/ryerson/ryerson.contest.html",
+        controller: "ryerson.contest.controller"
+      })
+      .state("/ryersonanswer", {
+        url: "/ryersonanswer",
+        templateUrl : "views/ryerson/ryerson.answer.html",
+        controller: "ryerson.answer.controller"
+      })
+      .state("/ryersonleaderboard", {
+        url: "/ryersonleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'ryerson'},
+        cache: false
+      })
+      .state("/ryersonanalytics", {
+        url: "/ryersonanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'ryerson'},
+        cache: false
+      });
+});
+
 //ryerson CONTROLLERS BELOW
 myapp.controller('ryerson.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#5C96CE';

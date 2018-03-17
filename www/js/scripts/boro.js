@@ -29,6 +29,65 @@ myapp.directive('tapTap', function() {
     };
 });
 
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state("/borodash", {
+        url: "/borodash",
+        templateUrl : "views/boro/boro.dash.html",
+	  	controller: "boro.dash.controller"
+      })
+      .state("/borogame", {
+        url: "/borogame",
+        templateUrl : "views/boro/boro.game.html",
+        controller: "boro.dash.controller",
+      })
+      .state("/borostore", {
+        url: "/borostore",
+        templateUrl : "views/boro/boro.game.html",
+        controller: "boro.dash.controller",
+        cache: false
+      })
+      .state("/borologin", {
+        url: "/borologin",
+        templateUrl : "views/boro/boro.login.html",
+        controller: "boro.login.controller"
+      })
+      .state("/borocontest", {
+        url: "/borocontest",
+        templateUrl : "views/boro/boro.contest.html",
+        controller: "boro.contest.controller"
+      })
+      .state("/boroanswer", {
+        url: "/boroanswer",
+        templateUrl : "views/boro/boro.answer.html",
+        controller: "boro.answer.controller"
+      })
+      .state("/borotest", {
+        url: "/borotest",
+        templateUrl : "views/boro/boro.test.html",
+        controller: "boro.test.controller"
+      })
+      .state("/boropuzzle", {
+        url: "/boropuzzle",
+        templateUrl : "views/boro/boro.puzzle.html",
+        controller: "boro.puzzle.controller"
+      })
+      .state("/boroleaderboard", {
+        url: "/boroleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'boro'},
+        cache: false
+      })
+      .state("/boroanalytics", {
+        url: "/boroanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'boro'},
+        cache: false
+      });
+});
+
 
 
 //BORO CONTROLLERS BELOW

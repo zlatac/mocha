@@ -11,6 +11,42 @@ myapp.directive('lzResultModal', function() {
     };
 });
 
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state("/lzdash", {
+        url: "/lzdash",
+        templateUrl : "views/lz/lz.dash.html",
+        controller: "lz.dash.controller"
+    })
+    .state("/lzgame", {
+        url: "/lzgame",
+        templateUrl : "views/lz/lz.game.html",
+        controller: "lz.dash.controller"
+    })
+    .state("/lzlogin", {
+        url: "/lzlogin",
+        templateUrl : "views/lz/lz.login.html",
+        controller: "lz.login.controller"
+    })
+    .state("/lzcontest", {
+        url: "/lzcontest",
+        templateUrl : "views/lz/lz.contest.html",
+        controller: "lz.contest.controller"
+    })
+    .state("/lzanswer", {
+        url: "/lzanswer",
+        templateUrl : "views/lz/lz.answer.html",
+        controller: "lz.answer.controller"
+    })
+    .state("/lzleaderboard", {
+        url: "/lzleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'lz'},
+        cache: false
+    });
+});
+
 //lz CONTROLLERS BELOW
 myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#ef4319';

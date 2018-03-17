@@ -11,6 +11,49 @@ myapp.directive('nlsResultModal', function() {
     };
 });
 
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state("/nlsdash", {
+        url: "/nlsdash",
+        templateUrl : "views/nls/nls.dash.html",
+	  	controller: "nls.dash.controller"
+      })
+      .state("/nlsgame", {
+        url: "/nlsgame",
+        templateUrl : "views/nls/nls.game.html",
+        controller: "nls.dash.controller"
+      })
+      .state("/nlslogin", {
+        url: "/nlslogin",
+        templateUrl : "views/nls/nls.login.html",
+        controller: "nls.login.controller"
+      })
+      .state("/nlscontest", {
+        url: "/nlscontest",
+        templateUrl : "views/nls/nls.contest.html",
+        controller: "nls.contest.controller"
+      })
+      .state("/nlsanswer", {
+        url: "/nlsanswer",
+        templateUrl : "views/nls/nls.answer.html",
+        controller: "nls.answer.controller"
+      })
+      .state("/nlsleaderboard", {
+        url: "/nlsleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'nls'},
+        cache: false
+      })
+      .state("/nlsanalytics", {
+        url: "/nlsanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'nls'},
+        cache: false
+      });
+});
+
 //nls CONTROLLERS BELOW
 myapp.controller('nls.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#5C96CE';

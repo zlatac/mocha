@@ -1,78 +1,106 @@
 <ion-view title="/nudnikgame">
-	
-    <!-- <menu-header></menu-header> -->
-    <!-- <menu-button></menu-button> -->
-    <loader ng-class="{'hide':loader == false}"></loader>
-    <ion-content class="squeeze">
-        <nudnik-result-modal></nudnik-result-modal>
+	<nudnik-result-modal></nudnik-result-modal>
+    <nudnik-menu-header></nudnik-menu-header>
+	<menu-button></menu-button>
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
         <style>
-            i.material-icons.gbutton{
-                font-size: 54px;
-                background-color: rgba(255, 255, 255, 0);
-                color: rgba(255, 255, 255, 0.96);
-            }
-            i.material-icons.dark{
-                /* font-size: 54px;
-                background-color: rgba(255, 255, 255, 0); */
-                color: rgba(3, 10, 25, 0.812) !important;
-            }
-            div.row.low{
-                margin-bottom: -12px;
-            }
-            img{
-                width: 90px;
-                height: 90px;
-                position: absolute;
-                top: 31%;
-                left: 38%;
-                background-color: rgba(165, 165, 165, 0.6);
-            }
-            .background{
-                position: absolute;
-                left: 0;
-                top: 0;
-                height: 100%;
-                width: 100%;
-                background-color: white;
-            }
-            div.scroll{
-                height:100%;
-            }
-            canvas{border: solid black; display: none;}
-            svg:not(:root) {overflow: visible !important;}
-            span{text-transform: lowercase;}
-            div.progress{height: 20px !important;}
-            @media only screen and (min-width: 768px){
-                /* playable on computer/laptop screen */
-                ion-content.squeeze{
-                    margin: 0 30%;
-                }
-                /* svg:not(:root) {overflow: visible !important;} */
-            }
+        select{color: white;background: linear-gradient(135deg,var(--nudnik),#232323);}
         </style>
-
-        <div class="background center-align">
-            <div style="background-color:white; width:100%;" >
-                <div class="progress animated fadeInDown" style="margin-top:0px;background-color:#dadcda;margin-bottom: 0px;" 
-                ng-class="{'hide': prog == 0 || prog == 100}">
-                    <div class="determinate btn-green" style="width:{{prog}}%;"></div>
-                    <div style="position: absolute;left: 50%;top: 5%;color:  white;">{{prog | number:0}}%</div>
+        <div class="center-align">
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-image">
+                  <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                      <div class="determinate btn-black" style="width: {{progress}}%"></div>
+                  </div>
+                  <div class="chip animated bounce" style="left:0;bottom:0;z-index:5;margin-left:5px;" 
+                       ng-class="{hide:game.subcategory == ''|| show_points == true}">{{game.subcategory}}</div>
+                  <img ng-src="{{game.url}}" ng-style="newstyle = (show_points == true)?{filter:'blur(10px)'}:null">
+				  <div class="shield"></div>
+                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-nudnik points-box"
+                     ng-class="{'hide': show_points == true}">
+                      <span>750 </span><span class="tiny-points">pts</span>
+                  </a>
+                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-green w3-animate-bottom points-box"
+                     ng-class="{'hide': show_points !== true}">
+                      <span>{{test.point_earned}}/750 </span><span class="tiny-points">pts</span>
+                  </a>
+                  <div class="qlayer" ng-class="{'hide':show_points == true || hide_question == true}" ng-bind-html="game.question" on-touch="hide_question = true" on-release="hide_question = false"></div>
                 </div>
-                <!-- <div class="btn list-me" ng-click="setUp(375,501)">Run</div> -->
-            </div>
-            <div id="svg" style="background-color:white; width:100%; height:80%;" >
-                <div class="btn list-me animated bounceIn" ng-class="{'hide': prog !== 100}">
-                        Completed!!  <i class="fa fa-clock-o"></i> 
-                        {{test.time_result[0]}}<span>m</span>:{{test.time_result[1]}}<span>s</span> 
+                <div class="card-content" style="padding-top: 50px;">
+                  <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}" style="font-size:24px;">
+                      <span ng-class="{hide:isPredict() !== true}">{{game.context || '$'}}</span><span ng-class="{hide:mocha.safe(game.options)||show_radio}">{{test.price}}</span> 
+                      <span ng-class="{hide:isPredict() == true}">{{game.context}}</span> 
+                      <span class="right"><i class="material-icons animated bounceIn" ng-class="{hide:show_points == true||mocha.safe(game.options)||show_radio}">edit</i></span>
+                  </p>
+    
+                  <div ng-class="{hide: manualprice !== true}">
+                      <form name="myForm" ng-submit="submitPrediction()">
+                          <input type="number" ng-model="test.second_price" format-price style="font-size:39px;">
+                          <input type="submit" value="Submit" hidden>
+                      </form>
+                  </div>
                 </div>
-                <!-- <div class="btn list-me animated bounceIn" ng-class="{'hide': prog == 100}">
-                        Puzzlegram
-                </div> -->
-            </div>
-            
-            <canvas id="canvas"></canvas>
-        
+              </div>
+            </div>            
         </div>
-        <foot-note></foot-note>
+        <div class="row">
+            <div class="col z-depth-2" style="padding-bottom:15px;margin-top:-8%;">
+                <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                    <div class="determinate btn-black" style="width: {{progress}}%"></div>
+                </div>
+                <form ng-class="{hide: show_points == true}" name="form">
+                    <p class="range-field" ng-if="manualprice == false && !show_radio && !mocha.safe(game.options)">
+                      <input type="range" class="nudnik-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price"/>
+                    </p>
+                    <div ng-if="mocha.safe(game.options)">
+                        <select name="size" class="browser-default" ng-model="test.select" ng-change="switchUp(game)">
+                            <option value="" disabled>Options</option>
+                            <option  ng-repeat="x in game.options" ng-value="$index">{{x.answer}}</option>
+                        </select>
+                    </div>
+                    <div class="row" ng-if="show_radio">
+                        <div class="col">
+                            <input class="with-gap" name="group1" type="radio" id="test3" ng-model="test.price_radio" value="1"
+                                   ng-click="radioFunc()"/>
+                            <label for="test3" style="color:black;">Yes</label>
+                        </div>
+                        <div class="col">
+                                <input class="with-gap" name="group1" type="radio" id="test4" ng-model="test.price_radio" value="0"
+                                       ng-click="radioFunc()"/>
+                                <label for="test4" style="color:black;">No</label>
+                            </div>
+                    </div>
+                </form>
+                <br>
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-black animated fadeIn"
+                   ng-click="nudnikSubmit()" 
+                   ng-disabled="(show_radio && !mocha.safe(form.group1.$modelValue)) || (mocha.safe(game.options) && test.select == '')"
+                   ng-class="{'hide': show_points == true}" id="enter">
+                    <span>ENTER</span>
+                </a>
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-nudnik"
+                   ng-class="{'hide': show_points !== true}"
+				   ng-click="nudnikNextProduct()">
+                    <span>NEXT</span> <i class="material-icons right">chevron_right</i>
+<!--
+                        <div class="preloader-wrapper small active">
+                            <div class="spinner-layer spinner-white-only">
+                              <div class="circle-clipper left">
+                                <div class="circle"></div>
+                              </div><div class="gap-patch">
+                                <div class="circle"></div>
+                              </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                              </div>
+                            </div>
+                      </div>
+-->
+                </a>
+            </div>
+
+        </div>
+     </div>
     </ion-content>
 </ion-view>

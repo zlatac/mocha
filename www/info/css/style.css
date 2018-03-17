@@ -533,6 +533,9 @@ header {
     z-index: 1;
     font-family: 'Pacifico', cursive;
     letter-spacing: 3px;
+    border-style: solid;
+    border-radius: 15px;
+    padding: 15px;
 }
 .tweak-background{
     position: absolute;
@@ -541,8 +544,10 @@ header {
     top: 0;
     background-color: #020000f5;
 }
-.tweak-background:hover{
-    background-color: #8b178ff0;
+.tweak-background:hover, .img-tweak{
+    background: -moz-linear-gradient(135deg, rgb(74, 13, 143) 0%, rgb(250, 42, 143) 100%);
+    background: -webkit-linear-gradient(135deg, rgb(74, 13, 143) 0%, rgb(250, 42, 143) 100%);
+    background: linear-gradient(135deg, rgb(74, 13, 143) 0%, rgb(250, 42, 143) 100%);
 }
 
 
