@@ -158,9 +158,10 @@ var myapp = angular.module('starter', ['ionic'])
                 //$scope.manualprice = false;
                 $scope.game = $scope.data[$scope.index];
                 $scope.progress = (($scope.index)/$scope.data.length)*100;
-                if(this.safe($scope.game.options)){
-                   //this sets up the data flow when the question has multiple options and we need to see the last option by default
+                if(!this.safe($scope.game.options)){
+                   //this sets up the data flow when we need to see the max answer by default
                    $scope.test.price = $scope.test.second_price = Number($scope.game.max);
+                   this.log('yaaaaaay it is an arrayish');
                 }
                 this.pullNextImage(null,$scope);
                 //$scope.modal.show();
@@ -4301,13 +4302,13 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             question:'How many women in MILLIONS had a hard time finding clothes off the rack in Canada?',
             min:'0',
             max:'2',
-            context:'million',
+            context:'',
             subcategory:'',
             p_id:'3',
             options: [
-                {answer: '6', url:''},
-                {answer: '7.5', url:''},
-                {answer: '10', url:''}
+                {answer: '6 million', url:''},
+                {answer: '7.5 million', url:''},
+                {answer: '10 million', url:''}
             ]
         },
         {

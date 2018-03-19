@@ -105,13 +105,13 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             question:'How many women in MILLIONS had a hard time finding clothes off the rack in Canada?',
             min:'0',
             max:'2',
-            context:'million',
+            context:'',
             subcategory:'',
             p_id:'3',
             options: [
-                {answer: '6', url:''},
-                {answer: '7.5', url:''},
-                {answer: '10', url:''}
+                {answer: '6 million', url:''},
+                {answer: '7.5 million', url:''},
+                {answer: '10 million', url:''}
             ]
         },
         {
