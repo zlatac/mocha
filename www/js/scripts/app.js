@@ -458,6 +458,8 @@ var myapp = angular.module('starter', ['ionic'])
              return function(){};
          }
      })();
+
+     this.letterOption = ['a','b','c','d','e','f','g','h','i','j','k','l','m'];
 	 
 	 return this;
  });

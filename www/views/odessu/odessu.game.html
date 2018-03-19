@@ -61,9 +61,14 @@
                         </select>
                     </div>
                     <div class="row" ng-if="show_radio">
-                        <div class="col">
-                            <input class="with-gap" name="group1" type="radio" id="test3" ng-model="test.price_radio" value="0"
+                        <div class="col" ng-repeat="x in game.picOption">
+                            <input class="with-gap" name="group1" type="radio" id="{{'test'+$index}}" ng-model="test.price_radio" ng-value="$index"
                                    ng-click="radioFunc()"/>
+                            <label for="{{'test'+$index}}" style="color:black;">{{mocha.letterOption[$index]}}</label>
+                        </div>
+                        <!-- <div class="col">
+                            <input class="with-gap" name="group1" type="radio" id="test3" ng-model="test.price_radio" value="0"
+                                    ng-click="radioFunc()"/>
                             <label for="test3" style="color:black;">A</label>
                         </div>
                         <div class="col">
@@ -85,7 +90,7 @@
                             <input class="with-gap" name="group1" type="radio" id="test7" ng-model="test.price_radio" value="4"
                                     ng-click="radioFunc()"/>
                             <label for="test7" style="color:black;">E</label>
-                        </div>
+                        </div> -->
                     </div>
                 </form>
                 <br>

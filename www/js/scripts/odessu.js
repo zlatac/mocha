@@ -136,8 +136,8 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
            
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/a09a775291325189a960414c33ee4341/5B2CDE43/t51.2885-15/e35/27579612_156593745138061_6807768844879265792_n.jpg',
-            price:'2',
+            url:'https://drive.google.com/uc?id=0B3udcDa1xiXod2U1OHM3OE05S1NKdnhjSDhma1FCRkdFTHpV',
+            price:'3',
             question:'which of the following is an inverted triangle?',
             min:'0',
             max:'1',
@@ -145,11 +145,41 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             subcategory:'',
             p_id:'6',
             picOption: [
-                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/183afd52d6797db28ee46f000e002fcf/5B28DB5C/t51.2885-15/e35/26863412_1915341968779277_8695320518074564608_n.jpg'},
-                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/18340eee4aab7ec99c26f6b90834a5b6/5B3137D4/t51.2885-15/e35/27580000_148188809200450_6273159181621002240_n.jpg'},
-                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/c510214694ba9b558d3b6e093db0dd14/5B35CC6C/t51.2885-15/e35/26864896_2049045895364938_4843974492793339904_n.jpg'},
-                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/df3e58da26893521808a547c3b7cc2e9/5B42674C/t51.2885-15/e35/28152320_536301183403282_8827340726057566208_n.jpg'},
-                { url:'https://scontent-yyz1-1.cdninstagram.com/vp/27029db2e727598c7db596367315bbce/5B32945C/t51.2885-15/e35/27879119_1266469950121909_200059211575459840_n.jpg'}
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXod2U1OHM3OE05S1NKdnhjSDhma1FCRkdFTHpV'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoOVJKUkFVU2oteFc2eUJxekJERmJ2U2lmUkZr'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoNTlkWkZWM0RPZGw5OTAySnZDMzk4UHJ4Q05F'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoN1pSZTRYSWtvaURNSWczMnJzVmhSNXNjcGMw'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoRnpmV29GRm5WRmZ5TE42Y2dLTFZkRlR3TjdZ'}
+            ]
+        },
+        {
+            url:'https://drive.google.com/uc?id=0B3udcDa1xiXoVi1NSjAxWmd4X1loMjR1eGhpZkJ0cFpBaUtZ',
+            price:'2',
+            question:'Which silhouette has a bust bigger than hips',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'7',
+            picOption: [
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoVi1NSjAxWmd4X1loMjR1eGhpZkJ0cFpBaUtZ'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoWHpwTHJOXzl4WVhaOFFGTGQwR19qMk53bkVZ'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoNXBJNkJSby1EZExHZ2c3dTlkamRjd1JKdUlr'}
+            ]
+        },
+        {
+            url:'https://drive.google.com/uc?id=0B3udcDa1xiXob29pYlNpdGxZMkcwa3NLZmFoajFoYXFJMmQw',
+            price:'2',
+            question:'which picture shows shoulders that are smaller than hips?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'8',
+            picOption: [
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXob29pYlNpdGxZMkcwa3NLZmFoajFoYXFJMmQw'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXocWRhWW9VTkxqSXFaWlNncUNWVHBNM1FwRnRn'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXobkVzWGo4bm1Mckd6aUVmbUE1WGdtYXFnRFhV'}
             ]
         },
         {
@@ -160,7 +190,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             max:'3',
             context:'',
             subcategory:'',
-            p_id:'7',
+            p_id:'9',
             options: [
                 {answer: 'shipping', url:''},
                 {answer: 'duties', url:''},
@@ -176,7 +206,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             max:'40',
             context:'%',
             subcategory:'',
-            p_id:'8',               
+            p_id:'10',               
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/vp/183afd52d6797db28ee46f000e002fcf/5B28DB5C/t51.2885-15/e35/26863412_1915341968779277_8695320518074564608_n.jpg',
@@ -186,7 +216,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             max:'60',
             context:'%',
             subcategory:'',
-            p_id:'9'
+            p_id:'11'
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/vp/18340eee4aab7ec99c26f6b90834a5b6/5B3137D4/t51.2885-15/e35/27580000_148188809200450_6273159181621002240_n.jpg',
@@ -196,7 +226,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             max:'40',
             context:'%',
             subcategory:'',
-            p_id:'10'
+            p_id:'12'
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/vp/c510214694ba9b558d3b6e093db0dd14/5B35CC6C/t51.2885-15/e35/26864896_2049045895364938_4843974492793339904_n.jpg',
@@ -206,7 +236,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             max:'2',
             context:'',
             subcategory:'',
-            p_id:'11',
+            p_id:'13',
             options: [
                 {answer: '10%', url:''},
                 {answer: '2%', url:''},
@@ -234,6 +264,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
     mocha.appName = 'mocha_'+'odessu';
     mocha.odessu_data = $scope.odessu_data;
     mocha.prizeEndDate = $scope.prizeEndDate;
+    
     //console.log($scope.data);
     
     
@@ -299,8 +330,14 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
         $state.go('/odessucontest');
     };
     $scope.radioFunc = function(){
+        $scope.game.subcategory = '';
         $scope.test.price = $scope.test.price_radio;
         $scope.game.url = $scope.game.picOption[$scope.test.price].url;
+        $scope.hide_question = true;
+        $timeout(function(){
+            $scope.game.subcategory = mocha.letterOption[$scope.test.price_radio];
+            $scope.hide_question = false;
+        }, 1800);
         //$scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no';
     };
     
