@@ -72,7 +72,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/vp/e22164a021640ede1b74ec76a601b241/5B304C6D/t51.2885-15/e35/28430827_353292461837496_1363788619130601472_n.jpg',
             price:'1',
-            question:'How many different stores do women shop from the most?',
+            question:'What\'s the average number of different stores women shop from?',
             min:'0',
             max:'2',
             context:'',
@@ -303,6 +303,10 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
         if(mocha.safe($scope.game.options)){
             $scope.test.price = '';
         }
+        if(mocha.safe($scope.game.picOption)){
+            mocha.log('pic options here')
+            mocha.imageLoop($scope.game.picOption);
+        }
     };
     $scope.resetGame = function(){mocha.resetGame($scope)};
     $scope.inputShow = function(){mocha.inputShow($scope)};
@@ -337,7 +341,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
         $timeout(function(){
             $scope.game.subcategory = mocha.letterOption[$scope.test.price_radio];
             $scope.hide_question = false;
-        }, 1800);
+        }, 1000);
         //$scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no';
     };
     

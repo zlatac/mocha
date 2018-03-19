@@ -460,6 +460,18 @@ var myapp = angular.module('starter', ['ionic'])
      })();
 
      this.letterOption = ['a','b','c','d','e','f','g','h','i','j','k','l','m'];
+
+     this.imageLoop = function(obj){
+        var a = 0;
+        obj.forEach(function(item){
+            item['img'+ a] = new Image();
+            item['img'+ a].onerror = function(){
+                this.log(img.src + ' failed to load into the DOM');
+            };
+            item['img'+ a].src = item.url;
+            a++;
+        });
+     };
 	 
 	 return this;
  });
