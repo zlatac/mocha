@@ -473,6 +473,24 @@ var myapp = angular.module('starter', ['ionic'])
             a++;
         });
      };
+
+     this.odessuPrize = function(val){
+        //get cash prize each gamer wins after the game
+        var n = (val/7500)*100;
+        if(40<n && n<60){
+            return 50;
+        }
+        if(60<n && n<70){
+            return 65;
+        }
+        if(71<n && n<80){
+            return 80;
+        }
+        if(n>81){
+            return 100;
+        }
+        return 0;
+     };
 	 
 	 return this;
  });

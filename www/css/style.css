@@ -102,6 +102,12 @@ padding-right: 10px;
 .price {
   font-size: 40px;
 }
+.cash-prize{
+  color: #197d19 !important;
+}
+.cash-prize-me{
+  color: #3aff3a !important;
+}
 .tiny-points {
   font-size: 8px;
 }

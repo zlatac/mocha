@@ -5,10 +5,11 @@
             <div class="sp animated flipInX">
                 <div class="row">
                     <form name="contestForm" ng-submit="contestSubmit(contestForm)" style="width:100%" novalidate>
-                          <input type="text" name="name" placeholder="Full Name" ng-model="mocha.contest.name" class="animated" 
+                          <input type="text" name="name" placeholder="Full Name*" ng-model="mocha.contest.name" class="animated" 
 								 ng-class="{'hasError': nameError = contestForm.name.$invalid && contestForm.$submitted,'shake': nameError}" required>
-                                 <input type="email" name="email" placeholder="Email" ng-model="mocha.contest.email" class="animated"
+                                 <input type="email" name="email" placeholder="Email*" ng-model="mocha.contest.email" class="animated"
                                  ng-class="{'hasError': phoneError = contestForm.email.$invalid && contestForm.$submitted, 'shake': phoneError}"required>
+                                 <input type="text" name="website" placeholder="Company Website" ng-model="mocha.contest.website">
                           <!-- <div class="switch" style="margin-bottom:20px;">
                             <label>
                               <input type="checkbox" ng-model="mocha.contest.signup">

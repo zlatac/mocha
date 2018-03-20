@@ -122,7 +122,7 @@ myapp.controller('nudnik.dash.controller', function($scope,$location,$rootScope,
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/vp/ad49082c94c37c3761a2e567896dfe91/5B4AD894/t51.2885-15/e35/21041026_170258393543917_532440764903325696_n.jpg',
-            price:'2014',
+            price:'2016',
             question:'Nudnik launched in what year?',
             min:'2003',
             max:'2018',

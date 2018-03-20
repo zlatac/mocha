@@ -33,16 +33,24 @@
 							 <div class="col col-10" ng-if="$index !== 0"> {{$index + 1}}</div>
 							 <div class="col col-10" ng-if="$index == 0"><i class="fa fa-trophy" style="font-size:22px"></i></div>
 							 <div class="col col-60">{{x.name | limitTo:19}}<span ng-if="x.name.length > 19">...</span></div>
-							 <div class="col" ng-if="x.points > 0">{{x.points| number:0}} Pts</div>
-							 <div class="col" ng-if="x.points < 0">{{x.playtime}}</div>
+							 <div class="col" ng-if="x.points > 0">{{x.points| number:0}} Pts
+								 <p class="cash-prize" ng-class="{'hide': !mocha.safe(x.prize)}">${{x.prize}}</p>
+							 </div>
+							 <div class="col" ng-if="x.points < 0">{{x.playtime}}
+								<p class="cash-prize" ng-class="{'hide': !mocha.safe(x.prize)}">${{x.prize}}</p>
+							 </div>
 						 </div>
 					</li>
 					<li class="item list-me z-depth-4" ng-class="{'hide': thisPlayer}">
 						 <div class="row" style="margin-bottom:0px;">
 							 <div class="col col-10">- -</div>
 							 <div class="col col-60">{{player.name | limitTo:19}}<span ng-if="x.name.length > 19">...</span></div>
-							 <div class="col"  ng-if="player[mocha.appName +'_points'] > 0">{{player[mocha.appName +'_points']| number:0}} Pts</div>
-							 <div class="col"  ng-if="player[mocha.appName +'_points'] < 0">{{player[mocha.appName +'_playtime']}}</div>
+							 <div class="col"  ng-if="player[mocha.appName +'_points'] > 0">{{player[mocha.appName +'_points']| number:0}} Pts
+								<p class="cash-prize" ng-class="{'hide': !mocha.safe(player[mocha.appName +'_prize'])}">${{player[mocha.appName +'_prize']}}</p>
+							 </div>
+							 <div class="col"  ng-if="player[mocha.appName +'_points'] < 0">{{player[mocha.appName +'_playtime']}}
+								<p class="cash-prize" ng-class="{'hide': !mocha.safe(player[mocha.appName +'_prize'])}">${{player[mocha.appName +'_prize']}}</p>
+							 </div>
 						 </div>
 					</li>
 <!--

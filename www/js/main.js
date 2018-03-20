@@ -473,6 +473,24 @@ var myapp = angular.module('starter', ['ionic'])
             a++;
         });
      };
+
+     this.odessuPrize = function(val){
+        //get cash prize each gamer wins after the game
+        var n = (val/7500)*100;
+        if(40<n && n<60){
+            return 50;
+        }
+        if(60<n && n<70){
+            return 65;
+        }
+        if(71<n && n<80){
+            return 80;
+        }
+        if(n>81){
+            return 100;
+        }
+        return 0;
+     };
 	 
 	 return this;
  });
@@ -3962,7 +3980,7 @@ myapp.controller('nudnik.dash.controller', function($scope,$location,$rootScope,
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/vp/ad49082c94c37c3761a2e567896dfe91/5B4AD894/t51.2885-15/e35/21041026_170258393543917_532440764903325696_n.jpg',
-            price:'2014',
+            price:'2016',
             question:'Nudnik launched in what year?',
             min:'2003',
             max:'2018',
@@ -4313,9 +4331,9 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
         },
         {
             url:'https://scontent-yyz1-1.cdninstagram.com/vp/f97da158c3db4faea0f0449fb8081bfa/5B3477C6/t51.2885-15/e35/28427663_552642121801422_8370153199838953472_n.jpg',
-            price:'75',
+            price:'50',
             question:'How many women in Canada feel like they are a special size?',
-            min:'40',
+            min:'20',
             max:'90',
             context:'%',
             subcategory:'',
@@ -4333,7 +4351,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
            
         },
         {
-            url:'https://drive.google.com/uc?id=0B3udcDa1xiXod2U1OHM3OE05S1NKdnhjSDhma1FCRkdFTHpV',
+            url:'https://drive.google.com/uc?id=0B3udcDa1xiXoOVJKUkFVU2oteFc2eUJxekJERmJ2U2lmUkZr',
             price:'3',
             question:'which of the following is an inverted triangle?',
             min:'0',
@@ -4342,16 +4360,16 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             subcategory:'',
             p_id:'6',
             picOption: [
-                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXod2U1OHM3OE05S1NKdnhjSDhma1FCRkdFTHpV'},
                 { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoOVJKUkFVU2oteFc2eUJxekJERmJ2U2lmUkZr'},
                 { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoNTlkWkZWM0RPZGw5OTAySnZDMzk4UHJ4Q05F'},
                 { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoN1pSZTRYSWtvaURNSWczMnJzVmhSNXNjcGMw'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXod2U1OHM3OE05S1NKdnhjSDhma1FCRkdFTHpV'},                
                 { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoRnpmV29GRm5WRmZ5TE42Y2dLTFZkRlR3TjdZ'}
             ]
         },
         {
-            url:'https://drive.google.com/uc?id=0B3udcDa1xiXoVi1NSjAxWmd4X1loMjR1eGhpZkJ0cFpBaUtZ',
-            price:'2',
+            url:'https://drive.google.com/uc?id=0B3udcDa1xiXoWHpwTHJOXzl4WVhaOFFGTGQwR19qMk53bkVZ',
+            price:'1',
             question:'Which silhouette has a bust bigger than hips',
             min:'0',
             max:'1',
@@ -4359,8 +4377,8 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             subcategory:'',
             p_id:'7',
             picOption: [
-                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoVi1NSjAxWmd4X1loMjR1eGhpZkJ0cFpBaUtZ'},
                 { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoWHpwTHJOXzl4WVhaOFFGTGQwR19qMk53bkVZ'},
+                { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoVi1NSjAxWmd4X1loMjR1eGhpZkJ0cFpBaUtZ'},
                 { url:'https://drive.google.com/uc?id=0B3udcDa1xiXoNXBJNkJSby1EZExHZ2c3dTlkamRjd1JKdUlr'}
             ]
         },
@@ -4567,15 +4585,18 @@ myapp.controller('odessu.contest.controller', function($scope,$location,$state,$
             $scope.contest.points = $scope.mocha.test.point_earned;
             $scope.contest.playtime = $scope.mocha.test.timePlayed;
             $scope.contest.played_data = JSON.stringify(mocha.played_data);
+            $scope.contest.prize = mocha.odessuPrize($scope.contest.points);
             //$scope.contest.signup = ($scope.mocha.contest.signup == true)? 1 : 0;
             $scope.contest.signup = 0;
             $http.get('https://styleminions.co/api/odessucontest?name='+$scope.mocha.contest.name+"&email="+
             $scope.mocha.contest.email+"&timestamp="+$scope.contest.timestamp+"&points="+$scope.contest.points
-            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&signup="+$scope.contest.signup)
+            +"&playtime="+$scope.contest.playtime+"&played_data="+$scope.contest.played_data+"&website="+$scope.contest.website
+            +"&prize="+$scope.contest.prize)
             .then(function(res){
                 localStorage.name = $scope.mocha.contest.name;
                 localStorage.email = $scope.mocha.contest.email;
                 localStorage[mocha.appName+'_points'] = $scope.contest.points;
+                localStorage[mocha.appName+'_prize'] = $scope.contest.prize;
                 //This allows a player to play games from different clients on MochaX without any clash
                 localStorage[mocha.appName] = JSON.stringify({'prizeplaydate':moment().toISOString()});
                 //$scope.thankyou = true;
