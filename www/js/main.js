@@ -4464,7 +4464,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
     angular.copy($scope.odessu_data,$scope.data);
     $scope.odessu = true;
     $scope.prizeStartDate = moment('2018/02/01','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2018/12/14 18:00','YYYY/MM/DD kk:mm');
+    $scope.prizeEndDate = moment('2018/04/03 23:59','YYYY/MM/DD kk:mm');
     $scope.gameEndTime = moment('2017/12/27 18:00','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
@@ -4605,7 +4605,7 @@ myapp.controller('odessu.contest.controller', function($scope,$location,$state,$
                 $scope.loader = false;
             });
         }else{
-            console.log('fuck no form not valid');
+            mocha.log('fuck no form not valid');
             //console.log(form);
         }
     };
@@ -4620,11 +4620,11 @@ myapp.controller('odessu.answer.controller', function($scope,$location,$state,$s
     var check = $interval(function(){
         let now = moment();
         if(mocha.prizeEndDate.isBefore(now)){
-            console.log('see the answers');
+            mocha.log('see the answers');
             $interval.cancel(check);
             $scope.showanswer = true;
         }else{
-            console.log('wait for a while');
+            mocha.log('wait for a while');
             $scope.showanswer = false;
         }
     }, 1000, 6000);
