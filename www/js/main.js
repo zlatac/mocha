@@ -466,15 +466,17 @@ var myapp = angular.module('starter', ['ionic'])
         var app = this.appName;
         var entryDateText = app + '_entryDate';
         var dateTime = moment().toISOString();
+        var firstTime = false;
         if(!localStorage.hasOwnProperty(app) && !localStorage.hasOwnProperty(entryDateText)){
             //set default entry datetime when user is on the particular game for the first time
             localStorage[entryDateText] = moment().toISOString();
+            firstTime = true;
         }
         var entryDate = moment(localStorage[entryDateText]);
         var visitedPreviously = entryDate.isAfter(this.prizeStartDate) && entryDate.isBefore(this.prizeEndDate);
         //var http = $http.post.bind(this);
         var self = this;
-        if(!visitedPreviously){
+        if(!visitedPreviously || firstTime){
             // send to backend for tracking
             $http.post('https://styleminions.co/api/traffic?appname='+app+'&time='+dateTime)
             .then(function(res){
