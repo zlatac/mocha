@@ -41,44 +41,10 @@ var myapp = angular.module('starter', ['ionic'])
         controller: "leaderboard.controller",
         cache: false
       })
-      .state("/fzleaderboard", {
-        url: "/fzleaderboard",
-        templateUrl : "views/leaderboard.html",
-        controller: "leaderboard.controller",
-        params: {mode: 'fz'},
-        cache: false
-      })
 	  .state("/winner", {
         url: "/winner",
         templateUrl : "views/winner.html",
 	  	controller: "winner.controller"
-      })
-	  .state("/fzdash", {
-        url: "/fzdash",
-        templateUrl : "views/fz/fz.dash.html",
-	  	controller: "fz.dash.controller"
-      })
-	  .state("/fzgame", {
-        url: "/fzgame",
-        templateUrl : "views/fz/fz.game.html",
-        controller: "fz.dash.controller"
-      })
-      .state("/fzlogin", {
-        url: "/fzlogin",
-        templateUrl : "views/fz/fz.login.html",
-        controller: "fz.login.controller"
-      })
-      .state("/fzcontest", {
-        url: "/fzcontest",
-        templateUrl : "views/fz/fz.contest.html",
-        controller: "fz.contest.controller"
-      })
-      .state("/fzanalytics", {
-        url: "/fzanalytics",
-        templateUrl : "views/analytics.html",
-        controller: "analytics.controller",
-        params: {mode: 'fz'},
-        cache: false
       })
       .state("/tutorial", {
         url: "/tutorial",
@@ -109,7 +75,7 @@ var myapp = angular.module('starter', ['ionic'])
   });
 });
 
- myapp.factory('mocha', function($rootScope,$state,$stateParams,$window,$ionicSlideBoxDelegate){
+ myapp.factory('mocha', function($rootScope,$state,$stateParams,$window,$ionicSlideBoxDelegate,$http){
     this.contest = {};
     this.test = {};
     this.played_data = []; 
@@ -460,7 +426,7 @@ var myapp = angular.module('starter', ['ionic'])
          }
      })();
 
-     this.letterOption = ['a','b','c','d','e','f','g','h','i','j','k','l','m'];
+     this.letterOption = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
      this.imageLoop = function(obj){
         var a = 0;
@@ -490,6 +456,47 @@ var myapp = angular.module('starter', ['ionic'])
             return 100;
         }
         return 0;
+     };
+
+     this.devMode = function(){return location.host.includes('8100')}(); //when in ionic serve mode
+
+     this.webTraffic = function(){
+        //leverage users device to know if they were here during the gaming period.
+        //this will eliminate double counting for accurate engagement metrics even after reloading browser
+        var app = this.appName;
+        var entryDateText = app + '_entryDate';
+        var dateTime = moment().toISOString();
+        if(!localStorage.hasOwnProperty(app) && !localStorage.hasOwnProperty(entryDateText)){
+            //set default entry datetime when user is on the particular game for the first time
+            localStorage[entryDateText] = moment().toISOString();
+        }
+        var entryDate = moment(localStorage[entryDateText]);
+        var visitedPreviously = entryDate.isAfter(this.prizeStartDate) && entryDate.isBefore(this.prizeEndDate);
+        //var http = $http.post.bind(this);
+        var self = this;
+        if(!visitedPreviously){
+            // send to backend for tracking
+            $http.post('https://styleminions.co/api/traffic?appname='+app+'&time='+dateTime)
+            .then(function(res){
+                //console.log(this)
+                //console.log(self)
+                if(!JSON.stringify(res.data).includes('failed')){
+                    self.ip = res.data;
+                }
+                self.log(res);
+                //console.log(this)
+                
+            });
+            //this.log(app,dateTime,entryDateText,entryDate);
+        }
+        localStorage[entryDateText] = moment().toISOString();
+        // var liveId = socket.id;
+        // if(!localStorage.hasOwnProperty(app)){
+        //     localStorage[app+'_trafficId'] = null;
+        // }
+        // var savedId = (this.safe(localStorage[app+'_trafficId'])) ? localStorage[app+'_trafficId'] : null;
+        //this.log(app, liveId,savedId,dateTime);
+         
      };
 	 
 	 return this;
@@ -539,7 +546,8 @@ var myapp = angular.module('starter', ['ionic'])
         //     }
             
         // });
-     
+     //Don't touch any code below for legacy reasons
+     /*/////////////////////////Don't touch any code below for legacy reasons/////////////////////////////////////*/
         $scope.submitPrediction = function(){
             if($scope.index < $scope.data.length){
 				$scope.data[$scope.index].prediction = $scope.test.price;	
@@ -884,6 +892,8 @@ var myapp = angular.module('starter', ['ionic'])
         }
         
     });
+
+    /*/////////////////////////Don't touch any code above for legacy reasons/////////////////////////////////////*/
     
     myapp.directive('menuButton', function() {
       return {

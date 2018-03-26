@@ -263,14 +263,16 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
     mocha.odessu = true;
     mocha.appName = 'mocha_'+'odessu';
     mocha.odessu_data = $scope.odessu_data;
+    mocha.prizeStartDate = $scope.prizeStartDate;
     mocha.prizeEndDate = $scope.prizeEndDate;
+    mocha.webTraffic(); //very key that start date and end date is added to the mocha service object before calling the func
     
     //console.log($scope.data);
     
     
     $scope.switchUp = function(){
         //console.log(game);
-        if($scope.safe($scope.game.options)){
+        if(mocha.safe($scope.game.options)){
             // if(mocha.safe($scope.game.options[$scope.test.price].url)){
             //     $scope.game.url = $scope.game.options[$scope.test.price].url;
             // }

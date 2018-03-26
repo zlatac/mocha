@@ -3,6 +3,7 @@ var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
+var uglify = require('gulp-uglify-es').default;
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
@@ -53,6 +54,14 @@ gulp.task('git-check', function(done) {
 gulp.task('mix', function(){
   return gulp.src(['www/js/scripts/**/*.js'])
       .pipe(concat('main.js'))
+      .pipe(gulp.dest('www/js'));
+});
+
+gulp.task('ugly', function(){
+  return gulp.src(['www/js/main.js'])
+      .pipe(rename("main.min.js"))
+      .pipe(uglify())
+      .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
       .pipe(gulp.dest('www/js'));
 });
 

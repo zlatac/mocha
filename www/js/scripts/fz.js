@@ -10,6 +10,44 @@ myapp.directive('fzResultModal', function() {
     };
 });
 
+myapp.config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+    .state("/fzdash", {
+        url: "/fzdash",
+        templateUrl : "views/fz/fz.dash.html",
+	  	controller: "fz.dash.controller"
+      })
+	  .state("/fzgame", {
+        url: "/fzgame",
+        templateUrl : "views/fz/fz.game.html",
+        controller: "fz.dash.controller"
+      })
+      .state("/fzlogin", {
+        url: "/fzlogin",
+        templateUrl : "views/fz/fz.login.html",
+        controller: "fz.login.controller"
+      })
+      .state("/fzcontest", {
+        url: "/fzcontest",
+        templateUrl : "views/fz/fz.contest.html",
+        controller: "fz.contest.controller"
+      })
+      .state("/fzanalytics", {
+        url: "/fzanalytics",
+        templateUrl : "views/analytics.html",
+        controller: "analytics.controller",
+        params: {mode: 'fz'},
+        cache: false
+      })
+      .state("/fzleaderboard", {
+        url: "/fzleaderboard",
+        templateUrl : "views/leaderboard.html",
+        controller: "leaderboard.controller",
+        params: {mode: 'fz'},
+        cache: false
+      });
+});
+
 //FASHION ZONE CONTROLLERS BELOW
 myapp.controller('fz.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#f64348';
