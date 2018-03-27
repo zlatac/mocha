@@ -57,6 +57,11 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
 //andela CONTROLLERS BELOW
 myapp.controller('andela.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#3359df';
+    var jsScripts = [
+        'lib/tone.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js'
+    ];
+    mocha.addScripts(jsScripts);
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu andela-color';
  
     

@@ -49,5 +49,9 @@
             "android",
             "browser"
         ]
+    },
+    "scripts":{
+        "autoGulp": "gulp ugly",
+        "postinstall": "npm run autoGulp"
     }
 }

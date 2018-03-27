@@ -487,9 +487,7 @@ var myapp = angular.module('starter', ['ionic'])
                 }
                 self.log(res);
                 //console.log(this)
-                
             });
-            //this.log(app,dateTime,entryDateText,entryDate);
         }
         localStorage[entryDateText] = moment().toISOString();
         // var liveId = socket.id;
@@ -500,6 +498,23 @@ var myapp = angular.module('starter', ['ionic'])
         //this.log(app, liveId,savedId,dateTime);
          
      };
+
+     this.addScripts = function(array){
+        var hookScripts = function(url, src) {
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.src = url || null;
+            s.innerHTML = src || null;
+            document.getElementsByTagName("head")[0].appendChild(s);
+        };
+        array.forEach(function(item){
+            var exist = document.querySelector('script[src="'+ item +'"]');
+            if(!exist){
+                hookScripts(item);
+            }
+            
+        });
+     }
 	 
 	 return this;
  });
@@ -1056,6 +1071,7 @@ var myapp = angular.module('starter', ['ionic'])
         $scope.validate = false;
         $scope.csvloader = false;
         $scope.mocha = mocha;
+        mocha.addScripts(['lib/papaparse.min.js']);
         if(mocha.safe($stateParams.mode)){
             //Default API FOR DEMOS. No need to build backend yet till its necessary
             url = 'https://styleminions.co/api/apianalytics?q=null';
