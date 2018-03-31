@@ -226,7 +226,7 @@ myapp.controller('lz.dash.controller', function($scope,$location,$rootScope,$sta
             
         }
 
-        if($scope.game.min === '0' & $scope.game.max === '1'){
+        if($scope.game.min === '0' && $scope.game.max === '1'){
             $scope.show_radio = true;
         }else{
             $scope.show_radio = false;

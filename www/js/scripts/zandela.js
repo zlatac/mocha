@@ -377,4 +377,3 @@ myapp.controller('andela.contest.controller', function($scope,$location,$state,$
 
     
 });
-

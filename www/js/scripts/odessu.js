@@ -288,7 +288,7 @@ myapp.controller('odessu.dash.controller', function($scope,$location,$rootScope,
             
         }
 
-        if($scope.game.min === '0' & $scope.game.max === '1'){
+        if($scope.game.min === '0' && $scope.game.max === '1'){
             //this fixes the bug that pre selects a yes or no option with the illusion that the value will be passed into the ngModel
             $scope.test.price_radio = null;
             $scope.show_radio = true;

@@ -514,7 +514,20 @@ var myapp = angular.module('starter', ['ionic'])
             }
             
         });
-     }
+     };
+
+     this.instagram = function(){
+        fetch('https://www.instagram.com/bohnchild/').then((res)=>{
+            return res.text();
+            
+        }).then((data)=>{
+            parser = new DOMParser();
+            let doc = parser.parseFromString(data,'text/html')
+            let node = doc.querySelector('meta[property="og:image"]')
+        
+            console.log(node.attributes[1].value);
+        });
+     };
 	 
 	 return this;
  });

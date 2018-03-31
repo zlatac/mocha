@@ -16,6 +16,7 @@
 :root{
   --odessu: #0071bc;
   --nudnik: #f0595d;
+  --sew: #eb005d;
 }
 body {
   text-transform: capitalize;
@@ -381,4 +382,19 @@ input[type=range].nudnik-range::-moz-range-thumb {
 }
 input[type=range].nudnik-range::-ms-thumb {
   background-color: var(--nudnik);
+}
+.btn-sew{
+  background-color: var(--sew) !important;
+}
+input[type=range].sew-range::-webkit-slider-thumb {
+  background-color: var(--sew);
+  height: 30px;
+  width: 30px;
+  margin-top: -12px;
+}
+input[type=range].sew-range::-moz-range-thumb {
+  background-color: var(--sew);
+}
+input[type=range].sew-range::-ms-thumb {
+  background-color: var(--sew);
 }
