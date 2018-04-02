@@ -40,6 +40,16 @@ io.on('connection', function(client) {
         client.broadcast.emit('broad',data);
         console.log(data, client.id);
     });
+
+    client.on('remoteControl', function(data) {
+        console.log(data);
+        client.broadcast.emit('question', data);
+    });
+    
+    client.on('audience', function(data) {
+        console.log(data);
+        client.broadcast.emit('answer', data);
+    });
 });
 // io.listen(3100);
 /*

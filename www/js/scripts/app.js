@@ -54,7 +54,7 @@ var myapp = angular.module('starter', ['ionic'])
         url: "/login",
         templateUrl : "views/login.html"
       });
-    $urlRouterProvider.otherwise('/odessulogin');
+    $urlRouterProvider.otherwise('/sewlogin');
 })
 
 .run(function($ionicPlatform) {
@@ -80,7 +80,7 @@ var myapp = angular.module('starter', ['ionic'])
     this.test = {};
     this.played_data = []; 
     this.submitPrediction = function($scope){
-            if($scope.index < $scope.data.length){
+            if($scope.index < $scope.data.length || $scope.gameType === 'pdx'){
                 //reconcile price prediction for consistent points
                 if($scope.manualprice === true){
                     $scope.test.price = $scope.test.second_price;
@@ -92,6 +92,9 @@ var myapp = angular.module('starter', ['ionic'])
                 if($scope.game.min === '0' & $scope.game.max === '1'){
                     //for situation where its a yes or no question and we need the right radio button model data
                     $scope.test.price = $scope.test.price_radio;
+                }
+                if($scope.gameType === 'pdx'){
+                    return $scope.test.price;
                 }
 
 				var prediction = $scope.data[$scope.index].prediction;                
@@ -117,7 +120,7 @@ var myapp = angular.module('starter', ['ionic'])
 	 
 	 this.nextProduct = function($scope){
             //action for what happens after final answer is given
-            if($scope.index !== $scope.data.length - 1){
+            if($scope.index !== $scope.data.length - 1 || $scope.gameType === 'pdx'){
                 this.log($scope.data);
                 $scope.index++;
                 $scope.show_points = false;
@@ -183,6 +186,7 @@ var myapp = angular.module('starter', ['ionic'])
 	 
 	 this.pullNextImage = function(a,$scope){
             var x = new Image();
+            var stockDefault = 'https://mochanow.com/info/images/graphic.png';
             x.onload = function(){
                if(a === 'auto'){
                    //Do not let player manually move to next if this is in place.
@@ -190,13 +194,20 @@ var myapp = angular.module('starter', ['ionic'])
                }
             };
             x.onerror = function(){
-                $scope.data.splice($scope.index + 1,1);
-                if(a === 'auto'){
-                    //This is used cause we need the game to move forward automatically despite an image(s) download failure
-                   this.pullNextImage('auto');
+                if('gameType' in $scope && $scope.gameType === 'pricex'){
+                    //with the price is right game concept we want to skip the question if image fails to load
+                    $scope.data.splice($scope.index + 1,1);
+                    if(a === 'auto'){
+                        //This is used cause we need the game to move forward automatically despite an image(s) download failure
+                        this.pullNextImage('auto');
+                    }else{
+                        this.pullNextImage(null,$scope);
+                    }
                 }else{
-                   this.pullNextImage(null,$scope);
-                }
+                    //for the triviaX game concept we want to use our stock image when image fails to load
+                    $scope.data[$scope.index + 1].url = stockDefault;
+                    x.src = stockDefault;
+                }               
                 
             };
             
@@ -528,6 +539,25 @@ var myapp = angular.module('starter', ['ionic'])
             console.log(node.attributes[1].value);
         });
      };
+
+     this.webSocket = function(){
+        if('io' in window){
+            var socket = io();
+            socket.on('connect', function(data) {
+            socket.emit('join', 'Hello World from client');
+            });
+            socket.on('messages', function(data) {
+                    console.log(data);
+            });
+            return socket;
+        }        
+     };
+
+     this.submitPdx = function($scope){
+        var answer = this.submitPrediction($scope);
+        var gamedata = {appName:$scope.appName, p_id:$scope.index, raw_answer:answer}
+        $scope.socket.emit('audience',gamedata);
+     }
 	 
 	 return this;
  });

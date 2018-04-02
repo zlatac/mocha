@@ -1,0 +1,57 @@
+<ion-view title="/sewanswer">
+	<!-- <sew-menu-header></sew-menu-header>
+	<menu-button ng-init="sew=true"></menu-button> -->
+	<loader ng-class="{'hide': !loader}"></loader>
+	<!-- <sew-analytics></sew-analytics> -->
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" >
+        <div class="container center-align" style="margin-top:50px;">
+            <row>
+				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
+					<li class="item item z-depth-1" ng-click="getList()">
+						<!--<label class="toggle">
+						   <input type="checkbox">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>-->
+						<!-- <span class="badge badge-stable z-depth-1 hide">Top 20</span>
+						<span class="left"><i class="material-icons">refresh</i></span> -->
+					 Questions
+					</li>
+
+					<li class="item animated fadeInUp" ng-if="showanswer === false">
+						<div class="row" style="margin-bottom:0px;">
+							<div class="col">
+								<p style="white-space:normal;">
+									Answers will be displayed immediately after the game ends at <strong style="color:var(--sew);">{{showEndDate}}</strong>.
+								</p>
+							</div>
+							
+						</div>
+				   </li>
+
+					<li class="item animated fadeInUp" ng-repeat="x in mocha.sew_data" ng-class="{'hide': x.hide === true}">
+						 <div class="row" style="margin-bottom:0px;">
+							 <div class="col col-10"> {{$index + 1}}</div>
+							 <!-- <div class="col col-10" ng-if="$index == 0"><i class="fa fa-trophy" style="font-size:22px"></i></div> -->
+							 <div class="col col-90">
+                                 <p style="white-space:normal;">{{x.question}}</p>
+                             </div>
+							 <!-- <div class="col">{{x.points| number:0}} Pts</div> -->
+						 </div>
+						 <div class="row" style="margin-top: 7px;margin-bottom: 0px;">
+							 <div class="col"><a class="btn" ng-click="pushQuestion($index)"><i class="material-icons">visibility</i></a></div>
+							 <div class="col"><a class="btn" ng-click="showResult($index)"><i class="material-icons">trending_up</i></a></div>
+							 <div class="col"><a class="btn" ng-click="x.hide=true"><i class="material-icons">delete</i></a></div>
+						 </div>
+					</li>
+					
+					
+				</ul>
+               
+			</row>           
+        
+        </div>
+        
+    </ion-content>
+</ion-view>

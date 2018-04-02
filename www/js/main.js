@@ -54,7 +54,7 @@ var myapp = angular.module('starter', ['ionic'])
         url: "/login",
         templateUrl : "views/login.html"
       });
-    $urlRouterProvider.otherwise('/odessulogin');
+    $urlRouterProvider.otherwise('/sewlogin');
 })
 
 .run(function($ionicPlatform) {
@@ -80,7 +80,7 @@ var myapp = angular.module('starter', ['ionic'])
     this.test = {};
     this.played_data = []; 
     this.submitPrediction = function($scope){
-            if($scope.index < $scope.data.length){
+            if($scope.index < $scope.data.length || $scope.gameType === 'pdx'){
                 //reconcile price prediction for consistent points
                 if($scope.manualprice === true){
                     $scope.test.price = $scope.test.second_price;
@@ -92,6 +92,9 @@ var myapp = angular.module('starter', ['ionic'])
                 if($scope.game.min === '0' & $scope.game.max === '1'){
                     //for situation where its a yes or no question and we need the right radio button model data
                     $scope.test.price = $scope.test.price_radio;
+                }
+                if($scope.gameType === 'pdx'){
+                    return $scope.test.price;
                 }
 
 				var prediction = $scope.data[$scope.index].prediction;                
@@ -117,7 +120,7 @@ var myapp = angular.module('starter', ['ionic'])
 	 
 	 this.nextProduct = function($scope){
             //action for what happens after final answer is given
-            if($scope.index !== $scope.data.length - 1){
+            if($scope.index !== $scope.data.length - 1 || $scope.gameType === 'pdx'){
                 this.log($scope.data);
                 $scope.index++;
                 $scope.show_points = false;
@@ -183,6 +186,7 @@ var myapp = angular.module('starter', ['ionic'])
 	 
 	 this.pullNextImage = function(a,$scope){
             var x = new Image();
+            var stockDefault = 'https://mochanow.com/info/images/graphic.png';
             x.onload = function(){
                if(a === 'auto'){
                    //Do not let player manually move to next if this is in place.
@@ -190,13 +194,20 @@ var myapp = angular.module('starter', ['ionic'])
                }
             };
             x.onerror = function(){
-                $scope.data.splice($scope.index + 1,1);
-                if(a === 'auto'){
-                    //This is used cause we need the game to move forward automatically despite an image(s) download failure
-                   this.pullNextImage('auto');
+                if('gameType' in $scope && $scope.gameType === 'pricex'){
+                    //with the price is right game concept we want to skip the question if image fails to load
+                    $scope.data.splice($scope.index + 1,1);
+                    if(a === 'auto'){
+                        //This is used cause we need the game to move forward automatically despite an image(s) download failure
+                        this.pullNextImage('auto');
+                    }else{
+                        this.pullNextImage(null,$scope);
+                    }
                 }else{
-                   this.pullNextImage(null,$scope);
-                }
+                    //for the triviaX game concept we want to use our stock image when image fails to load
+                    $scope.data[$scope.index + 1].url = stockDefault;
+                    x.src = stockDefault;
+                }               
                 
             };
             
@@ -528,6 +539,25 @@ var myapp = angular.module('starter', ['ionic'])
             console.log(node.attributes[1].value);
         });
      };
+
+     this.webSocket = function(){
+        if('io' in window){
+            var socket = io();
+            socket.on('connect', function(data) {
+            socket.emit('join', 'Hello World from client');
+            });
+            socket.on('messages', function(data) {
+                    console.log(data);
+            });
+            return socket;
+        }        
+     };
+
+     this.submitPdx = function($scope){
+        var answer = this.submitPrediction($scope);
+        var gamedata = {appName:$scope.appName, p_id:$scope.index, raw_answer:answer}
+        $scope.socket.emit('audience',gamedata);
+     }
 	 
 	 return this;
  });
@@ -5015,6 +5045,11 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
         templateUrl : "views/sew/sew.login.html",
         controller: "sew.login.controller"
       })
+      .state("/sewcontrol", {
+        url: "/sewcontrol",
+        templateUrl : "views/sew/sew.control.html",
+        controller: "sew.control.controller"
+      })
       .state("/sewanalytics", {
         url: "/sewanalytics",
         templateUrl : "views/analytics.html",
@@ -5026,7 +5061,7 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
 
 //sew CONTROLLERS BELOW
 myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
-    angular.element(document.querySelector('body'))[0].style.borderTopColor='#f0595d';
+    angular.element(document.querySelector('body'))[0].style.borderTopColor='#ff0000';
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu sew-color';
     if(mocha.checkWindow() === true){
         $state.go('/');
@@ -5093,8 +5128,10 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     ];    
     
     $scope.data = [];
+    $scope.socketLoader = true;
     angular.copy($scope.sew_data,$scope.data);
     $scope.sew = true;
+    $scope.gameType = 'pdx';
     $scope.prizeStartDate = moment('2018/02/01','YYYY/MM/DD');
     $scope.prizeEndDate = moment('2018/02/14 18:00','YYYY/MM/DD kk:mm');
     $scope.gameEndTime = moment('2017/12/27 18:00','YYYY/MM/DD kk:mm');
@@ -5111,7 +5148,18 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     mocha.appName = 'mocha_'+'sew';
     mocha.sew_data = $scope.sew_data;
     mocha.prizeEndDate = $scope.prizeEndDate;
-    //console.log($scope.data);
+    $scope.socket = mocha.webSocket();
+    $scope.socket.emit('join','we in this bitch son');
+    $scope.socket.on('question', function(data){
+        console.log(data)
+        if(data.appName === mocha.appName){
+            //$scope.game = $scope.data[data.p_id];
+            $scope.index = data.p_id - 1;
+            $scope.sewNextProduct();
+            $scope.socketLoader = false;
+            $scope.$apply();
+        }
+    })
     
     
     $scope.switchUp = function(){
@@ -5141,7 +5189,10 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
         }
     };
     
-    $scope.sewSubmit = function(){mocha.submitPrediction($scope)};
+    $scope.sewSubmit = function(){
+        $scope.socketLoader = true;
+        mocha.submitPdx($scope);
+    };
     $scope.sewNextProduct = function(){
         mocha.nextProduct($scope);
         $scope.switchUp();
@@ -5184,14 +5235,66 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
 
 myapp.controller('sew.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
     $scope.screen_big = mocha.checkWindow();
+    mocha.addScripts(['lib/socket.io.js']);
     if($scope.screen_big !== true){
         //This mimics a real life game loading thing. this can definitely be optimized later.
         $timeout(function(){
-            $state.go('/sewdash');
+            $state.go('/sewgame');
         },3000);
     }
     
 });
+
+myapp.directive('pdxLoader', function() {
+    return {
+        templateUrl: 'views/sew/sew.loader.html'
+        
+    };
+});
+myapp.directive('sewAnalytics', function() {
+    return {
+        templateUrl: 'views/sew/sew.analytics.html'
+        
+    };
+});
+
+myapp.controller('sew.control.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
+    $scope.mocha = mocha;
+    $scope.showanswer = true;
+    $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
+    $scope.controlSocket = mocha.webSocket();
+    $scope.pushQuestion = function(index){
+        $scope.controlSocket.emit('remoteControl',{appName:mocha.appName,p_id:index});
+    };
+    $scope.controlSocket.on('answer',function(data){
+        var realIndex = data.p_id;
+        if(!('raw_answer' in $scope.mocha.sew_data[realIndex])){
+            $scope.mocha.sew_data[realIndex].raw_answer = [];
+            $scope.mocha.sew_data[realIndex].raw_answer.push(data.raw_answer);
+        }else{
+            $scope.mocha.sew_data[realIndex].raw_answer.push(data.raw_answer);
+        }
+        $scope.$apply();
+        
+    });
+    $scope.showResult = function(index){
+        mocha.log($scope.mocha.sew_data[index]);
+    }
+    //var prizeEndDate = moment('2017/11/27 18:56','YYYY/MM/DD kk:mm');
+    // var check = $interval(function(){
+    //     let now = moment();
+    //     if(mocha.prizeEndDate.isBefore(now)){
+    //         console.log('see the answers');
+    //         $interval.cancel(check);
+    //         $scope.showanswer = true;
+    //     }else{
+    //         console.log('wait for a while');
+    //         $scope.showanswer = false;
+    //     }
+    // }, 1000, 6000);
+    
+});
+
 
 //WULLY DIRECTIVES
 myapp.directive('wullyMenuHeader', function() {

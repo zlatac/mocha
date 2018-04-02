@@ -1,7 +1,7 @@
 <ion-view title="/sewgame">
-	<sew-result-modal></sew-result-modal>
-    <sew-menu-header></sew-menu-header>
-	<menu-button></menu-button>
+	<pdx-loader ng-class="{'hide': socketLoader === false}"></pdx-loader>
+    <!-- <sew-menu-header></sew-menu-header> -->
+	<!-- <menu-button></menu-button> -->
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
         <style>
         select{color: white;background: linear-gradient(135deg,var(--sew),#232323);}
