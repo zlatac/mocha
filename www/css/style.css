@@ -398,3 +398,9 @@ input[type=range].sew-range::-moz-range-thumb {
 input[type=range].sew-range::-ms-thumb {
   background-color: var(--sew);
 }
+.pdx-green{
+  border: 4px solid limegreen;
+}
+.pdx-grey{
+  border: 4px solid lightgreen;
+}

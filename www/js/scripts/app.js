@@ -540,24 +540,46 @@ var myapp = angular.module('starter', ['ionic'])
         });
      };
 
-     this.webSocket = function(){
+     this.webSocket =  function(){
         if('io' in window){
             var socket = io();
-            socket.on('connect', function(data) {
-            socket.emit('join', 'Hello World from client');
-            });
-            socket.on('messages', function(data) {
-                    console.log(data);
-            });
+            // socket.on('connect', function(data) {
+            // socket.emit('join', 'Hello World from client');
+            // });
+            // socket.on('messages', function(data) {
+            //         console.log(data);
+            // });
             return socket;
-        }        
+        }
+                
      };
 
      this.submitPdx = function($scope){
         var answer = this.submitPrediction($scope);
         var gamedata = {appName:$scope.appName, p_id:$scope.index, raw_answer:answer}
         $scope.socket.emit('audience',gamedata);
-     }
+     };
+
+     this.authorize = function($scope){
+        if(this.safe(this.appName) && $scope.mocha.passtext === this.appName){
+            $scope.validate = true;
+        }else{
+            this.vibrate();
+            $scope.mocha.passtext = '';
+        }        
+     };
+
+     this.isAppNameSet = function(route,dependency){
+        var dependencyCounter = 0;
+        // dependency.forEach(function(item){
+        //     (item in window) ? dependencyCounter++ : null;
+        // });
+        if(!this.safe(this.appName)){
+            $state.go(route);
+            return false;
+        }
+        return true
+     };
 	 
 	 return this;
  });

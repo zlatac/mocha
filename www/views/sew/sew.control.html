@@ -5,7 +5,11 @@
 	<!-- <sew-analytics></sew-analytics> -->
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" >
         <div class="container center-align" style="margin-top:50px;">
-            <row>
+			<row ng-class="{'hide': validate}">
+				<input class="col" type="text" name="passtext" ng-model="mocha.passtext" placeholder="Password" style="margin-top: 20%;"/>
+				<button class="btn list-me col" ng-click="authorize()">Authorize</button>
+			</row>
+            <row ng-class="{'hide':!validate}">
 				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
 					<li class="item item z-depth-1" ng-click="getList()">
 						<!--<label class="toggle">
@@ -19,17 +23,6 @@
 					 Questions
 					</li>
 
-					<li class="item animated fadeInUp" ng-if="showanswer === false">
-						<div class="row" style="margin-bottom:0px;">
-							<div class="col">
-								<p style="white-space:normal;">
-									Answers will be displayed immediately after the game ends at <strong style="color:var(--sew);">{{showEndDate}}</strong>.
-								</p>
-							</div>
-							
-						</div>
-				   </li>
-
 					<li class="item animated fadeInUp" ng-repeat="x in mocha.sew_data" ng-class="{'hide': x.hide === true}">
 						 <div class="row" style="margin-bottom:0px;">
 							 <div class="col col-10"> {{$index + 1}}</div>
@@ -40,9 +33,17 @@
 							 <!-- <div class="col">{{x.points| number:0}} Pts</div> -->
 						 </div>
 						 <div class="row" style="margin-top: 7px;margin-bottom: 0px;">
-							 <div class="col"><a class="btn" ng-click="pushQuestion($index)"><i class="material-icons">visibility</i></a></div>
-							 <div class="col"><a class="btn" ng-click="showResult($index)"><i class="material-icons">trending_up</i></a></div>
-							 <div class="col"><a class="btn" ng-click="x.hide=true"><i class="material-icons">delete</i></a></div>
+							 <div class="col">
+								 <a class="btn" ng-click="pushQuestion($index)" style="background-color:#0ea011;" ng-disabled="x.disable">
+									<i class="material-icons">visibility</i>
+								 </a>
+							 </div>
+							 <div class="col">
+								 <a class="btn" ng-click="showResult($index)" style="background-color:#1160bf;">
+									<i class="material-icons">trending_up</i> {{x.raw_answer.length}}
+								 </a>
+							 </div>
+							 <div class="col"><a class="btn" ng-click="x.hide=true" style="background-color:#dc0e0e;"><i class="material-icons">delete</i></a></div>
 						 </div>
 					</li>
 					

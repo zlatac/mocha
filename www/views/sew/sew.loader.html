@@ -6,12 +6,13 @@
             <div class="row">
                 <a ui-sref="/sewcontrol">
                     <img class="circle profile z-depth-3" ng-src="https://pbs.twimg.com/profile_images/912429520933707776/G1mvD_50_400x400.jpg"
-                    style="border:4px solid limegreen">
+                    ng-class="{'pdx-green': isConnected, 'pdx-grey': !isConnected}">
                 </a>
             </div>
             <div class="clearfix"></div>
             <div class="row">
-                <div class="col">Waiting for a question...</div>
+                <div class="col" ng-class="{'hide': isConnected}">Connecting...</div>
+                <div class="col" ng-class="{'hide': !isConnected}">Waiting for a question...</div>
             </div>
             <div class="row">
                 <div class="progress" style="margin-top:0px;background-color:#dadcda;">

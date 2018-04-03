@@ -540,24 +540,46 @@ var myapp = angular.module('starter', ['ionic'])
         });
      };
 
-     this.webSocket = function(){
+     this.webSocket =  function(){
         if('io' in window){
             var socket = io();
-            socket.on('connect', function(data) {
-            socket.emit('join', 'Hello World from client');
-            });
-            socket.on('messages', function(data) {
-                    console.log(data);
-            });
+            // socket.on('connect', function(data) {
+            // socket.emit('join', 'Hello World from client');
+            // });
+            // socket.on('messages', function(data) {
+            //         console.log(data);
+            // });
             return socket;
-        }        
+        }
+                
      };
 
      this.submitPdx = function($scope){
         var answer = this.submitPrediction($scope);
         var gamedata = {appName:$scope.appName, p_id:$scope.index, raw_answer:answer}
         $scope.socket.emit('audience',gamedata);
-     }
+     };
+
+     this.authorize = function($scope){
+        if(this.safe(this.appName) && $scope.mocha.passtext === this.appName){
+            $scope.validate = true;
+        }else{
+            this.vibrate();
+            $scope.mocha.passtext = '';
+        }        
+     };
+
+     this.isAppNameSet = function(route,dependency){
+        var dependencyCounter = 0;
+        // dependency.forEach(function(item){
+        //     (item in window) ? dependencyCounter++ : null;
+        // });
+        if(!this.safe(this.appName)){
+            $state.go(route);
+            return false;
+        }
+        return true
+     };
 	 
 	 return this;
  });
@@ -5043,7 +5065,8 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
       .state("/sewlogin", {
         url: "/sewlogin",
         templateUrl : "views/sew/sew.login.html",
-        controller: "sew.login.controller"
+        controller: "sew.login.controller",
+        cache: false
       })
       .state("/sewcontrol", {
         url: "/sewcontrol",
@@ -5069,9 +5092,9 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     
     $scope.sew_data = [
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/4bcf71f3817127950f4637d7161dcc71/5B3B1548/t51.2885-15/e35/28765565_585431385134477_1793436321126023168_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/112902388a70330909948c7b3fc394be/5B51E6D4/t51.2885-15/e35/26157494_1158900284244745_486437155447504896_n.jpg',
             price:'10',
-            question:'How many bathtubs of water do you save by buying a sew product?',
+            question:'How many bathtubs of water do you save not taking a shower for 12 weeks?',
             min:'3',
             max:'20',
             context:'',
@@ -5079,9 +5102,9 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
             p_id:'1'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/24cd2e35f1f74daaf1b74b964358398a/5B29BD6C/t51.2885-15/e35/22582015_925336977617693_3032400443171930112_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/62386d52d2fbedccc23491b814de4756/5B6EF816/t51.2885-15/e35/26869673_173512470086835_7366131786113351680_n.jpg',
             price:'1',
-            question:'Are sew products Unisex??',
+            question:'Will AI replace humans completely in the workforce',
             min:'0',
             max:'1',
             context:'',
@@ -5089,9 +5112,9 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
             p_id:'2'
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/88fba2b9d8672b650af446c0f3b34a1b/5B326AB9/t51.2885-15/e35/18579951_431880163847441_4296984612074160128_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/98e23d628a1819234b38fd74d3910ebb/5B511071/t51.2885-15/e35/27880352_863303720535601_7696369824342999040_n.jpg',
             price:'1',
-            question:'Where in Canada are sew products designed and produced?',
+            question:'Where in canada are dinousar remains mostly found?',
             min:'0',
             max:'3',
             context:'',
@@ -5106,9 +5129,9 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/e993cd6e23b645e058690cbc58de18eb/5B3CBC46/t51.2885-15/e35/20837023_1927461270803288_6129871590793412608_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/088608f2bf57dd86a375e1946906bb35/5B5D0CE6/t51.2885-15/e35/28154665_1504332979680515_5085929284980178944_n.jpg',
             price:'1',
-            question:'sew products are designed using leading child development research data?',
+            question:'Will your heart explode if you dive 2000ft below see level?',
             min:'0',
             max:'1',
             context:'',
@@ -5116,9 +5139,9 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
             p_id:'4'
         },
         {
-            url:'https://cdn.shopify.com/s/files/1/2098/6327/products/IMG_4486_1050x.progressive.jpg?v=1505701849',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/544cda0e685cf02619018b46824e6025/5B5F0A09/t51.2885-15/e35/28763711_1944985042498099_1337264846730690560_n.jpg',
             price:'35',
-            question:'Predict the price of this sew product',
+            question:'what\'s the age of elon Musk',
             min:'20',
             max:'45',
             context:'',
@@ -5129,6 +5152,7 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     
     $scope.data = [];
     $scope.socketLoader = true;
+    $scope.isConnected = false
     angular.copy($scope.sew_data,$scope.data);
     $scope.sew = true;
     $scope.gameType = 'pdx';
@@ -5149,6 +5173,11 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     mocha.sew_data = $scope.sew_data;
     mocha.prizeEndDate = $scope.prizeEndDate;
     $scope.socket = mocha.webSocket();
+    mocha.livesocket = $scope.socket;
+    $scope.socket.on('connect', function(data) {
+        $scope.isConnected = true;
+        //console.log(data, 'connected my nigga');
+     });
     $scope.socket.emit('join','we in this bitch son');
     $scope.socket.on('question', function(data){
         console.log(data)
@@ -5262,9 +5291,10 @@ myapp.controller('sew.control.controller', function($scope,$location,$state,$sta
     $scope.mocha = mocha;
     $scope.showanswer = true;
     $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
-    $scope.controlSocket = mocha.webSocket();
+    $scope.controlSocket = mocha.livesocket;
     $scope.pushQuestion = function(index){
         $scope.controlSocket.emit('remoteControl',{appName:mocha.appName,p_id:index});
+        $scope.mocha.sew_data[index].disable = true;
     };
     $scope.controlSocket.on('answer',function(data){
         var realIndex = data.p_id;
@@ -5280,18 +5310,7 @@ myapp.controller('sew.control.controller', function($scope,$location,$state,$sta
     $scope.showResult = function(index){
         mocha.log($scope.mocha.sew_data[index]);
     }
-    //var prizeEndDate = moment('2017/11/27 18:56','YYYY/MM/DD kk:mm');
-    // var check = $interval(function(){
-    //     let now = moment();
-    //     if(mocha.prizeEndDate.isBefore(now)){
-    //         console.log('see the answers');
-    //         $interval.cancel(check);
-    //         $scope.showanswer = true;
-    //     }else{
-    //         console.log('wait for a while');
-    //         $scope.showanswer = false;
-    //     }
-    // }, 1000, 6000);
+    $scope.authorize = function(){mocha.authorize($scope);}
     
 });
 
