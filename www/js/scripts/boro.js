@@ -734,7 +734,7 @@ myapp.directive('ngBuzz', function() {
             elem.bind('click', function() {
                 $scope.isStarted();
                 //$scope.mocha.vibrate(60);
-                $scope.mocha.tones('e',5,10,null,'sine')
+                $scope.mocha.tones('e',5,10,null,'sine');
                 elem[0].instance.animate(100).width($scope.dw - $scope.dw*0.3);
                 if($scope.waste.length < 2){
                     $scope.waste.push(elem[0].instance);

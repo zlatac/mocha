@@ -13,11 +13,6 @@ myapp.directive('sewResultModal', function() {
 
 myapp.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
-    .state("/sewdash", {
-        url: "/sewdash",
-        templateUrl : "views/sew/sew.dash.html",
-	  	controller: "sew.dash.controller"
-      })
       .state("/sewgame", {
         url: "/sewgame",
         templateUrl : "views/sew/sew.game.html",
@@ -33,13 +28,6 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
         url: "/sewcontrol",
         templateUrl : "views/sew/sew.control.html",
         controller: "sew.control.controller"
-      })
-      .state("/sewanalytics", {
-        url: "/sewanalytics",
-        templateUrl : "views/analytics.html",
-        controller: "analytics.controller",
-        params: {mode: 'sew'},
-        cache: false
       });
 });
 
@@ -112,6 +100,7 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     ];    
     
     $scope.data = [];
+    $scope.metrics = [];
     $scope.socketLoader = true;
     $scope.isConnected = false
     angular.copy($scope.sew_data,$scope.data);
@@ -129,6 +118,7 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     $scope.mocha = mocha; // expose service to the view
     $scope.hide_question = false;
     $scope.show_radio = false;
+    $scope.showMetrics = false;
     mocha.sew = true;
     mocha.appName = 'mocha_'+'sew';
     mocha.sew_data = $scope.sew_data;
@@ -141,15 +131,25 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
      });
     $scope.socket.emit('join','we in this bitch son');
     $scope.socket.on('question', function(data){
-        console.log(data)
+        mocha.log(data)
         if(data.appName === mocha.appName){
             //$scope.game = $scope.data[data.p_id];
             $scope.index = data.p_id - 1;
             $scope.sewNextProduct();
             $scope.socketLoader = false;
+            $scope.showMetrics = false;
+            mocha.tones('f',5,500);
             $scope.$apply();
         }
-    })
+    });
+    $scope.socket.on('sendMetrics',function(data){
+        mocha.log(data,'metric data');
+        if(data.appName === mocha.appName){
+            $scope.metrics = data;
+            $scope.showMetrics = true;
+            $scope.$apply();
+        }
+    });
     
     
     $scope.switchUp = function(){
@@ -225,7 +225,7 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
 
 myapp.controller('sew.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
     $scope.screen_big = mocha.checkWindow();
-    mocha.addScripts(['lib/socket.io.js']);
+    mocha.addScripts(['lib/socket.io.js','lib/tone.js']);
     if($scope.screen_big !== true){
         //This mimics a real life game loading thing. this can definitely be optimized later.
         $timeout(function(){
@@ -253,18 +253,21 @@ myapp.controller('sew.control.controller', function($scope,$location,$state,$sta
     $scope.showanswer = true;
     $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
     $scope.controlSocket = mocha.livesocket;
+    $scope.validate = true;
     $scope.pushQuestion = function(index){
         $scope.controlSocket.emit('remoteControl',{appName:mocha.appName,p_id:index});
-        $scope.mocha.sew_data[index].disable = true;
+        //$scope.mocha.sew_data[index].disable = true;
     };
     $scope.controlSocket.on('answer',function(data){
         var realIndex = data.p_id;
+        var num = Number(data.raw_answer);
         if(!('raw_answer' in $scope.mocha.sew_data[realIndex])){
             $scope.mocha.sew_data[realIndex].raw_answer = [];
-            $scope.mocha.sew_data[realIndex].raw_answer.push(data.raw_answer);
+            $scope.mocha.sew_data[realIndex].raw_answer.push(num);
         }else{
-            $scope.mocha.sew_data[realIndex].raw_answer.push(data.raw_answer);
+            $scope.mocha.sew_data[realIndex].raw_answer.push(num);
         }
+        $scope.metricAnalysis(realIndex);
         $scope.$apply();
         
     });
@@ -272,6 +275,51 @@ myapp.controller('sew.control.controller', function($scope,$location,$state,$sta
         mocha.log($scope.mocha.sew_data[index]);
     }
     $scope.authorize = function(){mocha.authorize($scope);}
+    $scope.metricAnalysis = function(index){
+        var question = $scope.mocha.sew_data[index];
+        var total = question.raw_answer.length;
+        if('options' in question){
+            //this is for question with options
+            let obj = question.options.keys();
+            question.metrics = [];
+            for(let i of obj){
+                let container = {};
+                container.name = question.options[i].answer;
+                container.val = Math.round((question.raw_answer.filter(word=>word === i).length/total)*100);
+                question.metrics.push(container);
+            }
+            
+        }
+        if(!('options' in question) && question.min==='0' && question.max==='1'){
+            //question with yes or no
+            let obj = {};
+            obj.yes = Math.round((question.raw_answer.filter(word=>word === 1).length/total)*100);
+            obj.no = Math.round((question.raw_answer.filter(word=>word === 0).length/total)*100);
+            question.metrics = [{name:'yes',val:obj.yes},{name:'no',val:obj.no}];
+        }
+        if(!('options' in question) && question.min >='0' && question.max !=='1'){
+            //question with predictions (numbers only)
+            let low = Number(question.min);
+            let high = Number(question.max);
+            let quarter = Math.round((low + high)/5);
+            let qlow = low + quarter;
+            let qmid = qlow + quarter;
+            let qhigh = qmid + quarter;
+            let a_low = Math.round((question.raw_answer.filter(word=> low<word && word<qlow).length/total)*100);
+            let a_qlow = Math.round((question.raw_answer.filter(word=> qlow<=word && word<qmid).length/total)*100);
+            let a_qmid = Math.round((question.raw_answer.filter(word=> qmid<=word && word<qhigh).length/total)*100);
+            let a_high = Math.round((question.raw_answer.filter(word=> qhigh<=word && word<qhigh).length/total)*100);
+            question.metrics = [
+                {name:`${low} - ${qlow - 1}`,val:a_low},
+                {name:`${qlow} - ${qmid - 1}`,val:a_qlow},
+                {name:`${qmid} - ${qhigh - 1}`,val:a_qmid},
+                {name:`${qhigh} - ${high}`,val:a_high}            
+            ];
+        }
+        $scope.controlSocket.emit('analytics',{appName:mocha.appName,p_id:index,metrics:question.metrics});
+        mocha.log(question);
+        return question.metrics;
+    }
     
 });
 

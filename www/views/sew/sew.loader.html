@@ -1,27 +1,49 @@
 <div class="loader">
-    <div class="modal-backdrop center-align" style="margin-top:40%">
+    <div class="modal-backdrop center-align" style="margin-top:70px">
         <row>
-        <div class="col">
-            <div class="card-panel z-depth-1" style="margin-top:60px;">
-            <div class="row">
-                <a ui-sref="/sewcontrol">
-                    <img class="circle profile z-depth-3" ng-src="https://pbs.twimg.com/profile_images/912429520933707776/G1mvD_50_400x400.jpg"
-                    ng-class="{'pdx-green': isConnected, 'pdx-grey': !isConnected}">
-                </a>
-            </div>
-            <div class="clearfix"></div>
-            <div class="row">
-                <div class="col" ng-class="{'hide': isConnected}">Connecting...</div>
-                <div class="col" ng-class="{'hide': !isConnected}">Waiting for a question...</div>
-            </div>
-            <div class="row">
-                <div class="progress" style="margin-top:0px;background-color:#dadcda;">
-                    <div class="indeterminate btn-sew"></div>
+            <div class="col">
+                <div class="card-panel z-depth-1" style="margin-top:60px;">
+                    <div class="row">
+                        <a ui-sref="/sewcontrol">
+                            <img class="circle profile z-depth-3" ng-src="https://pbs.twimg.com/profile_images/912429520933707776/G1mvD_50_400x400.jpg"
+                            ng-class="{'pdx-green': isConnected, 'pdx-grey': !isConnected}">
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col" ng-class="{'hide': isConnected}">Connecting...</div>
+                        <div class="col" ng-class="{'hide': !isConnected}">Waiting for a question...</div>
+                    </div>
+                    <div class="row">
+                        <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                            <div class="indeterminate btn-sew"></div>
+                        </div>
+                    </div>
+                    <div class="row"  style="margin-top: 20px;" ng-repeat="z in metrics.metrics" 
+                         ng-class="{'hide': !showMetrics}">
+                        <div class="col col-30">{{z.name}}:</div>
+                        <div class="col col-50">
+                            <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                                <div class="determinate btn-black" style="width:{{z.val}}%"></div>
+                            </div>
+                        </div>
+                        <div class="col col-20">{{z.val}}%</div>    
+                    </div>
                 </div>
-            </div>                 
-
             </div>
-        </div>
         </row>
+        <!-- <row>
+            <div class="card-panel z-depth-1">
+                <div class="row"  style="margin-top: 20px;" ng-repeat="z in metrics.metrics">
+                    <div class="col col-30">{{z.name}}:</div>
+                    <div class="col col-50">
+                        <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                            <div class="determinate btn-black" style="width:{{z.val}}%"></div>
+                        </div>
+                    </div>
+                    <div class="col col-20">{{z.val}}%</div>    
+                </div>
+            </div>
+        </row> -->
     <div>
 </div>

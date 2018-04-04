@@ -50,6 +50,10 @@ io.on('connection', function(client) {
         console.log(data);
         client.broadcast.emit('answer', data);
     });
+    client.on('analytics', function(data) {
+        console.log(data);
+        client.broadcast.emit('sendMetrics', data);
+    });
 });
 // io.listen(3100);
 /*
