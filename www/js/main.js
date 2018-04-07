@@ -124,7 +124,7 @@ var myapp = angular.module('starter', ['ionic'])
                 this.log($scope.data);
                 $scope.index++;
                 $scope.show_points = false;
-                //$scope.manualprice = false;
+                $scope.manualprice = false;
                 $scope.game = $scope.data[$scope.index];
                 $scope.progress = (($scope.index)/$scope.data.length)*100;
                 if(!this.safe($scope.game.options)){
@@ -510,21 +510,28 @@ var myapp = angular.module('starter', ['ionic'])
          
      };
 
-     this.addScripts = function(array){
+     this.addScripts = async function(array){
+        var promises = [];
         var hookScripts = function(url, src) {
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.src = url || null;
-            s.innerHTML = src || null;
-            document.getElementsByTagName("head")[0].appendChild(s);
+            return new Promise(function(resolve,reject){
+                var s = document.createElement("script");
+                s.type = "text/javascript";
+                s.onload = ()=>{resolve(url)};
+                s.onerror = ()=>{reject(`${url} did not load`)};
+                s.src = url || null;
+                s.innerHTML = src || null;
+                document.getElementsByTagName("head")[0].appendChild(s);
+            });
+            
         };
         array.forEach(function(item){
             var exist = document.querySelector('script[src="'+ item +'"]');
             if(!exist){
-                hookScripts(item);
+                promises.push(hookScripts(item));
             }
             
         });
+        return Promise.all(promises)
      };
 
      this.instagram = function(){
@@ -569,13 +576,13 @@ var myapp = angular.module('starter', ['ionic'])
         }        
      };
 
-     this.isAppNameSet = function(route,dependency){
+     this.isAppNameSet = function(dependency){
         var dependencyCounter = 0;
-        // dependency.forEach(function(item){
-        //     (item in window) ? dependencyCounter++ : null;
-        // });
-        if(!this.safe(this.appName)){
-            $state.go(route);
+        dependency.forEach(function(item){
+            (item in window) ? dependencyCounter++ : null;
+        });
+        if(!this.safe(this.appName) || dependencyCounter !== dependency.length){
+            //$state.go(route);
             return false;
         }
         return true
@@ -5055,7 +5062,8 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
       .state("/sewgame", {
         url: "/sewgame",
         templateUrl : "views/sew/sew.game.html",
-        controller: "sew.dash.controller"
+        controller: "sew.dash.controller",
+        cache: false
       })
       .state("/sewlogin", {
         url: "/sewlogin",
@@ -5066,7 +5074,8 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
       .state("/sewcontrol", {
         url: "/sewcontrol",
         templateUrl : "views/sew/sew.control.html",
-        controller: "sew.control.controller"
+        controller: "sew.control.controller",
+        cache: false
       });
 });
 
@@ -5160,35 +5169,40 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     $scope.showMetrics = false;
     mocha.sew = true;
     mocha.appName = 'mocha_'+'sew';
-    mocha.sew_data = $scope.sew_data;
-    mocha.prizeEndDate = $scope.prizeEndDate;
-    $scope.socket = mocha.webSocket();
-    mocha.livesocket = $scope.socket;
-    $scope.socket.on('connect', function(data) {
-        $scope.isConnected = true;
-        //console.log(data, 'connected my nigga');
-     });
-    $scope.socket.emit('join','we in this bitch son');
-    $scope.socket.on('question', function(data){
-        mocha.log(data)
-        if(data.appName === mocha.appName){
-            //$scope.game = $scope.data[data.p_id];
-            $scope.index = data.p_id - 1;
-            $scope.sewNextProduct();
-            $scope.socketLoader = false;
-            $scope.showMetrics = false;
-            mocha.tones('f',5,500);
-            $scope.$apply();
-        }
-    });
-    $scope.socket.on('sendMetrics',function(data){
-        mocha.log(data,'metric data');
-        if(data.appName === mocha.appName){
-            $scope.metrics = data;
-            $scope.showMetrics = true;
-            $scope.$apply();
-        }
-    });
+    if(mocha.isAppNameSet(['io','tones'])){
+        mocha.sew_data = $scope.sew_data;
+        mocha.prizeEndDate = $scope.prizeEndDate;
+        $scope.socket = mocha.webSocket();
+        //mocha.livesocket = $scope.socket;
+        $scope.socket.on('connect', function(data) {
+            $scope.isConnected = true;
+            //console.log(data, 'connected my nigga');
+        });
+        $scope.socket.emit('join','we in this bitch son');
+        $scope.socket.on('question', function(data){
+            mocha.log(data)
+            if(data.appName === mocha.appName){
+                //$scope.game = $scope.data[data.p_id];
+                $scope.index = data.p_id - 1;
+                $scope.sewNextProduct();
+                $scope.socketLoader = false;
+                $scope.showMetrics = false;
+                mocha.tones('f',5,500);
+                $scope.$apply();
+            }
+        });
+        $scope.socket.on('sendMetrics',function(data){
+            mocha.log(data,'metric data');
+            if(data.appName === mocha.appName){
+                $scope.metrics = data;
+                $scope.showMetrics = true;
+                $scope.$apply();
+            }
+        });
+    }else{
+        $state.go('/sewlogin');
+    }
+    
     
     
     $scope.switchUp = function(){
@@ -5259,18 +5273,27 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
         $scope.test.price = $scope.test.price_radio;
         $scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no';
     };
+    $scope.goToControl = function(){
+        delete $scope.socket;
+        $state.go('/sewcontrol')
+    }
     
 });
 
-myapp.controller('sew.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
+myapp.controller('sew.login.controller', function($scope,$ionicHistory,$state,$stateParams,$http,$window,$timeout,mocha){
     $scope.screen_big = mocha.checkWindow();
-    mocha.addScripts(['lib/socket.io.js','lib/tone.js']);
-    if($scope.screen_big !== true){
-        //This mimics a real life game loading thing. this can definitely be optimized later.
-        $timeout(function(){
-            $state.go('/sewgame');
-        },3000);
-    }
+    mocha.addScripts(['lib/socket.io.js','lib/tone.js'])
+    .catch((err)=>{throw new Error(err)})
+    .then((data)=>{
+        //console.log('yay',data);
+        if($scope.screen_big !== true){
+            //This mimics a real life game loading thing. this can definitely be optimized later.
+            $timeout(function(){
+                $state.go('/sewgame');
+            },3000);
+        }
+    })
+    
     
 });
 
@@ -5288,28 +5311,33 @@ myapp.directive('sewAnalytics', function() {
 });
 
 myapp.controller('sew.control.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
-    $scope.mocha = mocha;
-    $scope.showanswer = true;
-    $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
-    $scope.controlSocket = mocha.livesocket;
-    $scope.validate = true;
-    $scope.pushQuestion = function(index){
-        $scope.controlSocket.emit('remoteControl',{appName:mocha.appName,p_id:index});
-        //$scope.mocha.sew_data[index].disable = true;
-    };
-    $scope.controlSocket.on('answer',function(data){
-        var realIndex = data.p_id;
-        var num = Number(data.raw_answer);
-        if(!('raw_answer' in $scope.mocha.sew_data[realIndex])){
-            $scope.mocha.sew_data[realIndex].raw_answer = [];
-            $scope.mocha.sew_data[realIndex].raw_answer.push(num);
-        }else{
-            $scope.mocha.sew_data[realIndex].raw_answer.push(num);
-        }
-        $scope.metricAnalysis(realIndex);
-        $scope.$apply();
-        
-    });
+    if(mocha.isAppNameSet(['io','tones'])){
+        $scope.mocha = mocha;
+        $scope.showanswer = true;
+        $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
+        $scope.controlSocket = mocha.webSocket();
+        $scope.validate = true;
+        $scope.pushQuestion = function(index){
+            $scope.controlSocket.emit('remoteControl',{appName:mocha.appName,p_id:index});
+            //$scope.mocha.sew_data[index].disable = true;
+        };
+        $scope.controlSocket.on('answer',function(data){
+            var realIndex = data.p_id;
+            var num = Number(data.raw_answer);
+            if(!('raw_answer' in $scope.mocha.sew_data[realIndex])){
+                $scope.mocha.sew_data[realIndex].raw_answer = [];
+                $scope.mocha.sew_data[realIndex].raw_answer.push(num);
+            }else{
+                $scope.mocha.sew_data[realIndex].raw_answer.push(num);
+            }
+            $scope.metricAnalysis(realIndex);
+            $scope.$apply();
+            
+        });
+    }else{
+        $state.go('/sewlogin');  
+    }
+    
     $scope.showResult = function(index){
         mocha.log($scope.mocha.sew_data[index]);
     }
@@ -5344,10 +5372,10 @@ myapp.controller('sew.control.controller', function($scope,$location,$state,$sta
             let qlow = low + quarter;
             let qmid = qlow + quarter;
             let qhigh = qmid + quarter;
-            let a_low = Math.round((question.raw_answer.filter(word=> low<word && word<qlow).length/total)*100);
+            let a_low = Math.round((question.raw_answer.filter(word=> low<=word && word<qlow).length/total)*100);
             let a_qlow = Math.round((question.raw_answer.filter(word=> qlow<=word && word<qmid).length/total)*100);
             let a_qmid = Math.round((question.raw_answer.filter(word=> qmid<=word && word<qhigh).length/total)*100);
-            let a_high = Math.round((question.raw_answer.filter(word=> qhigh<=word && word<qhigh).length/total)*100);
+            let a_high = Math.round((question.raw_answer.filter(word=> qhigh<=word && word<=high).length/total)*100);
             question.metrics = [
                 {name:`${low} - ${qlow - 1}`,val:a_low},
                 {name:`${qlow} - ${qmid - 1}`,val:a_qlow},
@@ -5704,11 +5732,7 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
 //andela CONTROLLERS BELOW
 myapp.controller('andela.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#3359df';
-    var jsScripts = [
-        'lib/tone.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js'
-    ];
-    mocha.addScripts(jsScripts);
+    //mocha.addScripts(jsScripts);
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu andela-color';
  
     
@@ -5780,7 +5804,7 @@ myapp.controller('andela.game.controller', function($scope,$location,$compile,$s
             im.crossOrigin = 'Anonymous';
             //perfect on mobile for any image dimensions (square, 3:4 ratio and 4:3 ratio)
             //good on desktop for only square and 4:3 ratio image dimensions
-            im.srcdefault = 'https://scontent-iad3-1.cdninstagram.com/vp/a7192d098e56d522ed528cf5efe378a7/5B1B0392/t51.2885-15/e35/27576648_1196500307153544_4673325211511160832_n.jpg';
+            im.srcdefault = 'https://scontent-yyz1-1.cdninstagram.com/vp/6514e74ccbb2ca45e99b59993c71f789/5B59267B/t51.2885-15/e35/24845274_530096207350422_600968630263349248_n.jpg';
             //only use instagram image links in url query
             im.src = location.hash.includes('q=') ? location.hash.split('=')[1].replace(/%2F/gi,'/') : im.srcdefault;
             
@@ -5978,11 +6002,20 @@ myapp.controller('andela.game.controller', function($scope,$location,$compile,$s
 
 myapp.controller('andela.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
     $scope.screen_big = false;
+    var jsScripts = [
+        'lib/tone.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js'
+    ];
     //if($scope.screen_big !== true){
         //This mimics a real life game loading thing. this can definitely be optimized later.
-        $timeout(function(){
-            $state.go('/andeladash');
-        },3000);
+        mocha.addScripts(jsScripts)
+        .catch((err)=>{throw new Error(err)})
+        .then((data)=>{
+            $timeout(function(){
+                $state.go('/andeladash');
+            },3000);
+        
+        })
     //}
     
 });

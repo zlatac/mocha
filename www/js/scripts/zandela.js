@@ -57,11 +57,7 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
 //andela CONTROLLERS BELOW
 myapp.controller('andela.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
     angular.element(document.querySelector('body'))[0].style.borderTopColor='#3359df';
-    var jsScripts = [
-        'lib/tone.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js'
-    ];
-    mocha.addScripts(jsScripts);
+    //mocha.addScripts(jsScripts);
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu andela-color';
  
     
@@ -133,7 +129,7 @@ myapp.controller('andela.game.controller', function($scope,$location,$compile,$s
             im.crossOrigin = 'Anonymous';
             //perfect on mobile for any image dimensions (square, 3:4 ratio and 4:3 ratio)
             //good on desktop for only square and 4:3 ratio image dimensions
-            im.srcdefault = 'https://scontent-iad3-1.cdninstagram.com/vp/a7192d098e56d522ed528cf5efe378a7/5B1B0392/t51.2885-15/e35/27576648_1196500307153544_4673325211511160832_n.jpg';
+            im.srcdefault = 'https://scontent-yyz1-1.cdninstagram.com/vp/6514e74ccbb2ca45e99b59993c71f789/5B59267B/t51.2885-15/e35/24845274_530096207350422_600968630263349248_n.jpg';
             //only use instagram image links in url query
             im.src = location.hash.includes('q=') ? location.hash.split('=')[1].replace(/%2F/gi,'/') : im.srcdefault;
             
@@ -331,11 +327,20 @@ myapp.controller('andela.game.controller', function($scope,$location,$compile,$s
 
 myapp.controller('andela.login.controller', function($scope,$location,$state,$stateParams,$http,$window,$timeout,mocha){
     $scope.screen_big = false;
+    var jsScripts = [
+        'lib/tone.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js'
+    ];
     //if($scope.screen_big !== true){
         //This mimics a real life game loading thing. this can definitely be optimized later.
-        $timeout(function(){
-            $state.go('/andeladash');
-        },3000);
+        mocha.addScripts(jsScripts)
+        .catch((err)=>{throw new Error(err)})
+        .then((data)=>{
+            $timeout(function(){
+                $state.go('/andeladash');
+            },3000);
+        
+        })
     //}
     
 });

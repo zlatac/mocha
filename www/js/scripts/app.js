@@ -124,7 +124,7 @@ var myapp = angular.module('starter', ['ionic'])
                 this.log($scope.data);
                 $scope.index++;
                 $scope.show_points = false;
-                //$scope.manualprice = false;
+                $scope.manualprice = false;
                 $scope.game = $scope.data[$scope.index];
                 $scope.progress = (($scope.index)/$scope.data.length)*100;
                 if(!this.safe($scope.game.options)){
@@ -510,21 +510,28 @@ var myapp = angular.module('starter', ['ionic'])
          
      };
 
-     this.addScripts = function(array){
+     this.addScripts = async function(array){
+        var promises = [];
         var hookScripts = function(url, src) {
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.src = url || null;
-            s.innerHTML = src || null;
-            document.getElementsByTagName("head")[0].appendChild(s);
+            return new Promise(function(resolve,reject){
+                var s = document.createElement("script");
+                s.type = "text/javascript";
+                s.onload = ()=>{resolve(url)};
+                s.onerror = ()=>{reject(`${url} did not load`)};
+                s.src = url || null;
+                s.innerHTML = src || null;
+                document.getElementsByTagName("head")[0].appendChild(s);
+            });
+            
         };
         array.forEach(function(item){
             var exist = document.querySelector('script[src="'+ item +'"]');
             if(!exist){
-                hookScripts(item);
+                promises.push(hookScripts(item));
             }
             
         });
+        return Promise.all(promises)
      };
 
      this.instagram = function(){
@@ -569,13 +576,13 @@ var myapp = angular.module('starter', ['ionic'])
         }        
      };
 
-     this.isAppNameSet = function(route,dependency){
+     this.isAppNameSet = function(dependency){
         var dependencyCounter = 0;
-        // dependency.forEach(function(item){
-        //     (item in window) ? dependencyCounter++ : null;
-        // });
-        if(!this.safe(this.appName)){
-            $state.go(route);
+        dependency.forEach(function(item){
+            (item in window) ? dependencyCounter++ : null;
+        });
+        if(!this.safe(this.appName) || dependencyCounter !== dependency.length){
+            //$state.go(route);
             return false;
         }
         return true
