@@ -11,6 +11,19 @@ myapp.directive('sewResultModal', function() {
     };
 });
 
+myapp.directive('pdxLoader', function() {
+    return {
+        templateUrl: 'views/sew/sew.loader.html'
+        
+    };
+});
+myapp.directive('sewAnalytics', function() {
+    return {
+        templateUrl: 'views/sew/sew.analytics.html'
+        
+    };
+});
+
 myapp.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state("/sewgame", {
@@ -121,6 +134,8 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     $scope.hide_question = false;
     $scope.show_radio = false;
     $scope.showMetrics = false;
+    $scope.comment = '';
+    $scope.commentDisplay = false;
     mocha.sew = true;
     mocha.appName = 'mocha_'+'sew';
     if(mocha.isAppNameSet(['io','tones'])){
@@ -130,19 +145,27 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
         //mocha.livesocket = $scope.socket;
         $scope.socket.on('connect', function(data) {
             $scope.isConnected = true;
+            $scope.socket.emit('join',{appName:mocha.appName});
             //console.log(data, 'connected my nigga');
         });
-        $scope.socket.emit('join','we in this bitch son');
+        //$scope.socket.emit('join','we in this bitch son');
         $scope.socket.on('question', function(data){
             mocha.log(data)
             if(data.appName === mocha.appName){
-                //$scope.game = $scope.data[data.p_id];
-                $scope.index = data.p_id - 1;
-                $scope.sewNextProduct();
-                $scope.socketLoader = false;
-                $scope.showMetrics = false;
-                mocha.tones('f',5,500);
-                $scope.$apply();
+                if('task' in data && data.task === 'question'){
+                    //$scope.game = $scope.data[data.p_id];
+                    $scope.index = data.p_id - 1;
+                    $scope.sewNextProduct();
+                    $scope.socketLoader = false;
+                    $scope.showMetrics = false;
+                    mocha.tones('f',5,500);
+                    
+                }
+                if('task' in data && data.task === 'comment'){
+                    $scope.commentDisplay = data.comment;
+                    mocha.tones('f',5,500);
+                }
+                $scope.$apply();                
             }
         });
         $scope.socket.on('sendMetrics',function(data){
@@ -231,6 +254,15 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
         delete $scope.socket;
         $state.go('/sewcontrol')
     }
+    $scope.sendComment = function(){
+        mocha.log($scope.comment)
+        if($scope.comment !== ''){
+            let post = {post:$scope.comment};
+            $scope.socket.emit('audience',{appName:mocha.appName,task:'comment',comment:post});
+            $scope.comment = '';
+        }
+        
+    }
     
 });
 
@@ -251,19 +283,6 @@ myapp.controller('sew.login.controller', function($scope,$ionicHistory,$state,$s
     
 });
 
-myapp.directive('pdxLoader', function() {
-    return {
-        templateUrl: 'views/sew/sew.loader.html'
-        
-    };
-});
-myapp.directive('sewAnalytics', function() {
-    return {
-        templateUrl: 'views/sew/sew.analytics.html'
-        
-    };
-});
-
 myapp.controller('sew.control.controller', function($scope,$location,$state,$stateParams,$http,$window,$interval,mocha){
     if(mocha.isAppNameSet(['io','tones'])){
         $scope.mocha = mocha;
@@ -271,21 +290,39 @@ myapp.controller('sew.control.controller', function($scope,$location,$state,$sta
         $scope.showEndDate = mocha.prizeEndDate.format('hh:mm a, DD/MM/YYYY');
         $scope.controlSocket = mocha.webSocket();
         $scope.validate = true;
+        $scope.message = false;
+        $scope.toggle = false;
+        $scope.toggleCounter = 1;
+        $scope.commentData = [];
+        $scope.comment = 1;
         $scope.pushQuestion = function(index){
-            $scope.controlSocket.emit('remoteControl',{appName:mocha.appName,p_id:index});
+            if($scope.comment % 2 === 0){
+                //close comments when new questions are served
+                $scope.allowComments();  
+            }
+            $scope.controlSocket.emit('remoteControl',{appName:mocha.appName,p_id:index,task:'question'});
             //$scope.mocha.sew_data[index].disable = true;
         };
         $scope.controlSocket.on('answer',function(data){
-            var realIndex = data.p_id;
-            var num = Number(data.raw_answer);
-            if(!('raw_answer' in $scope.mocha.sew_data[realIndex])){
-                $scope.mocha.sew_data[realIndex].raw_answer = [];
-                $scope.mocha.sew_data[realIndex].raw_answer.push(num);
-            }else{
-                $scope.mocha.sew_data[realIndex].raw_answer.push(num);
+            if(data.appName === mocha.appName){
+                if('task' in data && data.task === 'question'){
+                    var realIndex = data.p_id;
+                    var num = Number(data.raw_answer);
+                    if(!('raw_answer' in $scope.mocha.sew_data[realIndex])){
+                        $scope.mocha.sew_data[realIndex].raw_answer = [];
+                        $scope.mocha.sew_data[realIndex].raw_answer.push(num);
+                    }else{
+                        $scope.mocha.sew_data[realIndex].raw_answer.push(num);
+                    }
+                    $scope.metricAnalysis(realIndex);
+                }
+                if('task' in data && data.task === 'comment'){
+                    $scope.commentData.push(data.comment);
+                    mocha.tones('f',5,500);
+                }
+                
+                $scope.$apply();
             }
-            $scope.metricAnalysis(realIndex);
-            $scope.$apply();
             
         });
     }else{
@@ -340,6 +377,22 @@ myapp.controller('sew.control.controller', function($scope,$location,$state,$sta
         $scope.controlSocket.emit('analytics',{appName:mocha.appName,p_id:index,metrics:question.metrics});
         mocha.log(question);
         return question.metrics;
+    };
+    $scope.toggleFab = function(){
+        $scope.toggleCounter++;
+        if($scope.toggleCounter % 2 === 0){
+            $scope.toggle = true;
+        }else{
+            $scope.toggle = false;
+        }
+    };
+    $scope.allowComments = function(){
+        $scope.comment++;
+        if($scope.comment % 2 === 0){
+            $scope.controlSocket.emit('remoteControl',{appName:mocha.appName,task:'comment',comment:true})
+        }else{
+            $scope.controlSocket.emit('remoteControl',{appName:mocha.appName,task:'comment',comment:false})
+        }
     }
     
 });

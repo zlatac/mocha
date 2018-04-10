@@ -54,7 +54,7 @@ var myapp = angular.module('starter', ['ionic'])
         url: "/login",
         templateUrl : "views/login.html"
       });
-    $urlRouterProvider.otherwise('/sewlogin');
+    $urlRouterProvider.otherwise('/odessulogin');
 })
 
 .run(function($ionicPlatform) {
@@ -563,7 +563,7 @@ var myapp = angular.module('starter', ['ionic'])
 
      this.submitPdx = function($scope){
         var answer = this.submitPrediction($scope);
-        var gamedata = {appName:$scope.appName, p_id:$scope.index, raw_answer:answer}
+        var gamedata = {appName:this.appName, p_id:$scope.index, raw_answer:answer,task:'question'}
         $scope.socket.emit('audience',gamedata);
      };
 

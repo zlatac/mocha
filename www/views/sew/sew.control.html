@@ -1,6 +1,13 @@
 <ion-view title="/sewanswer">
 	<!-- <sew-menu-header></sew-menu-header>
 	<menu-button ng-init="sew=true"></menu-button> -->
+	<a class="btn btn-floating btn-sew" ng-click="toggleFab()"  
+	   style="position:absolute;bottom:4%;right:4%;width:70px;height:70px" >
+		<i class="material-icons" style="font-size:35px;margin-top:20%;" 
+		   ng-class="{'hide':toggle}">message</i>
+		<i class="material-icons" style="font-size:35px;margin-top:20%;"
+		   ng-class="{'hide':!toggle}">close</i>
+	</a>
 	<loader ng-class="{'hide': !loader}"></loader>
 	<!-- <sew-analytics></sew-analytics> -->
     <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}" >
@@ -9,7 +16,7 @@
 				<input class="col" type="text" name="passtext" ng-model="mocha.passtext" placeholder="Password" style="margin-top: 20%;"/>
 				<button class="btn list-me col" ng-click="authorize()">Authorize</button>
 			</row>
-            <row ng-class="{'hide':!validate}">
+            <row ng-class="{'hide':!validate || toggle}">
 				<ul class="list animated" ng-class="{'fadeInUp': !loader}">
 					<li class="item item z-depth-1" ng-click="getList()">
 						<!--<label class="toggle">
@@ -49,7 +56,7 @@
 							<div class="row"  style="margin-top: 20px;" ng-repeat="z in x.metrics">
 								<div class="col col-30">{{z.name}}:</div>
 								<div class="col col-50">
-									<div class="progress" style="margin-top:0px;background-color:#dadcda;">
+									<div class="progress" style="background-color:#dadcda;">
 										<div class="determinate btn-black" style="width:{{z.val}}%"></div>
 									</div>
 								</div>
@@ -76,7 +83,38 @@
 					
 				</ul>
                
-			</row>           
+			</row>
+			<row ng-class="{'hide':!validate || !toggle}">
+					<ul class="list animated" ng-class="{'fadeInUp': !loader}">
+						<li class="item item z-depth-1" >
+							<label class="toggle">
+							   <input type="checkbox" ng-model="graduate" ng-change="allowComments()">
+							   <div class="track">
+								 <div class="handle"></div>
+							   </div>
+							</label>
+							<!-- <span class="badge badge-stable z-depth-1 hide">Top 20</span>
+							<span class="left"><i class="material-icons">refresh</i></span> -->
+						 Audience Questions
+						</li>
+	
+						<li class="item animated fadeInUp" ng-repeat="x in commentData" 
+						style="border-radius: 30px;border: solid 1px var(--sew);">
+							 <div class="row" style="margin-bottom:0px;">
+								 <div class="col col-10"> {{$index + 1}}</div>
+								 <!-- <div class="col col-10" ng-if="$index == 0"><i class="fa fa-trophy" style="font-size:22px"></i></div> -->
+								 <div class="col col-90">
+									 <p style="white-space:normal;">{{x.post}}</p>
+								 </div>
+								 <!-- <div class="col">{{x.points| number:0}} Pts</div> -->
+							 </div>
+							 
+						</li>
+						
+						
+					</ul>
+				   
+				</row>
         
         </div>
         

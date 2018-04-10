@@ -19,11 +19,23 @@
                             <div class="indeterminate btn-sew"></div>
                         </div>
                     </div>
+                    <div class="row" ng-class="{'hide': !commentDisplay}">
+                        <div class="col" style="background-color:white;border:solid 1px #3bca3b;border-radius:30px;padding:5px">
+                            <div class="col col-80">
+                                <textarea style="background-color:white;color:grey;font-size: 16px;" ng-model="comment"
+                                          placeholder="Send a question"></textarea>
+                            </div>
+                            <div class="col col-20">
+                                <i class="material-icons" ng-click="sendComment()" 
+                                   style="margin-top:20%;color:lightgrey;font-size: 30px;">send</i>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row"  style="margin-top: 20px;" ng-repeat="z in metrics.metrics" 
                          ng-class="{'hide': !showMetrics}">
                         <div class="col col-30">{{z.name}}:</div>
                         <div class="col col-50">
-                            <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                            <div class="progress" style="background-color:#dadcda;">
                                 <div class="determinate btn-black" style="width:{{z.val}}%"></div>
                             </div>
                         </div>

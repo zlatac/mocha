@@ -27,31 +27,39 @@ app.use(express.static(path.resolve(__dirname, 'www')));
 // });
 
 //websocket testing code
+var dataStore = {};
 io.on('connection', function(client) {  
     console.log('Client connected...');
+    let socketMap = {remoteControl: 'question'};
 
     client.on('join', function(data) {
-        console.log(data);
-        client.emit('messages', 'Hello from server');
+        //console.log(client.id);
+        // client.emit('messages', 'Hello from server');
+        if(data.appName in dataStore){
+            //this is key for emitting to a specific client using the client id
+            io.sockets.connected[client.id].emit('question',dataStore[data.appName]);
+            //console.log(dataStore[data.appName]);
+        }
     });
 
     client.on('messages', function(data) {
         //client.emit('broad', data);
         client.broadcast.emit('broad',data);
-        console.log(data, client.id);
+        //console.log(data, client.id);
     });
 
     client.on('remoteControl', function(data) {
-        console.log(data);
+        //console.log(data);
+        dataStore[data.appName] = data;
         client.broadcast.emit('question', data);
     });
     
     client.on('audience', function(data) {
-        console.log(data);
+        //console.log(data);
         client.broadcast.emit('answer', data);
     });
     client.on('analytics', function(data) {
-        console.log(data);
+        //console.log(data);
         client.broadcast.emit('sendMetrics', data);
     });
 });
