@@ -54,7 +54,7 @@ var myapp = angular.module('starter', ['ionic'])
         url: "/login",
         templateUrl : "views/login.html"
       });
-    $urlRouterProvider.otherwise('/odessulogin');
+    $urlRouterProvider.otherwise('/sewlogin');
 })
 
 .run(function($ionicPlatform) {
@@ -410,14 +410,9 @@ var myapp = angular.module('starter', ['ionic'])
      };
 
      this.socket = function(){
-        // var socket = io();
-        // socket.on('connect', function(data) {
-        //    socket.emit('join', 'Hello World from client');
-        // });
-        // socket.on('broad', function(data) {
-        //         this.log(data);
-        //   }); 
-        // this.log(io);
+        if(this.devMode){
+            return io('https://mochanow.com');
+        }
         return io();
      };
 
@@ -5180,7 +5175,7 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     $scope.hide_question = false;
     $scope.show_radio = false;
     $scope.showMetrics = false;
-    $scope.comment = '';
+    $scope.mocha.comment = '';
     $scope.commentDisplay = false;
     mocha.sew = true;
     mocha.appName = 'mocha_'+'sew';
@@ -5301,11 +5296,11 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
         $state.go('/sewcontrol')
     }
     $scope.sendComment = function(){
-        mocha.log($scope.comment)
-        if($scope.comment !== ''){
-            let post = {post:$scope.comment};
+        mocha.log($scope.mocha.comment)
+        if($scope.mocha.comment !== ''){
+            let post = {post:$scope.mocha.comment};
             $scope.socket.emit('audience',{appName:mocha.appName,task:'comment',comment:post});
-            $scope.comment = '';
+            $scope.mocha.comment = '';
         }
         
     }

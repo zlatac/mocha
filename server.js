@@ -52,6 +52,17 @@ io.on('connection', function(client) {
         //console.log(data);
         dataStore[data.appName] = data;
         client.broadcast.emit('question', data);
+        dataStore.timeout = function(e){
+            //this empties the question data saved after 20 minutes
+            let minutes = 20*60000; //20 minutes
+            if(!('timeout' in dataStore)){
+                return setTimeout(function(){delete dataStore[e];},minutes);
+            }else{
+                clearTimeout(dataStore.timeout);
+                return setTimeout(function(){delete dataStore[e]; },minutes);
+            }
+            
+        }(data.appName);
     });
     
     client.on('audience', function(data) {

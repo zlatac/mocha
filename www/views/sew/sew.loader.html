@@ -1,5 +1,5 @@
-<div class="loader">
-    <div class="modal-backdrop center-align" style="margin-top:70px">
+<div class="loader" style="padding-top:0px;">
+    <div class="center-align" style="margin-top:70px;position:absolute;left: 0;z-index: 10;width: 100%;height: 100%;">
         <row>
             <div class="col">
                 <div class="card-panel z-depth-1" style="margin-top:60px;">
@@ -22,7 +22,7 @@
                     <div class="row" ng-class="{'hide': !commentDisplay}">
                         <div class="col" style="background-color:white;border:solid 1px #3bca3b;border-radius:30px;padding:5px">
                             <div class="col col-80">
-                                <textarea style="background-color:white;color:grey;font-size: 16px;" ng-model="comment"
+                                <textarea style="background-color:white;color:grey;font-size: 16px;" ng-model="mocha.comment"
                                           placeholder="Send a question"></textarea>
                             </div>
                             <div class="col col-20">
