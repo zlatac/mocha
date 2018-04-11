@@ -6,7 +6,7 @@
         select{color: white;background: linear-gradient(135deg,var(--sew),#232323);}
         </style>
         <pdx-loader ng-class="{'hide': socketLoader === false}"></pdx-loader>
-        <div class="center-align">
+        <div class="center-align" ng-class="{'hide': socketLoader === true}">
           <div class="row">
             <div class="col">
               <div class="card">
