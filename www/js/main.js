@@ -2167,7 +2167,7 @@ myapp.controller('carla.dash.controller', function($scope,$location,$rootScope,$
             ]
         },
         {
-            url:'https://media0.giphy.com/media/3uvOIKTBsEOHK/giphy.gif',
+            url:'https://media.giphy.com/media/y8btJ3OOxT4sg/giphy.gif',
             price:'3',
             question:'Conversation is going great, and you like this guy. What are the next steps?',    
             min:'0',
