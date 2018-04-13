@@ -54,7 +54,7 @@ var myapp = angular.module('starter', ['ionic'])
         url: "/login",
         templateUrl : "views/login.html"
       });
-    $urlRouterProvider.otherwise('/sewlogin');
+    $urlRouterProvider.otherwise('/carlalogin');
 })
 
 .run(function($ionicPlatform) {
@@ -531,26 +531,22 @@ var myapp = angular.module('starter', ['ionic'])
 
      this.instagram = function(){
         fetch('https://www.instagram.com/bohnchild/').then((res)=>{
-            return res.text();
-            
-        }).then((data)=>{
-            parser = new DOMParser();
-            let doc = parser.parseFromString(data,'text/html')
-            let node = doc.querySelector('meta[property="og:image"]')
-        
-            console.log(node.attributes[1].value);
+             return  res.text();    
+        })
+        .then((data)=>{
+            // parser = new DOMParser();
+            // let doc = parser.parseFromString(data,'text/html')
+            // let node = doc.querySelector('meta[property="og:image"]')
+            // console.log(node.attributes[1].value);
+            let sift = data.match(/og:image.+(http.+"")/)[1];
+            //json object with everything regex /window._sharedData = ({.+);/
+             console.log(sift);
         });
      };
 
      this.webSocket =  function(){
         if('io' in window){
             var socket = io();
-            // socket.on('connect', function(data) {
-            // socket.emit('join', 'Hello World from client');
-            // });
-            // socket.on('messages', function(data) {
-            //         console.log(data);
-            // });
             return socket;
         }
                 

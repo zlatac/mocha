@@ -1,0 +1,87 @@
+<ion-view title="/carlagame">
+	<carla-result-modal></carla-result-modal>
+    <carla-menu-header></carla-menu-header>
+	<menu-button></menu-button>
+    <ion-content ng-class="{'has-header':test.menuhide%2 !== 0}">
+        <style>
+        select{color: white;background: linear-gradient(135deg,var(--carla),#232323);}
+        </style>
+        <div class="center-align">
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-image">
+                  <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                      <div class="determinate btn-black" style="width: {{progress}}%"></div>
+                  </div>
+                  <div class="chip animated bounce" style="left:0;bottom:0;z-index:5;margin-left:5px;" 
+                       ng-class="{hide:game.subcategory == ''|| show_points == true}">{{game.subcategory}}</div>
+                  <img ng-src="{{game.url}}" ng-style="newstyle = (show_points == true)?{filter:'blur(10px)'}:null">
+				  <div class="shield"></div>
+                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-carla points-box"
+                     ng-class="{'hide': show_points == true}">
+                      <span>750 </span><span class="tiny-points">pts</span>
+                  </a>
+                  <a class="btn-floating btn-large halfway-fab waves-effect waves-light btn-green w3-animate-bottom points-box"
+                     ng-class="{'hide': show_points !== true}">
+                      <span>{{test.point_earned}}/750 </span><span class="tiny-points">pts</span>
+                  </a>
+                  <div class="qlayer" ng-class="{'hide':show_points === true || hide_question === true}" ng-bind-html="game.question" on-touch="hide_question = true" on-release="hide_question = false"></div>
+                </div>
+                <div class="card-content" style="padding-top: 50px;">
+                  <p class="price truncate" ng-click="inputShow()" ng-class="{hide:manualprice !== false}" style="font-size:24px;">
+                      <span ng-class="{hide:isPredict() !== true}">{{game.context || '$'}}</span><span ng-class="{hide:mocha.safe(game.options)||show_radio}">{{test.price}}</span><span ng-class="{hide:isPredict() == true}">{{game.context}}</span> 
+                      <span class="right"><i class="material-icons animated bounceIn" ng-class="{hide:show_points == true||mocha.safe(game.options)||show_radio}">edit</i></span>
+                  </p>
+    
+                  <div ng-class="{hide: manualprice !== true}">
+                      <form name="myForm" ng-submit="submitPrediction()">
+                          <input type="number" ng-model="test.second_price" format-price style="font-size:39px;">
+                          <input type="submit" value="Submit" hidden>
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col z-depth-2" style="padding-bottom:15px;margin-top:-8%;">
+                <div class="progress" style="margin-top:0px;background-color:#dadcda;">
+                    <div class="determinate btn-black" style="width: {{progress}}%"></div>
+                </div>
+                <form ng-class="{hide: show_points == true}" name="form">
+                    <p class="range-field" ng-if="manualprice == false && !show_radio && !mocha.safe(game.options)">
+                      <input type="range" class="carla-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price"/>
+                    </p>
+                    <div ng-if="mocha.safe(game.options)">
+                        <select name="size" class="browser-default" ng-model="test.select" ng-change="switchUp(game)">
+                            <option value="" disabled>Options</option>
+                            <option  ng-repeat="x in game.options" ng-value="$index">{{x.answer}}</option>
+                        </select>
+                    </div>
+                    <div class="row" ng-if="show_radio">
+                        <div class="col" ng-repeat="x in game.picOption">
+                            <input class="with-gap" name="group1" type="radio" id="{{'test'+$index}}" ng-model="test.price_radio" ng-value="$index"
+                                   ng-click="radioFunc()"/>
+                            <label for="{{'test'+$index}}" style="color:black;">{{mocha.letterOption[$index]}}</label>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-black animated fadeIn"
+                   ng-click="carlaSubmit()" 
+                   ng-disabled="(show_radio && !mocha.safe(form.group1.$modelValue)) || (mocha.safe(game.options) && test.select == '')"
+                   ng-class="{'hide': show_points == true}" id="enter">
+                    <span>ENTER</span>
+                </a>
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-carla"
+                   ng-class="{'hide': show_points !== true}"
+				   ng-click="carlaNextProduct()">
+                    <span>NEXT</span> <i class="material-icons right">chevron_right</i>
+                </a>
+            </div>
+
+        </div>
+     </div>
+    </ion-content>
+</ion-view>
