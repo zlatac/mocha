@@ -1146,7 +1146,8 @@ var myapp = angular.module('starter', ['ionic'])
             $scope.loader = true;
             $http.get(url + database_table)
             .then(function(res){
-                $scope.result = res.data;
+                $scope.result = res.data.game;
+                $scope.visitors = res.data.traffic.total;
                 if($scope.result.length !== 0){
                     var lastitem = $scope.result.length - 1;
                     $scope.firstplayer = moment($scope.result[0].time).format('hh:mm a, DD/MM/YYYY');
