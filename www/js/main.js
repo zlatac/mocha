@@ -1232,7 +1232,7 @@ var myapp = angular.module('starter', ['ionic'])
             mocha.log(basket,'report',output,'output');
             return {output:output,time:basket['time']};
         }        
-	});
+    });
 //BORO DIRECTIVES
 myapp.directive('boroMenuHeader', function() {
     return {
