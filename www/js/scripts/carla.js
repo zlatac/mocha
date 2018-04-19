@@ -230,8 +230,8 @@ myapp.controller('carla.dash.controller', function($scope,$location,$rootScope,$
     $scope.data = [];
     angular.copy($scope.carla_data,$scope.data);
     $scope.carla = true;
-    $scope.prizeStartDate = moment('2018/02/01','YYYY/MM/DD');
-    $scope.prizeEndDate = moment('2019/04/03 23:59','YYYY/MM/DD kk:mm');
+    $scope.prizeStartDate = moment('2018/04/19','YYYY/MM/DD');
+    $scope.prizeEndDate = moment('2019/04/25 23:59','YYYY/MM/DD kk:mm');
     $scope.gameEndTime = moment('2017/12/27 18:00','YYYY/MM/DD kk:mm');
     //$scope.game = $scope.data[0];
     $scope.index = 0;
