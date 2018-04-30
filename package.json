@@ -1,5 +1,5 @@
 {
-    "name": "myNewProject",
+    "name": "mochax",
     "version": "0.0.1",
     "description": "An Ionic project",
     "dependencies": {
@@ -50,7 +50,7 @@
             "browser"
         ]
     },
-    "scripts":{
+    "scripts": {
         "autoGulp": "gulp ugly",
         "postinstall": "npm run autoGulp"
     }

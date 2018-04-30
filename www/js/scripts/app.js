@@ -480,9 +480,10 @@ var myapp = angular.module('starter', ['ionic'])
         }
         var entryDate = moment(localStorage[entryDateText]);
         var visitedPreviously = entryDate.isAfter(this.prizeStartDate) && entryDate.isBefore(this.prizeEndDate);
+        var isGameEnded = this.prizeEndDate.isBefore(moment());
         //var http = $http.post.bind(this);
         var self = this;
-        if(!visitedPreviously || firstTime){
+        if((!visitedPreviously && !isGameEnded) || firstTime){
             // send to backend for tracking
             $http.post('https://styleminions.co/api/traffic?appname='+app+'&time='+dateTime)
             .then(function(res){
