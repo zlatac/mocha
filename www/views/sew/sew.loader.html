@@ -6,7 +6,7 @@
                 <div class="card-panel z-depth-1" style="margin-top:60px;">
                     <div class="row">
                         <a ng-click="goToControl()" >
-                            <img class="circle profile z-depth-3" ng-src="https://pbs.twimg.com/profile_images/912429520933707776/G1mvD_50_400x400.jpg"
+                            <img class="circle profile z-depth-3" ng-src="https://pbs.twimg.com/profile_images/950744377034444801/5K_Ce0r-_400x400.jpg"
                             ng-class="{'pdx-green': isConnected, 'pdx-grey': !isConnected}">
                         </a>
                     </div>
@@ -27,8 +27,10 @@
                                           placeholder="Send a question"></textarea>
                             </div>
                             <div class="col col-20">
-                                <i class="material-icons" ng-click="sendComment()" 
+                                <i class="material-icons" ng-class="{'hide': mocha.comment !== ''}"
                                    style="margin-top:20%;color:lightgrey;font-size: 30px;">send</i>
+                                <i class="material-icons animated bounceIn" ng-click="sendComment()" ng-class="{'hide': mocha.comment === ''}"
+                                   style="margin-top:20%;color:var(--sew);font-size: 30px;">send</i>
                             </div>
                         </div>
                     </div>

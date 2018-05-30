@@ -48,7 +48,7 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
 
 //sew CONTROLLERS BELOW
 myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
-    angular.element(document.querySelector('body'))[0].style.borderTopColor='#ff0000';
+    angular.element(document.querySelector('body'))[0].style.borderTopColor='#1F304F';
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu sew-color';
     if(mocha.checkWindow() === true){
         $state.go('/');
@@ -159,11 +159,13 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
                     $scope.socketLoader = false;
                     $scope.showMetrics = false;
                     mocha.tones('f',5,500);
+                    mocha.vibrate();
                     
                 }
                 if('task' in data && data.task === 'comment'){
                     $scope.commentDisplay = data.comment;
                     mocha.tones('f',5,500);
+                    mocha.vibrate();
                 }
                 $scope.$apply();                
             }
@@ -319,6 +321,7 @@ myapp.controller('sew.control.controller', function($scope,$location,$state,$sta
                 if('task' in data && data.task === 'comment'){
                     $scope.commentData.push(data.comment);
                     mocha.tones('f',5,500);
+                    mocha.vibrate()
                 }
                 
                 $scope.$apply();
