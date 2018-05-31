@@ -267,7 +267,9 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     }
     $scope.scroll = function(){
         var y = angular.element(document.querySelector('#submit-button'))[0];
-        y.scrollIntoView(true);
+        if(mocha.safe(y)){
+            y.scrollIntoView(true);
+        }        
     }
     
 });
