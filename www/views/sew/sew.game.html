@@ -27,7 +27,7 @@
                      ng-class="{'hide': show_points !== true}">
                       <span>{{test.point_earned}}/750 </span><span class="tiny-points">pts</span>
                   </a>
-                  <div class="qlayer" ng-class="{'hide':show_points == true || hide_question == true}" ng-bind-html="game.question" on-touch="hide_question = true" on-release="hide_question = false"></div>
+                  <div class="qlayer" ng-class="{'hide':show_points == true || hide_question == true}" ng-bind-html="game.question"></div>
                 </div>
                 <div class="card-content" style="padding-top: 50px;">
                   <p class="price" ng-click="inputShow()" ng-class="{hide:manualprice !== false}" style="font-size:24px;">
@@ -53,7 +53,7 @@
                 </div>
                 <form ng-class="{hide: show_points == true}" name="form">
                     <p class="range-field" ng-if="manualprice == false && !show_radio && !mocha.safe(game.options)">
-                      <input type="range" class="sew-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price"/>
+                      <input type="range" class="sew-range" min="{{game.min || 0}}" max="{{game.max || 500}}" ng-model="test.price" ng-change="scroll()"/>
                     </p>
                     <div ng-if="mocha.safe(game.options)">
                         <select name="size" class="browser-default" ng-model="test.select" ng-change="switchUp(game)">
@@ -75,7 +75,7 @@
                     </div>
                 </form>
                 <br>
-                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-black animated fadeIn"
+                <a class="waves-effect waves-light btn-large btn-full z-depth-1 btn-black animated fadeIn" id="submit-button"
                    ng-click="sewSubmit()" 
                    ng-disabled="(show_radio && !mocha.safe(form.group1.$modelValue)) || (mocha.safe(game.options) && test.select == '')"
                    ng-class="{'hide': show_points == true}" id="enter">

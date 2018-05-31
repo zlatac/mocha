@@ -159,13 +159,11 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
                     $scope.socketLoader = false;
                     $scope.showMetrics = false;
                     mocha.tones('f',5,500);
-                    mocha.vibrate();
                     
                 }
                 if('task' in data && data.task === 'comment'){
                     $scope.commentDisplay = data.comment;
                     mocha.tones('f',5,500);
-                    mocha.vibrate();
                 }
                 $scope.$apply();                
             }
@@ -209,6 +207,7 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
         }else{
             $scope.show_radio = false;
         }
+        $scope.scroll();
     };
     
     $scope.sewSubmit = function(){
@@ -251,6 +250,7 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     $scope.radioFunc = function(){
         $scope.test.price = $scope.test.price_radio;
         $scope.game.context = ($scope.test.price_radio === '1')? 'yes' : 'no';
+        $scope.scroll();
     };
     $scope.goToControl = function(){
         delete $scope.socket;
@@ -264,6 +264,10 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
             $scope.mocha.comment = '';
         }
         
+    }
+    $scope.scroll = function(){
+        var y = angular.element(document.querySelector('#submit-button'))[0];
+        y.scrollIntoView(true);
     }
     
 });

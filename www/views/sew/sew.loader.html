@@ -6,14 +6,15 @@
                 <div class="card-panel z-depth-1" style="margin-top:60px;">
                     <div class="row">
                         <a ng-click="goToControl()" >
-                            <img class="circle profile z-depth-3" ng-src="https://pbs.twimg.com/profile_images/950744377034444801/5K_Ce0r-_400x400.jpg"
-                            ng-class="{'pdx-green': isConnected, 'pdx-grey': !isConnected}">
+                            <img class="circle profile z-depth-3 animated infinite" ng-src="https://pbs.twimg.com/profile_images/950744377034444801/5K_Ce0r-_400x400.jpg"
+                            ng-class="{'pdx-green': isConnected, 'pdx-grey': !isConnected, 'flash': commentDisplay, 'pulse': !commentDisplay}">
                         </a>
                     </div>
                     <div class="clearfix"></div>
                     <div class="row">
                         <div class="col" ng-class="{'hide': isConnected}">Connecting...</div>
-                        <div class="col" ng-class="{'hide': !isConnected}">Waiting for a question...</div>
+                        <div class="col" ng-class="{'hide': !isConnected || commentDisplay}">Waiting for a question...</div>
+                        <div class="col" ng-class="{'hide': !isConnected || !commentDisplay}">Send the panel a question...</div>
                     </div>
                     <div class="row">
                         <div class="progress" style="margin-top:0px;background-color:#dadcda;">

@@ -417,6 +417,7 @@ var myapp = angular.module('starter', ['ionic'])
      };
 
      this.tones = function(key, octave, release, attack,type){
+        this.resumeAudioContext() //By default thanks to the guys at chrome audio context is suspended till user interaction
         tones.release = release || tones.release;
         tones.attack = attack || tones.attack;
         tones.type = type || tones.type;
@@ -578,6 +579,14 @@ var myapp = angular.module('starter', ['ionic'])
             return false;
         }
         return true
+     };
+
+     this.resumeAudioContext =  function(){
+        //fucking chrome suspends audio context till the user acts on an event in the browser
+        if(tones.context.state.includes('suspended')){
+            tones.context.resume()
+            .then(()=>{console.log('audio context back online')})
+        }
      };
 	 
 	 return this;
