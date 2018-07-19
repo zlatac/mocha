@@ -6,7 +6,7 @@
                 <div class="card-panel z-depth-1" style="margin-top:60px;">
                     <div class="row">
                         <a ng-click="goToControl()" >
-                            <img class="circle profile z-depth-3 animated infinite" ng-src="https://pbs.twimg.com/profile_images/950744377034444801/5K_Ce0r-_400x400.jpg"
+                            <img class="circle profile z-depth-3 animated infinite" ng-src="https://scontent-yyz1-1.cdninstagram.com/vp/1bbad4dbdc73d46931c6b98dc740eca1/5BD35656/t51.2885-19/s150x150/35294448_1969978936367993_3389425110094970880_n.jpg"
                             ng-class="{'pdx-green': isConnected, 'pdx-grey': !isConnected, 'flash': commentDisplay, 'pulse': !commentDisplay}">
                         </a>
                     </div>
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="row"  style="margin-top: 20px;" ng-repeat="z in metrics.metrics" 
-                         ng-class="{'hide': !showMetrics}">
+                         ng-class="{'hide': !showMetrics}" ng-show="z.name !== 'none'">
                         <div class="col col-30">{{z.name}}:</div>
                         <div class="col col-50">
                             <div class="progress" style="background-color:#dadcda;">

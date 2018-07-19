@@ -53,7 +53,7 @@
 							 <div class="col"><a class="btn" ng-click="x.hide=true" style="background-color:#dc0e0e;"><i class="material-icons">delete</i></a></div>
 						 </div>
 						 <div ng-class="{'hide': !x.showAnalytic}" style="margin:0px">
-							<div class="row"  style="margin-top: 20px;" ng-repeat="z in x.metrics">
+							<div class="row"  style="margin-top: 20px;" ng-repeat="z in x.metrics" ng-show="z.name !== 'none'">
 								<div class="col col-30">{{z.name}}:</div>
 								<div class="col col-50">
 									<div class="progress" style="background-color:#dadcda;">

@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
-var sass = require('gulp-sass');
+//var sass = require('gulp-sass');
 //var uglify = require('gulp-uglify');
 var uglify = require('gulp-uglify-es').default;
 var minifyCss = require('gulp-minify-css');
@@ -13,7 +13,7 @@ var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass','mix']);
+gulp.task('default', ['mix']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')

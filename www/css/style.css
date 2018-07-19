@@ -16,8 +16,9 @@
 :root{
   --odessu: #0071bc;
   --nudnik: #f0595d;
-  --sew: #1F304F;
+  --sew: #f5470e;
   --carla: #FF69B4;
+  --ama: #1F304F;
 }
 body {
   text-transform: capitalize;

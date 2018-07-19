@@ -58,7 +58,9 @@
                     <div ng-if="mocha.safe(game.options)">
                         <select name="size" class="browser-default" ng-model="test.select" ng-change="switchUp(game)">
                             <option value="" disabled>Options</option>
-                            <option  ng-repeat="x in game.options" ng-value="$index">{{x.answer}}</option>
+                            <option  ng-repeat="x in game.options" ng-value="$index" ng-disabled="x.answer === 'none'">
+                                {{x.answer}}
+                            </option>
                         </select>
                     </div>
                     <div class="row" ng-if="show_radio">

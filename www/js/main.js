@@ -5496,7 +5496,7 @@ myapp.config(function($stateProvider, $urlRouterProvider) {
 
 //sew CONTROLLERS BELOW
 myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$state,$stateParams,$http,$window,$timeout,mocha){
-    angular.element(document.querySelector('body'))[0].style.borderTopColor='#1F304F';
+    angular.element(document.querySelector('body'))[0].style.borderTopColor='#f5470e';
     //angular.element(document.querySelector('a.btn-menu.main-color'))[0].className = 'btn-menu sew-color';
     if(mocha.checkWindow() === true){
         $state.go('/');
@@ -5504,62 +5504,198 @@ myapp.controller('sew.dash.controller', function($scope,$location,$rootScope,$st
     
     $scope.sew_data = [
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/112902388a70330909948c7b3fc394be/5B51E6D4/t51.2885-15/e35/26157494_1158900284244745_486437155447504896_n.jpg',
-            price:'10',
-            question:'How many bathtubs of water do you save not taking a shower for 12 weeks?',
-            min:'3',
-            max:'20',
-            context:'',
-            subcategory:'',
-            p_id:'1'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/62386d52d2fbedccc23491b814de4756/5B6EF816/t51.2885-15/e35/26869673_173512470086835_7366131786113351680_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
             price:'1',
-            question:'Will AI replace humans completely in the workforce',
+            question:'Aladdin or The Lion King',
             min:'0',
-            max:'1',
+            max:'2',
             context:'',
             subcategory:'',
-            p_id:'2'
-        },
-        {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/98e23d628a1819234b38fd74d3910ebb/5B511071/t51.2885-15/e35/27880352_863303720535601_7696369824342999040_n.jpg',
-            price:'1',
-            question:'Where in canada are dinousar remains mostly found?',
-            min:'0',
-            max:'3',
-            context:'',
-            subcategory:'',
-            p_id:'3',
+            p_id:'1',
             options: [
-                
-                {answer: 'montreal', url:''},
-                {answer: 'toronto', url:''},
-                {answer: 'ottawa', url:''},
-                {answer: 'vancouver', url:''}
+                {answer: 'aladdin', url:''},
+                {answer: 'lion King', url:''},
+                {answer: 'none', url:''}
             ]
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/088608f2bf57dd86a375e1946906bb35/5B5D0CE6/t51.2885-15/e35/28154665_1504332979680515_5085929284980178944_n.jpg',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
             price:'1',
-            question:'Will your heart explode if you dive 2000ft below see level?',
+            question:'Cats or Dogs?',
+            min:'0',
+            max:'2',
+            context:'',
+            subcategory:'',
+            p_id:'2',
+            options: [
+                {answer: 'cats', url:''},
+                {answer: 'dogs', url:''},
+                {answer: 'none', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Should we pee in the shower?',
             min:'0',
             max:'1',
             context:'',
             subcategory:'',
-            p_id:'4'
+            p_id:'3',
         },
         {
-            url:'https://scontent-yyz1-1.cdninstagram.com/vp/544cda0e685cf02619018b46824e6025/5B5F0A09/t51.2885-15/e35/28763711_1944985042498099_1337264846730690560_n.jpg',
-            price:'35',
-            question:'what\'s the age of elon Musk',
-            min:'20',
-            max:'45',
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Should we fart in front of our partner\'s parents?',
+            min:'0',
+            max:'1',
             context:'',
             subcategory:'',
-            p_id:'5'
-        }            
+            p_id:'4',
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Would you use your partner\'s toothbrush?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'5',
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Would you remove your genitals to secure world peace?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'6',
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'What\'s weirder: Penises or Vaginas?',
+            min:'0',
+            max:'2',
+            context:'',
+            subcategory:'',
+            p_id:'7',
+            options: [
+                {answer: 'Penises', url:''},
+                {answer: 'Vaginas', url:''},
+                {answer: 'None', url:''}
+            ]
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Should we automate jobs?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'8',
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Is UBI a good idea?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'9',
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Do we need work to be happy?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'10',
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Is Twitter good or bad for politics?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'11',
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Should the UN exist?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'12',
+        },
+        {
+            url:'https://scontent-yyz1-1.cdninstagram.com/vp/d05fd94b53dc1e9b2d97199caa4247bb/5BE113C8/t51.2885-15/e35/36667845_345096899356155_1010804038964346880_n.jpg',
+            price:'1',
+            question:'Should protests ever be violent?',
+            min:'0',
+            max:'1',
+            context:'',
+            subcategory:'',
+            p_id:'13',
+        }
+        // {
+        //     url:'https://scontent-yyz1-1.cdninstagram.com/vp/62386d52d2fbedccc23491b814de4756/5B6EF816/t51.2885-15/e35/26869673_173512470086835_7366131786113351680_n.jpg',
+        //     price:'1',
+        //     question:'Will AI replace humans completely in the workforce',
+        //     min:'0',
+        //     max:'1',
+        //     context:'',
+        //     subcategory:'',
+        //     p_id:'14'
+        // },
+        // {
+        //     url:'https://scontent-yyz1-1.cdninstagram.com/vp/98e23d628a1819234b38fd74d3910ebb/5B511071/t51.2885-15/e35/27880352_863303720535601_7696369824342999040_n.jpg',
+        //     price:'1',
+        //     question:'Where in canada are dinousar remains mostly found?',
+        //     min:'0',
+        //     max:'3',
+        //     context:'',
+        //     subcategory:'',
+        //     p_id:'3',
+        //     options: [
+                
+        //         {answer: 'montreal', url:''},
+        //         {answer: 'toronto', url:''},
+        //         {answer: 'ottawa', url:''},
+        //         {answer: 'vancouver', url:''}
+        //     ]
+        // },
+        // {
+        //     url:'https://scontent-yyz1-1.cdninstagram.com/vp/088608f2bf57dd86a375e1946906bb35/5B5D0CE6/t51.2885-15/e35/28154665_1504332979680515_5085929284980178944_n.jpg',
+        //     price:'1',
+        //     question:'Will your heart explode if you dive 2000ft below see level?',
+        //     min:'0',
+        //     max:'1',
+        //     context:'',
+        //     subcategory:'',
+        //     p_id:'4'
+        // },
+        // {
+        //     url:'https://scontent-yyz1-1.cdninstagram.com/vp/544cda0e685cf02619018b46824e6025/5B5F0A09/t51.2885-15/e35/28763711_1944985042498099_1337264846730690560_n.jpg',
+        //     price:'35',
+        //     question:'what\'s the age of elon Musk',
+        //     min:'20',
+        //     max:'45',
+        //     context:'',
+        //     subcategory:'',
+        //     p_id:'5'
+        // }
+
     ];    
     
     $scope.data = [];
